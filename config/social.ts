@@ -11,10 +11,10 @@ export const social = {
     username: "leadflowproteam",
   },
 
-  x: {
+  twitter: {
     name: "X",
     url: "https://x.com/leadflowproteam",
-    username: "leadflowproteam",
+    username: "@leadflowproteam",
   },
 
   instagram: {
