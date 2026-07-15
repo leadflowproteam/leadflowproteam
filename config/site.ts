@@ -10,7 +10,7 @@ export const site = {
 
   url: "https://leadflowproteam.com",
 
-  language: "en",
+  language: "en-US",
 
   locale: "en_US",
 
