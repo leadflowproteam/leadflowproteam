@@ -8,12 +8,14 @@ export const company = {
   },
 
   contact: {
-    businessEmail: "hello@leadflowproteam.com",
+    email: "hello@leadflowproteam.com",
     supportEmail: "support@leadflowproteam.com",
     salesEmail: "sales@leadflowproteam.com",
-    phone: "",
-    location: "Remote",
+  },
+
+  location: {
     country: "Bangladesh",
+    city: "Remote",
     timezone: "Asia/Dhaka",
   },
 
@@ -24,14 +26,12 @@ export const company = {
       "United Kingdom",
       "Australia",
     ],
-    secondary: [],
   },
 
   services: [
     "Website Development",
     "Landing Page Development",
     "Technical SEO",
-    "Local SEO",
     "AI Search Optimization",
     "Website Audit",
   ],
@@ -44,5 +44,3 @@ export const company = {
     "Vercel",
   ],
 } as const;
-
-export type Company = typeof company;
