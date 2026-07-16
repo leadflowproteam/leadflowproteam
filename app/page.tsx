@@ -1,3 +1,5 @@
+import Button from "@/components/ui/Button";
+
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-white">
@@ -20,13 +22,13 @@ export default function HomePage() {
         </p>
 
         <div className="mt-10 flex flex-wrap justify-center gap-4">
-          <button className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700">
+          <Button>
             Book Free Consultation
-          </button>
+          </Button>
 
-          <button className="rounded-xl border border-gray-300 px-6 py-3 font-semibold text-gray-700 transition hover:bg-gray-100">
+          <Button variant="secondary">
             View Services
-          </button>
+          </Button>
         </div>
       </section>
     </main>
