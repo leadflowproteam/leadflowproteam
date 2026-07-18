@@ -1,41 +1,34 @@
 import Link from "next/link";
 
+import { navigation } from "@/config/navigation";
+import { company } from "@/config/company";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 
-const navigation = [
-  { name: "Services", href: "/services" },
-  { name: "About", href: "/about" },
-  { name: "Process", href: "/process" },
-  { name: "Contact", href: "/contact" },
-];
-
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur">
-      <Container className="flex h-20 items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="text-2xl font-bold tracking-tight">
-          <span className="text-blue-600">LeadFlow</span>
-          <span className="text-gray-900">ProTeam</span>
-        </Link>
+    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/90 backdrop-blur">
+      <Container>
+        <div className="flex h-20 items-center justify-between">
+          <Link href="/" className="text-2xl font-bold text-gray-900">
+            {company.name}
+          </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="text-sm font-medium text-gray-700 transition-colors hover:text-blue-600"
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
+          <nav className="hidden items-center gap-8 lg:flex">
+            {navigation.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm font-medium text-gray-700 transition hover:text-blue-600"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
 
-        {/* CTA Button */}
-        <div className="hidden md:block">
-          <Button>Free Audit</Button>
+          <div className="hidden lg:block">
+            <Button>Free Audit</Button>
+          </div>
         </div>
       </Container>
     </header>
