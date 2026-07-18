@@ -1,3 +1,4 @@
+import FAQ from "@/components/sections/FAQ";
 import Results from "@/components/sections/Results";
 import Process from "@/components/sections/Process"; 
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
@@ -18,6 +19,7 @@ export default function HomePage() {
 <WhyChooseUs />
 <Process />
 <Results />
+<FAQ />
 </main>
     </>
   );
