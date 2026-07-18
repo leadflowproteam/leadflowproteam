@@ -1,3 +1,4 @@
+import Results from "@/components/sections/Results";
 import Process from "@/components/sections/Process"; 
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
 import Services from "@/components/sections/Services";
@@ -11,10 +12,12 @@ export default function HomePage() {
       <Header />
 <main className="bg-white">
   <Hero />
+<Hero />
 <TrustBar />
 <Services />
 <WhyChooseUs />
 <Process />
+<Results />
 </main>
     </>
   );
