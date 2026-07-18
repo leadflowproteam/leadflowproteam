@@ -1,33 +1,32 @@
 export const faqs = [
   {
-    question: "Why choose Next.js instead of Shopify or WordPress?",
+    question: "What services does LeadFlowProTeam provide?",
     answer:
-      "Next.js delivers exceptional speed, better SEO, stronger security, and a modern foundation for long-term eCommerce growth.",
+      "We specialize in Web Design & Development, Technical SEO, AI Search Optimization (AEO), Landing Page Development, Website Audits, and Performance Optimization.",
   },
+
   {
-    question: "Do you provide SEO with every project?",
+    question: "Do you work with businesses outside Bangladesh?",
     answer:
-      "Yes. Every project includes technical SEO best practices, performance optimization, and AI search visibility foundations.",
+      "Yes. Our primary focus is helping businesses in the United States, Canada, the United Kingdom, and Australia.",
   },
+
   {
-    question: "Can you improve my existing website?",
+    question: "Do you build websites with Next.js?",
     answer:
-      "Absolutely. We can redesign, optimize performance, improve SEO, and increase conversion rates for existing eCommerce websites.",
+      "Yes. We use modern technologies such as Next.js, TypeScript, and Tailwind CSS to build fast, secure, and scalable websites.",
   },
+
   {
-    question: "Is my website optimized for Facebook and Google Ads?",
+    question: "Is Technical SEO included?",
     answer:
-      "Yes. We build fast, conversion-focused landing pages and eCommerce websites designed to maximize paid advertising performance.",
+      "Yes. Technical SEO is integrated into every project to improve search visibility, website health, and long-term performance.",
   },
+
   {
-    question: "Do you optimize websites for AI search?",
+    question: "How do we get started?",
     answer:
-      "Yes. We implement modern technical SEO, structured data, and AI search optimization practices to improve visibility across emerging search platforms.",
-  },
-  {
-    question: "How long does a typical project take?",
-    answer:
-      "Most projects are completed within 2–6 weeks depending on the project scope and business requirements.",
+      "Simply request a free website audit. We'll review your website, discuss your goals, and recommend the best solution for your business.",
   },
 ] as const;
 
