@@ -1,32 +1,37 @@
 type SectionHeadingProps = {
-  badge: string;
+  badge?: string;
   title: string;
-  description: string;
-  align?: "left" | "center";
+  description?: string;
+  center?: boolean;
 };
 
 export default function SectionHeading({
   badge,
   title,
   description,
-  align = "center",
+  center = true,
 }: SectionHeadingProps) {
-  const alignment =
-    align === "center" ? "mx-auto text-center" : "text-left";
-
   return (
-    <div className={`max-w-3xl ${alignment}`}>
-      <span className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
-        {badge}
-      </span>
+    <div
+      className={`mb-12 ${
+        center ? "text-center" : ""
+      }`}
+    >
+      {badge && (
+        <span className="inline-block rounded-full bg-blue-100 px-4 py-1 text-sm font-semibold text-blue-700">
+          {badge}
+        </span>
+      )}
 
-      <h2 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">
+      <h2 className="mt-4 text-4xl font-bold tracking-tight text-gray-900">
         {title}
       </h2>
 
-      <p className="mt-6 text-lg leading-8 text-gray-600">
-        {description}
-      </p>
+      {description && (
+        <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+          {description}
+        </p>
+      )}
     </div>
   );
 }
