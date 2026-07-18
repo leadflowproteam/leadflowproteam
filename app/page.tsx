@@ -1,3 +1,4 @@
+import CTA from "@/components/sections/CTA";
 import FAQ from "@/components/sections/FAQ";
 import Results from "@/components/sections/Results";
 import Process from "@/components/sections/Process"; 
@@ -20,6 +21,7 @@ export default function HomePage() {
 <Process />
 <Results />
 <FAQ />
+<CTA />
 </main>
     </>
   );
