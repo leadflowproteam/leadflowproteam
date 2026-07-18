@@ -1,3 +1,5 @@
+import Process from "@/components/sections/Process"; 
+import WhyChooseUs from "@/components/sections/WhyChooseUs";
 import Services from "@/components/sections/Services";
 import TrustBar from "@/components/sections/TrustBar";
 import Header from "@/components/layout/Header";
@@ -9,8 +11,10 @@ export default function HomePage() {
       <Header />
 <main className="bg-white">
   <Hero />
-  <TrustBar />
-  <Services />
+<TrustBar />
+<Services />
+<WhyChooseUs />
+<Process />
 </main>
     </>
   );
