@@ -1,33 +1,37 @@
 export const processSteps = [
   {
     step: "01",
-    title: "Free Growth Audit",
+    title: "Discovery & Audit",
     description:
-      "We review your website, advertising funnel, website speed, SEO, and customer experience to identify growth opportunities.",
+      "We analyze your business, website, competitors, technical SEO, and growth opportunities to understand where improvements will create the biggest impact.",
   },
+
   {
     step: "02",
-    title: "Strategy & Roadmap",
+    title: "Strategy & Planning",
     description:
-      "You receive a clear action plan focused on performance, conversions, search visibility, and business growth.",
+      "We create a clear roadmap covering website structure, user experience, SEO priorities, and measurable business goals.",
   },
+
   {
     step: "03",
-    title: "High-Performance Development",
+    title: "Design & Development",
     description:
-      "We build a lightning-fast Next.js eCommerce website optimized for real customers and advertising traffic.",
+      "We build a modern, responsive, and high-performance website using Next.js with clean, scalable, and maintainable code.",
   },
+
   {
     step: "04",
-    title: "SEO & AI Search Visibility",
+    title: "SEO & AI Optimization",
     description:
-      "Your website is optimized for Google Search, AI search engines, LLMs, and future search experiences.",
+      "Every project is optimized for Technical SEO, Core Web Vitals, AI-powered search, and future search experiences.",
   },
+
   {
     step: "05",
-    title: "Continuous Growth",
+    title: "Launch & Continuous Growth",
     description:
-      "After launch, we continue improving speed, visibility, conversions, and long-term business performance.",
+      "After launch, we monitor performance, improve visibility, and support long-term business growth through continuous optimization.",
   },
 ] as const;
 
