@@ -1,26 +1,26 @@
 export const company = {
-  basicInfo: {
-    name: "LeadFlowProTeam",
-    legalName: "LeadFlowProTeam",
-    slogan: "Build Faster. Rank Smarter. Grow Better.",
-    founded: 2026,
-    website: "https://leadflowproteam.com",
-  },
+  name: "LeadFlowProTeam",
 
-  contact: {
-    email: "hello@leadflowproteam.com",
-    supportEmail: "support@leadflowproteam.com",
-    salesEmail: "sales@leadflowproteam.com",
-  },
+  shortName: "LFPT",
+
+  slogan: "Build Faster. Rank Smarter. Grow Better.",
+
+  description:
+    "LeadFlowProTeam helps advertising-driven eCommerce businesses increase sales through high-performance Next.js websites, technical SEO, AI search visibility, and conversion-focused development.",
+
+  url: "https://leadflowproteam.com",
+
+  logo: "/logo.svg",
+
+  email: "info@leadflowproteam.com",
+
+  phone: "",
+
+  founded: "2026",
 
   location: {
     country: "Bangladesh",
-    city: "Remote",
-    timezone: "Asia/Dhaka",
-  },
-
-  markets: {
-    primary: [
+    serving: [
       "United States",
       "Canada",
       "United Kingdom",
@@ -28,19 +28,37 @@ export const company = {
     ],
   },
 
+  contact: {
+    email: "info@leadflowproteam.com",
+    phone: "",
+  },
+
+  social: {
+    facebook: "#",
+    linkedin: "#",
+    github: "#",
+    x: "#",
+    youtube: "#",
+  },
+
   services: [
-    "Website Development",
+    "High-Performance eCommerce Websites",
     "Landing Page Development",
     "Technical SEO",
     "AI Search Optimization",
-    "Website Audit",
+    "Performance Optimization",
   ],
 
-  technologies: [
-    "Next.js",
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "Vercel",
+  keywords: [
+    "Next.js Agency",
+    "eCommerce Website Development",
+    "Technical SEO",
+    "AI Search Optimization",
+    "LLM SEO",
+    "Conversion Optimization",
+    "Landing Page Development",
+    "Website Performance Optimization",
   ],
 } as const;
+
+export type Company = typeof company;

@@ -27,9 +27,11 @@ export const metadata: Metadata = {
     },
   ],
 
-  creator: company.basicInfo.name,
+  // ✅ Fixed
+  creator: company.name,
 
-  publisher: company.basicInfo.name,
+  // ✅ Fixed
+  publisher: company.name,
 
   alternates: {
     canonical: "/",

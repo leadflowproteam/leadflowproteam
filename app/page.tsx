@@ -1,3 +1,4 @@
+import Footer from "@/components/layout/Footer";
 import CTA from "@/components/sections/CTA";
 import FAQ from "@/components/sections/FAQ";
 import Results from "@/components/sections/Results";
@@ -22,6 +23,7 @@ export default function HomePage() {
 <Results />
 <FAQ />
 <CTA />
+<Footer />
 </main>
     </>
   );
