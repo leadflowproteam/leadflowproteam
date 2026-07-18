@@ -1,34 +1,40 @@
 export const results = [
   {
-    title: "Lightning-Fast Performance",
+    title: "Performance Optimized",
     description:
-      "Optimized Next.js websites designed to load quickly and deliver a smooth shopping experience.",
+      "Every website is built for speed, stability, and excellent Core Web Vitals.",
+    icon: "⚡",
   },
   {
-    title: "Higher Conversion Rates",
+    title: "SEO Foundation",
     description:
-      "Conversion-focused layouts that help turn more visitors into paying customers.",
+      "Technical SEO is integrated from the beginning—not added later.",
+    icon: "🔍",
   },
   {
-    title: "Better Search Visibility",
+    title: "AI Search Ready",
     description:
-      "Technical SEO and AI search optimization to improve your visibility across modern search platforms.",
+      "Prepared for AI-powered search engines and modern search experiences.",
+    icon: "🤖",
   },
   {
-    title: "Built for Paid Traffic",
+    title: "Scalable Architecture",
     description:
-      "Designed specifically for businesses using Facebook Ads and Google Ads to maximize campaign performance.",
+      "Clean, maintainable code designed for future business growth.",
+    icon: "🏗️",
   },
   {
-    title: "Mobile-First Experience",
+    title: "Responsive Experience",
     description:
-      "Responsive websites that perform beautifully on phones, tablets, and desktops.",
+      "Optimized for desktop, tablet, and mobile devices.",
+    icon: "📱",
   },
   {
-    title: "Future-Ready Foundation",
+    title: "Long-Term Support",
     description:
-      "Scalable architecture prepared for AI automation, business growth, and future integrations.",
+      "Continuous improvements and technical support after launch.",
+    icon: "🤝",
   },
 ] as const;
 
-export type Result = (typeof results)[number];
+export type ResultItem = (typeof results)[number];
