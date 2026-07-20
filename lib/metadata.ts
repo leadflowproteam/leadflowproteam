@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
   applicationName: site.name,
 
-  keywords: [...site.keywords],
+  keywords: site.keywords,
 
   authors: [
     {
@@ -27,19 +27,30 @@ export const metadata: Metadata = {
     },
   ],
 
-  // ✅ Fixed
-  creator: company.name,
+  creator: site.creator,
 
-  // ✅ Fixed
-  publisher: company.name,
+  publisher: site.publisher,
+
+  category: site.category,
+
+  classification: site.classification,
 
   alternates: {
     canonical: "/",
   },
 
+  verification: {
+    google: site.verification.google || undefined,
+    other: {
+      "msvalidate.01": site.verification.bing || undefined,
+      yandex: site.verification.yandex || undefined,
+    },
+  },
+
   robots: {
-    index: true,
-    follow: true,
+    index: site.robots.index,
+    follow: site.robots.follow,
+
     googleBot: {
       index: true,
       follow: true,
@@ -51,28 +62,60 @@ export const metadata: Metadata = {
 
   openGraph: {
     type: "website",
+
     locale: site.locale,
+
     url: site.url,
+
     siteName: site.name,
+
     title: site.title,
+
     description: site.description,
+
     images: [
       {
         url: site.defaultOgImage,
         width: 1200,
         height: 630,
-        alt: site.name,
+        alt: company.name,
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
+
     title: site.title,
+
     description: site.description,
+
     creator: social.twitter.username,
+
     images: [site.defaultOgImage],
   },
 
-  category: "Technology",
+  icons: {
+    icon: site.favicon,
+
+    shortcut: site.favicon,
+
+    apple: site.appleTouchIcon,
+  },
+
+  manifest: site.manifest,
+
+  referrer: "origin-when-cross-origin",
+
+  formatDetection: {
+    telephone: false,
+    address: false,
+    email: false,
+  },
+
+  appleWebApp: {
+    capable: true,
+    title: site.name,
+    statusBarStyle: "default",
+  },
 };
