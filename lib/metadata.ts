@@ -1,55 +1,44 @@
 import type { Metadata } from "next";
 
-import { company } from "@/config/company";
-import { site } from "@/config/site";
-import { social } from "@/config/social";
+import { brandEntity } from "@/data/brand-entity";
 
-const siteUrl = new URL(site.url);
+const brand = brandEntity.brand;
 
-export const metadata: Metadata = {
-  metadataBase: siteUrl,
+const metadata: Metadata = {
+  metadataBase: new URL(brand.url),
 
   title: {
-    default: site.title,
-    template: site.titleTemplate,
+    default:
+      "LeadFlowProTeam | Web Development, Technical SEO & AI Search Optimization",
+    template: "%s | LeadFlowProTeam",
   },
 
-  description: site.description,
+  description: brand.longDescription,
 
-  applicationName: site.name,
+  applicationName: brand.name,
 
-  keywords: site.keywords,
+  keywords: [...brandEntity.keywords],
 
   authors: [
     {
-      name: site.author,
-      url: site.url,
+      name: brand.name,
+      url: brand.url,
     },
   ],
 
-  creator: site.creator,
+  creator: brand.name,
 
-  publisher: site.publisher,
+  publisher: brand.name,
 
-  category: site.category,
-
-  classification: site.classification,
+  category: "Business",
 
   alternates: {
-    canonical: "/",
-  },
-
-  verification: {
-    google: site.verification.google || undefined,
-    other: {
-      "msvalidate.01": site.verification.bing || undefined,
-      yandex: site.verification.yandex || undefined,
-    },
+    canonical: brand.url,
   },
 
   robots: {
-    index: site.robots.index,
-    follow: site.robots.follow,
+    index: true,
+    follow: true,
 
     googleBot: {
       index: true,
@@ -63,22 +52,26 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
 
-    locale: site.locale,
+    url: brand.url,
 
-    url: site.url,
+    siteName: brand.name,
 
-    siteName: site.name,
+    locale: "en_US",
 
-    title: site.title,
+    title:
+      "LeadFlowProTeam | Web Development, Technical SEO & AI Search Optimization",
 
-    description: site.description,
+    description: brand.shortDescription,
 
     images: [
       {
-        url: site.defaultOgImage,
+        url: "/images/og-image.jpg",
+
         width: 1200,
+
         height: 630,
-        alt: company.name,
+
+        alt: brand.name,
       },
     ],
   },
@@ -86,36 +79,29 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
 
-    title: site.title,
+    title:
+      "LeadFlowProTeam | Web Development, Technical SEO & AI Search Optimization",
 
-    description: site.description,
+    description: brand.shortDescription,
 
-    creator: social.twitter.username,
-
-    images: [site.defaultOgImage],
+    images: ["/images/og-image.jpg"],
   },
 
   icons: {
-    icon: site.favicon,
+    icon: "/favicon.ico",
 
-    shortcut: site.favicon,
+    shortcut: "/favicon.ico",
 
-    apple: site.appleTouchIcon,
+    apple: "/apple-touch-icon.png",
   },
-
-  manifest: site.manifest,
-
-  referrer: "origin-when-cross-origin",
 
   formatDetection: {
     telephone: false,
+
     address: false,
+
     email: false,
   },
-
-  appleWebApp: {
-    capable: true,
-    title: site.name,
-    statusBarStyle: "default",
-  },
 };
+
+export { metadata };

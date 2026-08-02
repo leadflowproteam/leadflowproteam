@@ -25,38 +25,91 @@ export default function Button({
   size = "md",
   fullWidth = false,
   className = "",
+  type,
   ...props
 }: ButtonProps) {
-  const base =
-    "inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-60";
+  const base = [
+    "inline-flex",
+    "items-center",
+    "justify-center",
+    "gap-2",
+    "rounded-2xl",
+    "font-semibold",
+    "whitespace-nowrap",
+    "transition-all",
+    "duration-300",
+    "ease-out",
+    "select-none",
+    "min-h-[48px]",
+    "focus-visible:outline-none",
+    "focus-visible:ring-2",
+    "focus-visible:ring-blue-500",
+    "focus-visible:ring-offset-2",
+    "disabled:pointer-events-none",
+    "disabled:cursor-not-allowed",
+    "disabled:opacity-60",
+  ].join(" ");
 
   const variants = {
-    primary:
-      "bg-blue-600 text-white hover:bg-blue-700",
+    primary: [
+      "bg-blue-600",
+      "text-white",
+      "shadow-md",
+      "hover:bg-blue-700",
+      "hover:-translate-y-1",
+      "hover:shadow-xl",
+      "active:translate-y-0",
+    ].join(" "),
 
-    secondary:
-      "bg-gray-100 text-gray-900 hover:bg-gray-200",
+    secondary: [
+      "bg-slate-100",
+      "text-slate-900",
+      "hover:bg-slate-200",
+      "hover:-translate-y-1",
+      "shadow-sm",
+      "hover:shadow-lg",
+    ].join(" "),
 
-    outline:
-      "border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white",
+    outline: [
+      "border",
+      "border-blue-600",
+      "bg-transparent",
+      "text-blue-600",
+      "hover:bg-blue-600",
+      "hover:text-white",
+      "hover:-translate-y-1",
+      "shadow-sm",
+      "hover:shadow-lg",
+    ].join(" "),
 
-    white:
-      "bg-white text-blue-700 hover:bg-gray-100",
+    white: [
+      "bg-white",
+      "text-blue-700",
+      "shadow-md",
+      "hover:bg-slate-100",
+      "hover:-translate-y-1",
+      "hover:shadow-xl",
+    ].join(" "),
   };
 
   const sizes = {
-    sm: "px-4 py-2 text-sm",
-
-    md: "px-6 py-3 text-base",
-
-    lg: "px-8 py-4 text-lg",
+    sm: "px-5 py-2.5 text-sm",
+    md: "px-7 py-3.5 text-base",
+    lg: "px-9 py-4 text-lg",
   };
 
   return (
     <button
-      className={`${base} ${variants[variant]} ${sizes[size]} ${
-        fullWidth ? "w-full" : ""
-      } ${className}`}
+      type={type ?? "button"}
+      className={[
+        base,
+        variants[variant],
+        sizes[size],
+        fullWidth ? "w-full" : "",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
       {...props}
     >
       {children}

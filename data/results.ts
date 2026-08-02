@@ -1,40 +1,24 @@
 export const results = [
   {
-    title: "Performance Optimized",
+    title: "High-Performance Websites",
     description:
-      "Every website is built for speed, stability, and excellent Core Web Vitals.",
-    icon: "⚡",
+      "Built with modern technologies to deliver exceptional speed, responsiveness, and user experience.",
   },
   {
-    title: "SEO Foundation",
+    title: "Search-First Development",
     description:
-      "Technical SEO is integrated from the beginning—not added later.",
-    icon: "🔍",
+      "Every website is developed with technical SEO best practices from the very beginning.",
   },
   {
     title: "AI Search Ready",
     description:
-      "Prepared for AI-powered search engines and modern search experiences.",
-    icon: "🤖",
+      "Structured content and modern architecture prepared for AI-powered search experiences.",
   },
   {
-    title: "Scalable Architecture",
+    title: "Conversion-Focused Experience",
     description:
-      "Clean, maintainable code designed for future business growth.",
-    icon: "🏗️",
-  },
-  {
-    title: "Responsive Experience",
-    description:
-      "Optimized for desktop, tablet, and mobile devices.",
-    icon: "📱",
-  },
-  {
-    title: "Long-Term Support",
-    description:
-      "Continuous improvements and technical support after launch.",
-    icon: "🤝",
+      "Clear messaging, intuitive layouts, and strategic design that encourage more enquiries.",
   },
 ] as const;
 
-export type ResultItem = (typeof results)[number];
+export type Result = (typeof results)[number];

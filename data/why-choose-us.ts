@@ -1,39 +1,23 @@
 export const whyChooseUs = [
   {
-    title: "Modern Technology",
+    title: "Built for Business Growth",
     description:
-      "Built with Next.js, TypeScript, and modern web standards for speed, scalability, and reliability.",
-    icon: "💻",
+      "Every website is designed with one goal in mind—helping your business attract more qualified leads and convert more visitors into customers.",
   },
   {
-    title: "Performance First",
+    title: "Performance Without Compromise",
     description:
-      "Every website is optimized for Core Web Vitals, fast loading, and an excellent user experience.",
-    icon: "⚡",
+      "Fast loading, responsive, and optimized websites that deliver an excellent experience across all devices.",
   },
   {
-    title: "Technical SEO",
+    title: "Search-First Development",
     description:
-      "Strong technical foundations help search engines crawl, understand, and rank your website.",
-    icon: "🔍",
+      "Technical SEO is built into every project from the beginning, not added as an afterthought.",
   },
   {
-    title: "AI Search Ready",
+    title: "Future-Ready Technology",
     description:
-      "Prepared for AI-powered search experiences, Answer Engines, and future search technologies.",
-    icon: "🤖",
-  },
-  {
-    title: "Transparent Workflow",
-    description:
-      "Clear communication, milestone-based delivery, and no hidden surprises throughout the project.",
-    icon: "🤝",
-  },
-  {
-    title: "Long-Term Partnership",
-    description:
-      "We continue supporting your business after launch with improvements and ongoing optimization.",
-    icon: "📈",
+      "Modern technologies and AI-ready architecture ensure your website stays competitive as search evolves.",
   },
 ] as const;
 

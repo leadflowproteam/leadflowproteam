@@ -1,37 +1,37 @@
 export const processSteps = [
   {
     step: "01",
-    title: "Discovery & Audit",
+    title: "Business Discovery",
     description:
-      "We analyze your business, website, competitors, technical SEO, and growth opportunities to understand where improvements will create the biggest impact.",
+      "We learn about your business, target audience, competitors, and goals to create a strategy that supports long-term growth.",
   },
 
   {
     step: "02",
     title: "Strategy & Planning",
     description:
-      "We create a clear roadmap covering website structure, user experience, SEO priorities, and measurable business goals.",
+      "We define the website structure, user journey, SEO priorities, and project roadmap before development begins.",
   },
 
   {
     step: "03",
     title: "Design & Development",
     description:
-      "We build a modern, responsive, and high-performance website using Next.js with clean, scalable, and maintainable code.",
+      "Your website is built with modern technologies, responsive layouts, fast performance, and scalable architecture.",
   },
 
   {
     step: "04",
     title: "SEO & AI Optimization",
     description:
-      "Every project is optimized for Technical SEO, Core Web Vitals, AI-powered search, and future search experiences.",
+      "Technical SEO, structured data, Core Web Vitals, and AI search optimization are implemented before launch.",
   },
 
   {
     step: "05",
     title: "Launch & Continuous Growth",
     description:
-      "After launch, we monitor performance, improve visibility, and support long-term business growth through continuous optimization.",
+      "After launch, we monitor performance, improve visibility, and continuously optimize for better business results.",
   },
 ] as const;
 

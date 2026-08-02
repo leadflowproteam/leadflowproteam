@@ -1,71 +1,78 @@
-import Container from "@/components/ui/Container";
+import {
+  Bot,
+  Gauge,
+  SearchCheck,
+  TrendingUp,
+} from "lucide-react";
 
-const features = [
+import Section from "@/components/ui/Section";
+
+const items = [
   {
-    title: "High-Performance Websites",
+    icon: Gauge,
+    title: "Lightning Fast Performance",
     description:
-      "Fast, secure, and scalable websites built with modern technologies for long-term business growth.",
-    icon: "⚡",
+      "Built with Next.js, optimized Core Web Vitals, and fast loading experiences that improve both rankings and conversions.",
   },
   {
-    title: "Technical SEO",
+    icon: SearchCheck,
+    title: "Technical SEO Built-In",
     description:
-      "Every project is built with SEO best practices to improve search visibility and website health.",
-    icon: "🔍",
+      "Every website is engineered with clean architecture, structured metadata, crawlability, and search engine best practices.",
   },
   {
+    icon: Bot,
     title: "AI Search Ready",
     description:
-      "Optimized for the future of AI-powered search experiences, including AEO and GEO strategies.",
-    icon: "🤖",
+      "Designed for Google's AI Overviews, ChatGPT, Gemini, Claude, and the next generation of AI-powered search.",
   },
   {
-    title: "Conversion Focused",
+    icon: TrendingUp,
+    title: "Lead Generation Focused",
     description:
-      "Designed to build trust, generate qualified leads, and turn more visitors into customers.",
-    icon: "📈",
+      "Conversion-driven layouts and clear calls-to-action help transform visitors into qualified business enquiries.",
   },
 ];
 
 export default function TrustBar() {
   return (
-    <section className="border-y border-gray-200 bg-gray-50 py-16 lg:py-20">
-      <Container>
-        <div className="mx-auto mb-12 max-w-3xl text-center">
-          <span className="inline-flex rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
-            Why Businesses Choose LeadFlowProTeam
-          </span>
+    <Section className="py-14 sm:py-16 lg:py-20">
+      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        {items.map((item) => {
+          const Icon = item.icon;
 
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 md:text-4xl">
-            Built for Performance, Visibility, and Growth
-          </h2>
-
-          <p className="mt-4 text-lg text-gray-600">
-            We combine modern web development, technical SEO, and AI-ready
-            optimization to help service businesses build credibility and
-            generate more qualified leads.
-          </p>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {features.map((feature) => (
+          return (
             <div
-              key={feature.title}
-              className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+              key={item.title}
+              className="
+                rounded-2xl
+                border
+                border-gray-200
+                bg-white
+                p-6
+                shadow-sm
+                transition-all
+                duration-300
+                hover:-translate-y-1
+                hover:border-blue-200
+                hover:shadow-xl
+              "
             >
-              <div className="mb-4 text-4xl">{feature.icon}</div>
+              <div className="mb-5 inline-flex rounded-xl bg-blue-50 p-3 text-blue-600">
+                <Icon className="h-6 w-6" />
+              </div>
 
-              <h3 className="text-lg font-semibold text-gray-900">
-                {feature.title}
+              <h3 className="text-lg font-bold text-gray-900">
+                {item.title}
               </h3>
 
-              <p className="mt-3 text-sm leading-6 text-gray-600">
-                {feature.description}
+              <p className="mt-3 text-sm leading-7 text-gray-600">
+                {item.description}
               </p>
             </div>
-          ))}
-        </div>
-      </Container>
-    </section>
+          );
+        })}
+      </div>
+    </Section>
   );
 }
