@@ -16,30 +16,30 @@ const results = [
   {
     icon: Gauge,
     metric: "95+",
-    title: "Performance Score",
+    title: "Lighthouse Performance",
     description:
-      "Optimized for exceptional speed, Core Web Vitals, and a smooth user experience.",
+      "Optimized Core Web Vitals, faster loading speed, smooth responsiveness, and exceptional user experience that supports stronger search performance.",
   },
   {
     icon: SearchCheck,
-    metric: "SEO",
-    title: "Technical SEO Ready",
+    metric: "100%",
+    title: "Technical SEO Foundation",
     description:
-      "Clean architecture, structured data, metadata, sitemap, robots.txt, and crawl optimization.",
+      "Complete Technical SEO implementation including structured metadata, schema markup, crawl optimization, XML sitemap, robots.txt, and search-friendly architecture.",
   },
   {
     icon: Bot,
     metric: "AI",
     title: "AI Search Ready",
     description:
-      "Prepared for ChatGPT, Gemini, Claude, AI Overviews, Entity SEO, and Semantic Search.",
+      "Engineered for Google AI Overviews, ChatGPT, Gemini, Claude, Microsoft Copilot, and future AI-powered search experiences using semantic architecture and entity optimization.",
   },
   {
     icon: TrendingUp,
     metric: "Growth",
-    title: "Business Focused",
+    title: "Business Growth Focused",
     description:
-      "Designed to improve lead generation, conversion rates, trust, and long-term business growth.",
+      "Every website is strategically designed to generate qualified leads, improve conversions, strengthen trust, and support sustainable long-term business growth.",
   },
 ];
 
@@ -58,42 +58,82 @@ const technologies = [
 
 export default function Results() {
   return (
-    <section className="bg-gradient-to-b from-slate-50 via-white to-slate-50 py-20 lg:py-28">
+    <section className="bg-linear-to-b from-slate-50 via-white to-cyan-50 py-20 lg:py-28">
       <Container>
         <SectionHeading
-          badge="Results That Matter"
-          title="Built for Speed, Search Visibility & Business Growth"
-          description="Every project is engineered with measurable outcomes in mind—from website performance and Technical SEO to AI Search Visibility and long-term lead generation."
+          badge="Proven Results"
+          title="Engineered for Performance, Search Visibility & Long-Term Growth"
+          description="Every LeadFlowProTeam website is built with measurable business outcomes in mind—combining modern web engineering, Technical SEO, AI Search Optimization, and conversion-focused architecture to help service businesses grow with confidence."
         />
-
+        <div className="mx-auto mt-6 max-w-4xl text-center">
+        <p className="text-lg leading-8 text-slate-600">
+          We don't just design beautiful websites—we build high-performance digital
+          platforms engineered for Google Search, AI-powered search experiences,
+          faster loading speeds, stronger technical foundations, and sustainable
+          business growth.
+        </p>
+      </div>
         {/* Result Cards */}
 
-        <div className="mt-16 grid gap-8 md:grid-cols-2">
+        <div className="mt-20 grid gap-8 md:grid-cols-2 xl:grid-cols-4">
           {results.map((item) => {
             const Icon = item.icon;
 
             return (
               <article
                 key={item.title}
-                className="group overflow-hidden rounded-3xl border border-gray-200 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-200 hover:shadow-2xl"
+                className="
+                group
+                relative
+                overflow-hidden
+                rounded-3xl
+                border
+                border-slate-200
+                bg-white
+                p-8
+                shadow-sm
+                transition-all
+                duration-300
+                hover:-translate-y-2
+                hover:border-cyan-300
+                hover:shadow-2xl
+                "
               >
                 <div className="flex items-center justify-between">
-                  <div className="inline-flex h-16 w-16 items-center justify-center rounded-3xl bg-blue-50 text-blue-600 transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white">
+                  <div
+                  className="
+                  inline-flex
+                  h-16
+                  w-16
+                  items-center
+                  justify-center
+                  rounded-2xl
+                  bg-cyan-50
+                  text-cyan-600
+                  transition-all
+                  duration-300
+                  group-hover:bg-cyan-600
+                  group-hover:text-white
+                "
+                >
                     <Icon className="h-8 w-8" />
                   </div>
 
-                  <span className="text-4xl font-extrabold text-blue-600">
+                  <span className="text-5xl font-extrabold tracking-tight text-cyan-600">
                     {item.metric}
                   </span>
                 </div>
 
-                <h3 className="mt-8 text-2xl font-bold text-gray-900">
+                <h3 className="mt-8 text-2xl font-bold leading-tight text-slate-900">
                   {item.title}
                 </h3>
 
-                <p className="mt-5 leading-8 text-gray-600">
+                <p className="mt-5 grow leading-8 text-slate-600">
                   {item.description}
                 </p>
+                <div className="mt-8 h-2 w-full overflow-hidden rounded-full bg-slate-200">
+                <div className="h-2 w-[96%] rounded-full bg-linear-to-r from-cyan-500 to-blue-600" />
+</div>
               </article>
             );
           })}
@@ -101,52 +141,114 @@ export default function Results() {
 
         {/* Technologies */}
 
-        <div className="mt-24 rounded-[36px] border border-gray-200 bg-white p-10 shadow-lg">
-          <h3 className="text-center text-3xl font-bold text-gray-900">
+        <div
+          className="
+            mt-24
+            rounded-[36px]
+            border
+            border-cyan-100
+            bg-linear-to-br
+            from-cyan-50
+            via-white
+            to-blue-50
+            p-10
+            shadow-xl
+          "
+        >
+        <h3 className="text-center text-3xl font-bold tracking-tight text-slate-900">
             Technologies & Best Practices
           </h3>
 
-          <p className="mx-auto mt-5 max-w-3xl text-center leading-8 text-gray-600">
+          <p className="mx-auto mt-6 max-w-3xl text-center text-lg leading-8 text-slate-600">
             We use modern technologies and proven optimization strategies to
             build secure, scalable, SEO-friendly, and AI-ready business
             websites.
           </p>
-
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {technologies.map((tech) => (
-              <span
-                key={tech}
-                className="rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700 transition hover:bg-blue-600 hover:text-white"
-              >
-                {tech}
-              </span>
+             <div
+              key={tech}
+              className="
+                rounded-2xl
+                border
+                border-cyan-100
+                bg-white
+                px-5
+                py-5
+                text-center
+                font-semibold
+                text-slate-800
+                shadow-sm
+                transition-all
+                duration-300
+                hover:-translate-y-1
+                hover:border-cyan-300
+                hover:bg-cyan-600
+                hover:text-white
+                hover:shadow-lg
+              "
+            >
+              {tech}
+            </div> 
             ))}
           </div>
         </div>
 
         {/* CTA */}
 
-        <div className="mt-24 rounded-[36px] bg-gradient-to-r from-blue-600 via-blue-700 to-slate-900 px-10 py-16 text-center text-white shadow-2xl">
-          <h3 className="text-4xl font-extrabold">
-            Ready to Grow Your Business Online?
-          </h3>
+        <div
+  className="
+    mt-24
+    overflow-hidden
+    rounded-[40px]
+    bg-linear-to-r
+    from-cyan-600
+    via-blue-700
+    to-slate-900
+    px-10
+    py-16
+    text-center
+    text-white
+    shadow-2xl
+  "
+>
+       <h3 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
+        Ready to Build a Website That
+        <span className="block text-cyan-200">
+          Generates More Leads?
+        </span>
+      </h3>
 
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-blue-100">
-            Let's build a high-performance website that loads faster, ranks
-            better, and generates more qualified leads for your business.
-          </p>
+        <p className="mx-auto mt-6 max-w-4xl text-lg leading-8 text-blue-100">
+          Whether you need a modern business website, Technical SEO,
+          AI Search Optimization, or a complete website audit,
+          LeadFlowProTeam helps service businesses improve search visibility,
+          build trust, and generate qualified leads with long-term
+          sustainable growth.
+        </p>
 
-          <div className="mt-10 flex justify-center">
-            <Link href="/free-audit">
-              <Button
-                variant="secondary"
-                className="group"
-              >
-                Get Your Free Website Audit
+          <div className="mt-12 flex flex-wrap justify-center gap-5">
+           <Link href="/free-audit">
+  <Button
+    variant="secondary"
+    size="lg"
+    className="group"
+  >
+    Get Free Website Audit
 
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </Button>
-            </Link>
+    <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+  </Button>
+</Link>
+
+<Link href="/contact">
+  <Button
+    variant="outline"
+    size="lg"
+    className="border-white text-white hover:bg-white hover:text-blue-700"
+  >
+    Contact Our Team
+  </Button>
+</Link>
           </div>
         </div>
       </Container>
