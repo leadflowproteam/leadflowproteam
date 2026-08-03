@@ -52,16 +52,18 @@ export default function Hero() {
             <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-5xl xl:text-6xl">
               Websites That
               <span className="block text-blue-600">
-                Rank, Convert &
-                Grow
+                Rank, Convert & Grow
               </span>
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
-              We build modern Next.js websites engineered with
-              Technical SEO, AI Search Optimization, Core Web
-              Vitals, and conversion-focused architecture that
-              helps service businesses generate qualified leads.
+              We build modern <strong>Next.js websites</strong> engineered with
+              <strong> Technical SEO</strong>,
+              <strong> AI Search Optimization</strong>,
+              <strong> Core Web Vitals</strong>, and
+              <strong> conversion-focused architecture</strong> that helps
+              service businesses generate qualified leads, improve search
+              visibility, and build long-term digital growth.
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -79,6 +81,18 @@ export default function Hero() {
                 >
                   Explore Services
                 </Button>
+              </Link>
+            </div>
+
+            {/* NEW Portfolio Link */}
+
+            <div className="mt-5">
+              <Link
+                href="/portfolio"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition hover:text-blue-700"
+              >
+                View Our Portfolio
+                <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
 
@@ -103,8 +117,7 @@ export default function Hero() {
               })}
             </div>
           </div>
-
-          {/* RIGHT */}
+                 {/* RIGHT */}
 
           <div className="relative">
             <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-2xl">
@@ -118,7 +131,7 @@ export default function Hero() {
                 <span className="h-3 w-3 rounded-full bg-green-400" />
 
                 <div className="ml-4 rounded-lg bg-white px-4 py-1 text-xs text-gray-500">
-                  leadflowproteam.com
+                  www.leadflowproteam.com
                 </div>
               </div>
 
@@ -129,8 +142,12 @@ export default function Hero() {
                   </p>
 
                   <h3 className="mt-2 text-3xl font-bold">
-                    95+
+                    Enterprise Ready
                   </h3>
+
+                  <p className="mt-2 text-sm text-blue-100">
+                    Built for speed, stability & scalability.
+                  </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -173,48 +190,51 @@ export default function Hero() {
                       High
                     </p>
                   </div>
+                </div>   
+                                {/* Floating Card */}
+
+                <div className="absolute -left-6 top-8 hidden rounded-2xl border border-white/70 bg-white/90 p-5 shadow-2xl backdrop-blur lg:block">
+                  <div className="flex items-center gap-3">
+                    <div className="rounded-xl bg-blue-100 p-3">
+                      <Sparkles className="h-6 w-6 text-blue-600" />
+                    </div>
+
+                    <div>
+                      <p className="text-xs uppercase tracking-wide text-gray-500">
+                        AI Search Visibility
+                      </p>
+
+                      <h4 className="font-bold text-gray-900">
+                        Optimized
+                      </h4>
+                    </div>
+                  </div>
                 </div>
 
-                  {/* Floating Card */}
+                {/* Floating Card */}
 
-<div className="absolute -left-6 top-8 hidden rounded-2xl border border-white/70 bg-white/90 p-5 shadow-2xl backdrop-blur lg:block">
-  <div className="flex items-center gap-3">
-    <div className="rounded-xl bg-blue-100 p-3">
-      <Sparkles className="h-6 w-6 text-blue-600" />
-    </div>
+                <div className="absolute -right-6 bottom-10 hidden rounded-2xl border border-white/70 bg-white/90 p-5 shadow-2xl backdrop-blur lg:block">
+                  <p className="text-xs uppercase tracking-wide text-gray-500">
+                    Technical SEO
+                  </p>
 
-    <div>
-      <p className="text-xs uppercase tracking-wide text-gray-500">
-        AI Visibility
-      </p>
+                  <h3 className="mt-1 text-3xl font-extrabold text-blue-600">
+                    Ready
+                  </h3>
 
-      <h4 className="font-bold text-gray-900">
-        Optimized
-      </h4>
-    </div>
-  </div>
-</div>
+                  <p className="text-sm text-gray-600">
+                    Enterprise Standard
+                  </p>
+                </div>
 
-<div className="absolute -right-6 bottom-10 hidden rounded-2xl border border-white/70 bg-white/90 p-5 shadow-2xl backdrop-blur lg:block">
-  <p className="text-xs uppercase tracking-wide text-gray-500">
-    Lighthouse
-  </p>
-
-  <h3 className="mt-1 text-3xl font-extrabold text-blue-600">
-    95+
-  </h3>
-
-  <p className="text-sm text-gray-600">
-    Performance
-  </p>
-</div>
                 <div className="rounded-xl bg-gray-50 p-5">
                   <div className="mb-3 h-2 rounded-full bg-gray-200">
                     <div className="h-2 w-[96%] rounded-full bg-blue-600" />
                   </div>
 
                   <p className="text-sm text-gray-600">
-                    Performance Score: 96 / 100
+                    Optimized for Core Web Vitals, Technical SEO & AI Search
+                    Visibility
                   </p>
                 </div>
               </div>

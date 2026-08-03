@@ -13,8 +13,8 @@ export default function Services() {
       <Container>
         <SectionHeading
           badge="Our Services"
-          title="Digital Solutions That Drive Business Growth"
-          description="We build modern websites engineered for performance, Technical SEO, AI Search Visibility, and long-term lead generation—helping service businesses grow with confidence."
+          title="High-Performance Digital Solutions Built for Search & Business Growth"
+          description="We build high-performance websites engineered with Technical SEO, AI Search Visibility, Entity SEO, Core Web Vitals, and conversion-focused architecture that helps service businesses generate qualified leads, improve search visibility, and achieve sustainable long-term growth."
         />
 
         <div className="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
@@ -45,15 +45,14 @@ export default function Services() {
                   <Card.Description className="mt-5 grow leading-8">
                     {service.description}
                   </Card.Description>
-
-                  {/* CTA */}
+                                    {/* CTA */}
 
                   <div className="mt-10 border-t border-gray-100 pt-6">
                     <Link
                       href={service.href}
                       className="inline-flex items-center font-semibold text-blue-600 transition-all duration-300 hover:text-blue-700"
                     >
-                      Learn More
+                      Explore Service
 
                       <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
                     </Link>
@@ -64,18 +63,19 @@ export default function Services() {
             );
           })}
         </div>
-
-        {/* Bottom CTA */}
+                {/* Bottom CTA */}
 
         <div className="mt-24 rounded-[36px] bg-gradient-to-r from-blue-600 via-blue-700 to-slate-900 px-10 py-16 text-center text-white shadow-2xl">
           <h2 className="text-4xl font-extrabold">
-            Need a Website That Actually Generates Leads?
+            Ready to Grow Your Business Online?
           </h2>
 
           <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-blue-100">
-            Whether you're launching a new business or improving an existing
-            website, we build fast, SEO-ready, AI-ready websites that help
-            attract more qualified customers.
+            Whether you're launching a new business, redesigning an existing
+            website, or improving your online visibility, our Next.js
+            development, Technical SEO, and AI Search Visibility framework helps
+            you attract more qualified customers, increase search visibility,
+            and build sustainable long-term digital growth.
           </p>
 
           <div className="mt-10 flex flex-wrap justify-center gap-4">
@@ -83,14 +83,14 @@ export default function Services() {
               href="/free-audit"
               className="rounded-xl bg-white px-7 py-3 font-semibold text-blue-700 transition hover:bg-slate-100"
             >
-              Get Free Website Audit
+              Get Your Free Website Audit
             </Link>
 
             <Link
               href="/contact"
               className="rounded-xl border border-white/30 px-7 py-3 font-semibold text-white transition hover:bg-white/10"
             >
-              Contact Our Team
+              Schedule a Free Consultation
             </Link>
           </div>
         </div>
