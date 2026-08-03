@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import {
   Bot,
   BrainCircuit,
@@ -13,6 +15,7 @@ import {
   Workflow,
 } from "lucide-react";
 
+import Button from "@/components/ui/Button";
 import Section from "@/components/ui/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
 
@@ -46,9 +49,8 @@ const checklistGroups = [
       },
     ],
   },
-
   {
-    title: "Content Intelligence",
+    title: "Semantic Intelligence",
     items: [
       {
         icon: BrainCircuit,
@@ -76,9 +78,8 @@ const checklistGroups = [
       },
     ],
   },
-
   {
-    title: "Authority & Growth",
+    title: "Authority & Trust Signals",
     items: [
       {
         icon: Bot,
@@ -100,27 +101,30 @@ const checklistGroups = [
       },
       {
         icon: CheckCircle2,
-        title: "Continuous AI Monitoring",
+        title: "Future AI Adaptability",
         description:
-          "Receive ongoing recommendations based on evolving AI search behavior, indexing improvements, and semantic opportunities.",
+          "Create a scalable AI Search optimization framework that remains adaptable as Google Search, AI assistants, and Large Language Models continue to evolve.",
       },
     ],
   },
 ];
+
 export default function AiSearchVisibilityChecklist() {
   return (
     <Section className="bg-gradient-to-b from-slate-50 via-white to-slate-50 py-16 sm:py-20 lg:py-24">
       <SectionHeading
         badge="Complete AI Visibility Framework"
-        title="Everything Included in Our AI Search Visibility Service"
-        description="Our AI Search Visibility framework combines Technical SEO, Entity SEO, structured data, semantic optimization, Answer Engine Optimization (AEO), and AI-friendly architecture to help your business become discoverable across both traditional search engines and modern AI assistants."
+        title="Everything Included in Our AI Search Visibility Framework"
+        description="Our AI Search Visibility Framework combines Technical SEO, Entity SEO, Semantic SEO, Structured Data, Knowledge Graph Optimization, and Answer Engine Optimization (AEO) to help your business become discoverable across Google Search, Google AI Overviews, ChatGPT, Gemini, Claude, Microsoft Copilot, Perplexity, and future AI-powered search platforms."
       />
 
       <div className="mx-auto mt-6 max-w-4xl text-center">
         <p className="text-lg leading-8 text-slate-600">
-          Every optimization is designed to improve how intelligent systems
-          discover, interpret, trust, and recommend your business while also
-          strengthening your long-term organic search performance.
+          Every optimization is designed to improve how search engines and AI
+          assistants discover, interpret, trust, and recommend your business.
+          Our framework combines Technical SEO, Entity SEO, Semantic SEO,
+          Structured Data, and Answer Engine Optimization (AEO) into one
+          future-ready strategy for long-term organic growth.
         </p>
       </div>
 
@@ -141,10 +145,7 @@ export default function AiSearchVisibilityChecklist() {
                 const Icon = item.icon;
 
                 return (
-                  <div
-                    key={item.title}
-                    className="flex items-start gap-4"
-                  >
+                  <div key={item.title} className="flex items-start gap-4">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-700">
                       <Icon className="h-6 w-6" />
                     </div>
@@ -165,7 +166,8 @@ export default function AiSearchVisibilityChecklist() {
           </div>
         ))}
       </div>
-            <div className="mt-20 rounded-[32px] border border-cyan-100 bg-gradient-to-br from-cyan-50 via-white to-blue-50 p-8 lg:p-12">
+
+      <div className="mt-20 rounded-[32px] border border-cyan-100 bg-gradient-to-br from-cyan-50 via-white to-blue-50 p-8 lg:p-12">
         <div className="mx-auto max-w-5xl text-center">
           <h3 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             A Complete Framework for AI Search Success
@@ -173,48 +175,63 @@ export default function AiSearchVisibilityChecklist() {
 
           <p className="mt-6 text-lg leading-8 text-slate-600">
             AI Search Visibility is no longer limited to keywords or traditional
-            rankings. Success depends on how effectively your website communicates
-            meaning, expertise, trust, and relationships to intelligent systems.
-            Our framework aligns Technical SEO, Entity SEO, structured data,
-            semantic content, and AI Search Optimization into one scalable strategy.
+            rankings. Success depends on how effectively your website
+            communicates meaning, expertise, trust, and relationships to
+            intelligent systems. Our framework aligns Technical SEO, Entity SEO,
+            Structured Data, Semantic Content, and Answer Engine Optimization
+            into one scalable strategy.
           </p>
 
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             <div className="rounded-2xl border border-cyan-100 bg-white p-6 shadow-sm">
               <h4 className="text-lg font-semibold text-slate-900">
-                Better AI Understanding
+                Machine Understanding
               </h4>
 
               <p className="mt-3 text-sm leading-7 text-slate-600">
-                Help AI assistants accurately understand your business, services,
-                expertise, and topical authority through structured, machine-readable
-                information.
+                Help AI assistants accurately understand your business,
+                expertise, services, and topical authority using structured,
+                machine-readable information.
               </p>
             </div>
 
             <div className="rounded-2xl border border-cyan-100 bg-white p-6 shadow-sm">
               <h4 className="text-lg font-semibold text-slate-900">
-                Greater Digital Authority
+                Entity Authority
               </h4>
 
               <p className="mt-3 text-sm leading-7 text-slate-600">
-                Build stronger trust signals with entity consistency, semantic
-                relationships, structured data, and authoritative content that
-                supports long-term discoverability.
+                Build stronger trust signals through entity consistency,
+                semantic relationships, structured data, and authoritative
+                content that supports long-term discoverability.
               </p>
             </div>
 
             <div className="rounded-2xl border border-cyan-100 bg-white p-6 shadow-sm">
               <h4 className="text-lg font-semibold text-slate-900">
-                Future-Ready Visibility
+                Future Search Readiness
               </h4>
 
               <p className="mt-3 text-sm leading-7 text-slate-600">
                 Prepare your website for the evolving future of search where AI
-                assistants, conversational search, and intelligent recommendation
-                systems increasingly influence customer decisions.
+                assistants and intelligent recommendation systems increasingly
+                influence customer decisions.
               </p>
             </div>
+          </div>
+
+          <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link href="/free-audit">
+              <Button size="lg">
+                Get Free AI Visibility Audit
+              </Button>
+            </Link>
+
+            <Link href="/contact">
+              <Button variant="outline" size="lg">
+                Book Strategy Call
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
