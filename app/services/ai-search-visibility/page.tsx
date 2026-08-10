@@ -30,13 +30,13 @@ export default function AiSearchVisibilityPage() {
     <main className="bg-white">
       <AiSearchHero />
 
-      <AiSearchFeatures />
-
       <AiSearchBenefits />
 
-      <AiSearchProcess />
+      <AiSearchFeatures />
 
       <AiSearchChecklist />
+
+      <AiSearchProcess />
 
       <AiSearchPortfolio />
 

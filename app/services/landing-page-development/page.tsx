@@ -28,19 +28,19 @@ export default function LandingPageDevelopmentPage() {
     <main className="bg-white">
       <LandingPageHero />
 
-<LandingPageFeatures />
+      <LandingPageFeatures />
 
-<LandingPageChecklist />
+      <LandingPageChecklist />
 
-<LandingPageProcess />
+      <LandingPageProcess />
 
-<LandingPagePortfolio />
+      <LandingPagePortfolio />
 
-<LandingPageTestimonials />
+      <LandingPageTestimonials />
 
-<LandingPageFaq />
+      <LandingPageFaq />
 
-<CTA />
+      <CTA />
     </main>
   );
 }

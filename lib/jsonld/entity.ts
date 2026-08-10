@@ -9,12 +9,12 @@ export function entitySchema(entity: Entity) {
     entity.type === "Service"
       ? "Service"
       : entity.type === "Technology"
-      ? "SoftwareApplication"
-      : entity.type === "Platform"
-      ? "WebSite"
-      : entity.type === "Metric"
-      ? "DefinedTerm"
-      : "Thing";
+        ? "SoftwareApplication"
+        : entity.type === "Platform"
+          ? "WebSite"
+          : entity.type === "Metric"
+            ? "DefinedTerm"
+            : "Thing";
 
   const links = knowledgeLinks[entity.slug];
 
@@ -57,7 +57,7 @@ export function entitySchema(entity: Entity) {
       })),
 
       ...(links?.portfolio ?? []).map((slug) => ({
-        "@id": `${SITE_URL}/portfolio/${slug}#project`,
+        "@id": `${SITE_URL}/portfolio/${slug}#portfolio`,
       })),
 
       ...(links?.industries ?? []).map((slug) => ({

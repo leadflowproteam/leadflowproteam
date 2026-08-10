@@ -5,17 +5,10 @@ import "./globals.css";
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-
-import JsonLd from "@/components/seo/JsonLd";
-import OrganizationSchema from "@/components/seo/OrganizationSchema";
-import { siteGraph } from "@/lib/jsonld/site-graph";
 import StickyCTA from "@/components/ui/StickyCTA";
 
-import {
-  organizationSchema,
-  websiteSchema,
-  professionalServiceSchema,
-} from "@/lib/schema";
+import JsonLd from "@/components/seo/JsonLd";
+import { siteGraph } from "@/lib/jsonld/site-graph";
 
 import { metadata } from "@/lib/metadata";
 import { site } from "@/config/site";
@@ -37,27 +30,17 @@ export default function RootLayout({
   children,
 }: Readonly<RootLayoutProps>) {
   return (
-    <html
-      lang={site.language}
-      suppressHydrationWarning
-    >
-      <body className="min-h-screen bg-white text-gray-900 antialiased">
+    <html lang="en">
+      <body>
         {/* Global Structured Data */}
-
-        <OrganizationSchema />
-
-        <JsonLd data={organizationSchema()} />
-
-        <JsonLd data={professionalServiceSchema()} />
-
-          <JsonLd data={siteGraph()} />
-
-        <JsonLd data={websiteSchema()} />
+        <JsonLd data={siteGraph()} />
 
         <Header />
 
         <main>{children}</main>
-          <StickyCTA />
+
+        <StickyCTA />
+
         <Footer />
       </body>
     </html>

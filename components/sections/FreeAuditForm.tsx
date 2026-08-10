@@ -6,36 +6,53 @@ import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 
+type FormData = {
+  fullName: string;
+  businessName: string;
+  email: string;
+  website: string;
+  industry: string;
+  country: string;
+  visitors: string;
+  challenge: string;
+  message: string;
+};
+
+const initialFormData: FormData = {
+  fullName: "",
+  businessName: "",
+  email: "",
+  website: "",
+  industry: "",
+  country: "",
+  visitors: "",
+  challenge: "",
+  message: "",
+};
+
 export default function FreeAuditForm() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    businessName: "",
-    email: "",
-    website: "",
-    industry: "",
-    country: "",
-    visitors: "",
-    challenge: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [submitted, setSubmitted] = useState(false);
 
   function handleChange(
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >,
   ) {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    setFormData((current) => ({
+      ...current,
+      [name]: value,
+    }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    console.log(formData);
-
-    alert("Thank you! Your audit request has been received.");
+    // Temporary client-side submission state.
+    // API / CRM integration will be added later.
+    setSubmitted(true);
   }
 
   return (
@@ -59,7 +76,7 @@ export default function FreeAuditForm() {
               label="Full Name"
               name="fullName"
               value={formData.fullName}
-              onChange={handleChange}
+              handleChange={handleChange}
               required
             />
 
@@ -67,7 +84,7 @@ export default function FreeAuditForm() {
               label="Business Name"
               name="businessName"
               value={formData.businessName}
-              onChange={handleChange}
+              handleChange={handleChange}
               required
             />
 
@@ -76,7 +93,7 @@ export default function FreeAuditForm() {
               name="email"
               type="email"
               value={formData.email}
-              onChange={handleChange}
+              handleChange={handleChange}
               required
             />
 
@@ -84,9 +101,9 @@ export default function FreeAuditForm() {
               label="Website URL"
               name="website"
               type="url"
-              placeholder="https://example.com"
+              placeholder="https://yourwebsite.com"
               value={formData.website}
-              onChange={handleChange}
+              handleChange={handleChange}
               required
             />
 
@@ -94,21 +111,23 @@ export default function FreeAuditForm() {
               label="Industry"
               name="industry"
               value={formData.industry}
-              onChange={handleChange}
+              handleChange={handleChange}
+              placeholder="e.g. Plumbing, Legal, Healthcare"
             />
 
             <Field
               label="Target Country"
               name="country"
               value={formData.country}
-              onChange={handleChange}
+              handleChange={handleChange}
+              placeholder="e.g. United States"
             />
 
             <Field
               label="Monthly Visitors"
               name="visitors"
               value={formData.visitors}
-              onChange={handleChange}
+              handleChange={handleChange}
               placeholder="Optional"
             />
 
@@ -116,31 +135,46 @@ export default function FreeAuditForm() {
               label="Biggest Challenge"
               name="challenge"
               value={formData.challenge}
-              onChange={handleChange}
+              handleChange={handleChange}
               placeholder="SEO, Speed, Leads..."
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-semibold text-gray-700">
+            <label
+              htmlFor="audit-message"
+              className="mb-2 block text-sm font-semibold text-gray-700"
+            >
               Additional Message
             </label>
 
             <textarea
+              id="audit-message"
               rows={6}
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500"
-              placeholder="Tell us anything that will help us understand your project..."
+              placeholder="Tell us anything that will help us understand your website or business..."
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
             />
           </div>
+
+          {submitted && (
+            <div
+              role="status"
+              className="rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-700"
+            >
+              Thank you! Your audit request has been received.
+            </div>
+          )}
 
           <Button
             size="lg"
             type="submit"
           >
-            Request Free Website Audit
+            {submitted
+              ? "Audit Request Received"
+              : "Request Free Website Audit"}
           </Button>
         </form>
       </Container>
@@ -152,7 +186,7 @@ type FieldProps = {
   label: string;
   name: string;
   value: string;
-  onChange: (
+  handleChange: (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >,
@@ -166,26 +200,31 @@ function Field({
   label,
   name,
   value,
-  onChange,
+  handleChange,
   type = "text",
   placeholder,
   required = false,
 }: FieldProps) {
   return (
     <div>
-      <label className="mb-2 block text-sm font-semibold text-gray-700">
+      <label
+        htmlFor={"audit-" + name}
+        className="mb-2 block text-sm font-semibold text-gray-700"
+      >
         {label}
       </label>
 
       <input
-        type={type}
+        id={"audit-" + name}
         name={name}
+        type={type}
         value={value}
-        onChange={onChange}
+        onChange={handleChange}
         placeholder={placeholder}
         required={required}
-        className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500"
+        className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
       />
     </div>
   );
 }
+

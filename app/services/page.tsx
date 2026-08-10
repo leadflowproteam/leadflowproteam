@@ -45,19 +45,19 @@ export default function ServicesPage() {
         ]}
       />
 
+      <Services />
+
       <WebDevelopmentFeatures />
 
       <WebDevelopmentTechStack />
 
-      <WebDevelopmentProcess />
-
       <WhyChooseUs />
+
+      <WebDevelopmentProcess />
 
       <FAQ />
 
       <CTA />
-
-      <Services />
     </main>
   );
 }

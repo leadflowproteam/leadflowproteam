@@ -47,8 +47,15 @@ export async function generateMetadata({
   if (!entity) {
     return {
       title: "Entity Not Found",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
+
+  const entityUrl =
+    `https://leadflowproteam.com/entities/${entity.slug}`;
 
   return {
     title: `${entity.name} | LeadFlowProTeam`,
@@ -56,16 +63,13 @@ export async function generateMetadata({
     description: entity.description,
 
     alternates: {
-      canonical: `https://leadflowproteam.com/entities/${entity.slug}`,
+      canonical: entityUrl,
     },
 
     openGraph: {
-      title: entity.name,
-
+      title: `${entity.name} | LeadFlowProTeam`,
       description: entity.description,
-
-      url: `https://leadflowproteam.com/entities/${entity.slug}`,
-
+      url: entityUrl,
       type: "article",
     },
   };
@@ -89,76 +93,97 @@ export default async function EntityPage({
       entity.slug as keyof typeof entityContent
     ];
 
-  const relatedEntitiesData =
-    entity.relatedEntities
-      .map((slug) =>
-        entities.find(
-          (entity) => entity.slug === slug,
-        ),
-      )
-      .filter(
-        (
-          entity,
-        ): entity is (typeof entities)[number] =>
-          entity !== undefined,
+  const relatedEntitiesData = entity.relatedEntities
+    .map((slug) =>
+      entities.find(
+        (relatedEntity) =>
+          relatedEntity.slug === slug,
+      ),
+    )
+    .filter(
+      (
+        relatedEntity,
+      ): relatedEntity is (typeof entities)[number] =>
+        relatedEntity !== undefined,
+    );
+
+  const topicClusterItems = entity.relatedEntities
+    .map((slug) => {
+      const related = entities.find(
+        (item) => item.slug === slug,
       );
 
-  const topicClusterItems =
-    entity.relatedEntities
-      .map((slug) => {
-        const related = entities.find(
-          (item) => item.slug === slug,
-        );
+      if (!related) {
+        return null;
+      }
 
-        if (!related) {
-          return null;
-        }
+      return {
+        title: related.name,
+        href: `/entities/${related.slug}`,
+      };
+    })
+    .filter(
+      (
+        item,
+      ): item is {
+        title: string;
+        href: string;
+      } => item !== null,
+    );
 
-        return {
-          title: related.name,
+  const entityUrl =
+    `https://leadflowproteam.com/entities/${entity.slug}`;
 
-          href: `/entities/${related.slug}`,
-        };
-      })
-      .filter(
-        (
-          item,
-        ): item is {
-          title: string;
-          href: string;
-        } => item !== null,
-      );
+  return (
+    <>
+      <JsonLd
+        data={siteGraph(
+          entitySchema(entity),
+
+          webpageJsonLd({
+            title: `${entity.name} | LeadFlowProTeam`,
+            description: entity.description,
+            url: entityUrl,
+          }),
+        )}
+      />
+
+      <BreadcrumbSchema
+        items={[
+          {
+            name: "Home",
+            url: "https://leadflowproteam.com",
+          },
+          {
+            name: "Entities",
+            url: "https://leadflowproteam.com/entities",
+          },
+          {
+            name: entity.name,
+            url: entityUrl,
+          },
+        ]}
+      />
+
       <main className="mx-auto max-w-5xl px-6 py-20">
-        <span className="rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
-          Entity
-        </span>
+        <header>
+          <span className="rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
+            {entity.type}
+          </span>
 
-        <h1 className="mt-6 text-5xl font-bold text-gray-900">
-          {entity.name}
-        </h1>
+          <h1 className="mt-6 text-5xl font-bold tracking-tight text-gray-900">
+            {entity.name}
+          </h1>
 
-        <p className="mt-8 text-xl leading-9 text-gray-700">
-          {entity.description}
-        </p>
+          <p className="mt-8 max-w-3xl text-xl leading-9 text-gray-700">
+            {entity.description}
+          </p>
+        </header>
 
-        <KnowledgeGraph
-          title="Connected Knowledge Graph"
-          entities={relatedEntitiesData}
-        />
-
-        <TopicCluster
-          title="Explore Related Topics"
-          items={topicClusterItems}
-        />
-
-        <InternalLinks
-          title="Continue Exploring"
-          links={getSemanticLinks(entity.slug)}
-        />
         {content && (
           <>
             <section className="mt-16">
-              <h2 className="text-3xl font-bold">
+              <h2 className="text-3xl font-bold text-gray-900">
                 Overview
               </h2>
 
@@ -168,7 +193,7 @@ export default async function EntityPage({
             </section>
 
             <section className="mt-16">
-              <h2 className="text-3xl font-bold">
+              <h2 className="text-3xl font-bold text-gray-900">
                 Why It Matters
               </h2>
 
@@ -178,7 +203,7 @@ export default async function EntityPage({
             </section>
 
             <section className="mt-16">
-              <h2 className="text-3xl font-bold">
+              <h2 className="text-3xl font-bold text-gray-900">
                 Benefits
               </h2>
 
@@ -186,18 +211,46 @@ export default async function EntityPage({
                 {content.benefits.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
-                            </ul>
+              </ul>
+            </section>
+
+            <section className="mt-16">
+              <h2 className="text-3xl font-bold text-gray-900">
+                Common Use Cases
+              </h2>
+
+              <ul className="mt-6 list-disc space-y-3 pl-6 text-gray-600">
+                {content.useCases.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
             </section>
           </>
         )}
 
-               <InternalLinks
-          title="Continue Exploring"
-          links={getSemanticLinks(entity.slug)}
-        />
+        <section className="mt-20">
+          <KnowledgeGraph
+            title="Connected Knowledge Graph"
+            entities={relatedEntitiesData}
+          />
+        </section>
+
+        <section className="mt-16">
+          <TopicCluster
+            title="Explore Related Topics"
+            items={topicClusterItems}
+          />
+        </section>
+
+        <section className="mt-16">
+          <InternalLinks
+            title="Continue Exploring"
+            links={getSemanticLinks(entity.slug)}
+          />
+        </section>
 
         <section className="mt-20 rounded-2xl bg-slate-50 p-10">
-          <h2 className="text-3xl font-bold">
+          <h2 className="text-3xl font-bold text-gray-900">
             Need Help With {entity.name}?
           </h2>
 
@@ -214,31 +267,14 @@ export default async function EntityPage({
             Contact Our Team
           </a>
         </section>
-
       </main>
-      
-  return (
-  <>
-      <RelatedTopics
-        currentSlug={entity.slug}
+
+      <RelatedEntities
+        entitySlugs={entity.relatedEntities}
       />
 
       <RelatedServices
         currentSlug={entity.slug}
-      />
-
-      <KnowledgeGraph
-        title="Connected Knowledge Graph"
-        entities={relatedEntitiesData}
-      />
-
-      <TopicCluster
-        title="Explore Related Topics"
-        items={topicClusterItems}
-      />
-
-      <RelatedEntities
-        entitySlugs={entity.relatedEntities}
       />
 
       <RelatedResources
@@ -246,6 +282,10 @@ export default async function EntityPage({
       />
 
       <RelatedPortfolio
+        currentSlug={entity.slug}
+      />
+
+      <RelatedTopics
         currentSlug={entity.slug}
       />
     </>

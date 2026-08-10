@@ -2,21 +2,24 @@ import type { Metadata } from "next";
 
 import { generateSeo } from "@/lib/seo";
 
-import CTA from "@/components/sections/CTA";
 import FreeAuditHero from "@/components/sections/FreeAuditHero";
 import FreeAuditBenefits from "@/components/sections/FreeAuditBenefits";
 import FreeAuditForm from "@/components/sections/FreeAuditForm";
 import FreeAuditFaq from "@/components/sections/FreeAuditFaq";
+import CTA from "@/components/sections/CTA";
 
 export const metadata: Metadata = generateSeo({
   title: "Free Website Audit",
   description:
-    "Request a free website audit and receive actionable recommendations for SEO, performance, user experience, and AI Search Visibility.",
+    "Request a free website audit from LeadFlowProTeam and receive actionable recommendations for technical SEO, performance, user experience, and AI Search Visibility.",
   path: "/free-audit",
   keywords: [
     "Free Website Audit",
-    "SEO Audit",
-    "Website Review",
+    "Free SEO Audit",
+    "Technical SEO Audit",
+    "Website Performance Audit",
+    "AI Search Visibility Audit",
+    "Free Website Review",
   ],
 });
 

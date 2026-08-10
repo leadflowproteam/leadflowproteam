@@ -6,36 +6,49 @@ import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 
+type FormData = {
+  fullName: string;
+  company: string;
+  email: string;
+  website: string;
+  service: string;
+  budget: string;
+  message: string;
+};
+
+const initialFormData: FormData = {
+  fullName: "",
+  company: "",
+  email: "",
+  website: "",
+  service: "",
+  budget: "",
+  message: "",
+};
+
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    company: "",
-    email: "",
-    website: "",
-    service: "",
-    budget: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [submitted, setSubmitted] = useState(false);
 
   function handleChange(
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >,
   ) {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    setFormData((current) => ({
+      ...current,
+      [name]: value,
+    }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    console.log(formData);
-
-    alert(
-      "Thank you for contacting LeadFlowProTeam. We'll get back to you shortly.",
-    );
+    // Temporary client-side submission state.
+    // API / CRM integration will be added later.
+    setSubmitted(true);
   }
 
   return (
@@ -55,7 +68,6 @@ export default function ContactForm() {
           className="mx-auto mt-16 max-w-5xl space-y-8 rounded-3xl border border-gray-200 bg-white p-8 shadow-sm lg:p-10"
         >
           <div className="grid gap-6 md:grid-cols-2">
-
             <Field
               label="Full Name"
               name="fullName"
@@ -84,107 +96,80 @@ export default function ContactForm() {
               label="Website URL"
               name="website"
               type="url"
-              placeholder="https://example.com"
+              placeholder="https://yourwebsite.com"
               value={formData.website}
               onChange={handleChange}
             />
-      <div>
-  <label className="mb-2 block text-sm font-semibold text-gray-700">
-    Service Interested In
-  </label>
 
-  <select
-    name="service"
-    value={formData.service}
-    onChange={handleChange}
-    required
-    className="w-full appearance-none rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 transition focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
-  >
-    <option value="" disabled>
-      Select a Service
-    </option>
+            <SelectField
+              label="Service Interested In"
+              name="service"
+              value={formData.service}
+              onChange={handleChange}
+              required
+              options={[
+                ["web-development", "Web Development"],
+                ["technical-seo", "Technical SEO"],
+                ["ai-search-visibility", "AI Search Visibility"],
+                ["website-audit", "Website Audit"],
+                [
+                  "landing-page-development",
+                  "Landing Page Development",
+                ],
+              ]}
+            />
 
-    <option value="web-development">
-      Web Development
-    </option>
-
-    <option value="technical-seo">
-      Technical SEO
-    </option>
-
-    <option value="ai-search-visibility">
-      AI Search Visibility
-    </option>
-
-    <option value="website-audit">
-      Website Audit
-    </option>
-
-    <option value="landing-page-development">
-      Landing Page Development
-    </option>
-  </select>
-</div>
-            
-            <div>
-  <label className="mb-2 block text-sm font-semibold text-gray-700">
-    Project Budget
-  </label>
-
-  <select
-    name="budget"
-    value={formData.budget}
-    onChange={handleChange}
-    required
-    className="w-full appearance-none rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 transition focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
-  >
-    <option value="" disabled>
-      Select Budget
-    </option>
-
-    <option value="under-500">
-      Under $500
-    </option>
-
-    <option value="500-1000">
-      $500 – $1,000
-    </option>
-
-    <option value="1000-3000">
-      $1,000 – $3,000
-    </option>
-
-    <option value="3000-plus">
-      $3,000+
-    </option>
-  </select>
-</div>
-
+            <SelectField
+              label="Project Budget"
+              name="budget"
+              value={formData.budget}
+              onChange={handleChange}
+              required
+              options={[
+                ["under-500", "Under $500"],
+                ["500-1000", "$500 – $1,000"],
+                ["1000-3000", "$1,000 – $3,000"],
+                ["3000-plus", "$3,000+"],
+              ]}
+            />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-semibold text-gray-700">
+            <label
+              htmlFor="contact-message"
+              className="mb-2 block text-sm font-semibold text-gray-700"
+            >
               Project Details
             </label>
 
             <textarea
+              id="contact-message"
               rows={6}
               name="message"
               value={formData.message}
               onChange={handleChange}
               required
               placeholder="Tell us about your goals, challenges, or project requirements..."
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
             />
           </div>
+
+          {submitted && (
+            <div
+              role="status"
+              className="rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-700"
+            >
+              Thank you for contacting LeadFlowProTeam. Your message has been
+              received.
+            </div>
+          )}
 
           <Button
             type="submit"
             size="lg"
           >
-            Send Message
+            {submitted ? "Message Received" : "Send Message"}
           </Button>
-
         </form>
       </Container>
     </section>
@@ -216,19 +201,75 @@ function Field({
 }: FieldProps) {
   return (
     <div>
-      <label className="mb-2 block text-sm font-semibold text-gray-700">
+      <label
+        htmlFor={"contact-" + name}
+        className="mb-2 block text-sm font-semibold text-gray-700"
+      >
         {label}
       </label>
 
       <input
-        type={type}
+        id={"contact-" + name}
         name={name}
+        type={type}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
         required={required}
-        className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500"
+        className="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
       />
+    </div>
+  );
+}
+
+type SelectFieldProps = {
+  label: string;
+  name: string;
+  value: string;
+  onChange: (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
+  ) => void;
+  options: [string, string][];
+  required?: boolean;
+};
+
+function SelectField({
+  label,
+  name,
+  value,
+  onChange,
+  options,
+  required = false,
+}: SelectFieldProps) {
+  return (
+    <div>
+      <label
+        htmlFor={"contact-" + name}
+        className="mb-2 block text-sm font-semibold text-gray-700"
+      >
+        {label}
+      </label>
+
+      <select
+        id={`contact-${name}`}
+        name={name}
+        value={value}
+        onChange={onChange}
+        required={required}
+        className="w-full appearance-none rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+      >
+        <option value="" disabled>
+          Select an option
+        </option>
+
+        {options.map(([optionValue, optionLabel]) => (
+          <option key={optionValue} value={optionValue}>
+            {optionLabel}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }

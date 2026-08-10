@@ -1,24 +1,29 @@
 import type { Metadata } from "next";
+
 import JsonLd from "@/components/seo/JsonLd";
-import CTA from "@/components/sections/CTA";
-import FAQ from "@/components/sections/FAQ";
+
+import WebDevelopmentHero from "@/components/sections/WebDevelopmentHero";
 import WebDevelopmentFeatures from "@/components/sections/WebDevelopmentFeatures";
+import WebDevelopmentChecklist from "@/components/sections/WebDevelopmentChecklist";
 import WebDevelopmentProcess from "@/components/sections/WebDevelopmentProcess";
 import WebDevelopmentTechStack from "@/components/sections/WebDevelopmentTechStack";
-import WebDevelopmentHero from "@/components/sections/WebDevelopmentHero";
-import WebDevelopmentChecklist from "@/components/sections/WebDevelopmentChecklist";
 import WebDevelopmentPortfolio from "@/components/sections/WebDevelopmentPortfolio";
 import WebDevelopmentTestimonials from "@/components/sections/WebDevelopmentTestimonials";
 import WebDevelopmentFAQ from "@/components/sections/WebDevelopmentFAQ";
+import CTA from "@/components/sections/CTA";
+
 import { siteGraph } from "@/lib/jsonld/site-graph";
-import PageHero from "@/components/ui/PageHero";
 import { webpageJsonLd } from "@/lib/jsonld/webpage";
-import { generateSeo } from "@/lib/seo";
 
 import {
   breadcrumbSchema,
   serviceSchema,
 } from "@/lib/schema";
+
+import { generateSeo } from "@/lib/seo";
+
+const PAGE_URL =
+  "https://leadflowproteam.com/services/web-development";
 
 export const metadata: Metadata = generateSeo({
   title: "Web Development Services",
@@ -35,64 +40,59 @@ export const metadata: Metadata = generateSeo({
 export default function WebDevelopmentPage() {
   return (
     <>
-  <JsonLd
-  data={siteGraph(
-    serviceSchema({
-      name: "Web Development",
-      description:
-        "High-performance Next.js websites built for service businesses with Technical SEO, AI Search Optimization, and Core Web Vitals optimization.",
-      url:
-        "https://leadflowproteam.com/services/web-development",
-      entitySlug: "web-development",
-    }),
+      <JsonLd
+        data={siteGraph(
+          serviceSchema({
+            name: "Web Development",
+            description:
+              "High-performance Next.js websites built for service businesses with Technical SEO, AI Search Optimization, and Core Web Vitals optimization.",
+            url: PAGE_URL,
+            entitySlug: "web-development",
+          }),
 
-    breadcrumbSchema([
-      {
-        name: "Home",
-        url: "https://leadflowproteam.com",
-      },
-      {
-        name: "Services",
-        url: "https://leadflowproteam.com/services",
-      },
-      {
-        name: "Web Development",
-        url:
-          "https://leadflowproteam.com/services/web-development",
-      },
-    ]),
+          breadcrumbSchema([
+            {
+              name: "Home",
+              url: "https://leadflowproteam.com",
+            },
+            {
+              name: "Services",
+              url: "https://leadflowproteam.com/services",
+            },
+            {
+              name: "Web Development",
+              url: PAGE_URL,
+            },
+          ]),
 
-    webpageJsonLd({
-      title: "Web Development Services",
-      description:
-        "Modern Next.js website development for service businesses with high performance, Technical SEO, and AI Search Visibility.",
-      url:
-        "https://leadflowproteam.com/services/web-development",
-    })
-  )}
-/> 
+          webpageJsonLd({
+            title: "Web Development Services",
+            description:
+              "Modern Next.js website development for service businesses with high performance, Technical SEO, and AI Search Visibility.",
+            url: PAGE_URL,
+          }),
+        )}
+      />
 
+      <main className="bg-white">
+        <WebDevelopmentHero />
 
-<main className="bg-white">
- 
-  <WebDevelopmentHero />
+        <WebDevelopmentFeatures />
 
-<WebDevelopmentFeatures />
+        <WebDevelopmentChecklist />
 
-<WebDevelopmentTechStack />
+        <WebDevelopmentProcess />
 
-<WebDevelopmentProcess />
+        <WebDevelopmentTechStack />
 
-<WebDevelopmentChecklist />
+        <WebDevelopmentPortfolio />
 
-<WebDevelopmentPortfolio />
+        <WebDevelopmentTestimonials />
 
-<WebDevelopmentTestimonials />
+        <WebDevelopmentFAQ />
 
-<WebDevelopmentFAQ />
-
-<CTA />
-</main>
+        <CTA />
+      </main>
     </>
   );
 }

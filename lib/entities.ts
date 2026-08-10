@@ -1,61 +1,67 @@
-import { entities } from "@/data/entities";
+import { company } from "@/config/company";
+import type { Entity } from "@/data/entities";
+import { knowledgeLinks } from "@/lib/knowledge-links";
 
-export function getAllEntities() {
-  return entities;
-}
+const SITE_URL = company.url;
 
-export function getFeaturedEntities() {
-  return entities.filter((entity) => entity.featured);
-}
+export function entitySchema(entity: Entity) {
+  const schemaType =
+    entity.type === "Service"
+      ? "Service"
+      : entity.type === "Technology"
+        ? "SoftwareApplication"
+        : entity.type === "Platform"
+          ? "WebSite"
+          : entity.type === "Metric"
+            ? "DefinedTerm"
+            : "Thing";
 
-export function getEntityBySlug(slug: string) {
-  return entities.find((entity) => entity.slug === slug);
-}
+  const links = knowledgeLinks[entity.slug];
 
-export function getEntityByName(name: string) {
-  return entities.find(
-    (entity) =>
-      entity.name.toLowerCase() === name.toLowerCase(),
-  );
-}
+  return {
+    "@context": "https://schema.org",
+    "@type": schemaType,
 
-export function getEntitiesByType(
-  type:
-    | "Service"
-    | "Technology"
-    | "Concept"
-    | "Platform"
-    | "Metric",
-) {
-  return entities.filter(
-    (entity) => entity.type === type,
-  );
-}
+    "@id": `${SITE_URL}/entities/${entity.slug}#entity`,
 
-export function getRelatedEntities(slug: string) {
-  const entity = getEntityBySlug(slug);
+    name: entity.name,
 
-  if (!entity) {
-    return [];
-  }
+    description: entity.description,
 
-  return entity.relatedEntities
-    .map((relatedSlug) =>
-      getEntityBySlug(relatedSlug),
-    )
-    .filter(Boolean);
-}
+    url: `${SITE_URL}/entities/${entity.slug}`,
 
-export function searchEntities(keyword: string) {
-  const query = keyword.toLowerCase();
+    identifier: entity.slug,
 
-  return entities.filter((entity) => {
-    return (
-      entity.name.toLowerCase().includes(query) ||
-      entity.description.toLowerCase().includes(query) ||
-      entity.aliases.some((alias) =>
-        alias.toLowerCase().includes(query),
-      )
-    );
-  });
+    alternateName: [...entity.aliases],
+
+    isPartOf: {
+      "@id": `${SITE_URL}#website`,
+    },
+
+    provider: {
+      "@id": `${SITE_URL}#organization`,
+    },
+
+    about: entity.relatedEntities.map((slug) => ({
+      "@id": `${SITE_URL}/entities/${slug}#entity`,
+    })),
+
+    subjectOf: [
+      ...(links?.services ?? []).map((slug) => ({
+        "@id": `${SITE_URL}/services/${slug}#service`,
+      })),
+
+      ...(links?.resources ?? []).map((slug) => ({
+        "@id": `${SITE_URL}/resources/${slug}#article`,
+      })),
+
+      ...(links?.portfolio ?? []).map((slug) => ({
+        "@id": `${SITE_URL}/portfolio/${slug}#project`,
+      })),
+
+      ...(links?.industries ?? []).map((slug) => ({
+        "@id": `${SITE_URL}/industries/${slug}#industry`,
+      })),
+    ],
+  };
 }

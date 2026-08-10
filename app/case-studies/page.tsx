@@ -1,34 +1,34 @@
 import type { Metadata } from "next";
 
-import CaseStudiesCTA from "@/components/sections/CaseStudiesCTA";
-import CaseStudiesGrid from "@/components/sections/CaseStudiesGrid";
 import CaseStudiesHero from "@/components/sections/CaseStudiesHero";
+import CaseStudiesGrid from "@/components/sections/CaseStudiesGrid";
+import CaseStudiesCTA from "@/components/sections/CaseStudiesCTA";
 
 import { generateSeo } from "@/lib/seo";
 
 export const metadata: Metadata = generateSeo({
   title: "Case Studies",
   description:
-    "Explore real-world case studies showcasing how LeadFlowProTeam delivers high-performance websites, Technical SEO improvements, AI Search Visibility, and measurable business growth.",
+    "Explore LeadFlowProTeam case studies showcasing high-performance web development, Technical SEO improvements, AI Search Visibility, and measurable business outcomes.",
   path: "/case-studies",
   keywords: [
-    "Case Studies",
+    "LeadFlowProTeam Case Studies",
     "Technical SEO Case Study",
-    "Web Development Projects",
-    "AI Search Visibility",
-    "Lead Generation",
-    "Business Growth",
+    "Web Development Case Studies",
+    "AI Search Visibility Case Study",
+    "Website Performance Case Study",
+    "Business Growth Case Studies",
   ],
 });
 
 export default function CaseStudiesPage() {
   return (
-    <>
+    <main className="bg-white">
       <CaseStudiesHero />
 
       <CaseStudiesGrid />
 
       <CaseStudiesCTA />
-    </>
+    </main>
   );
 }

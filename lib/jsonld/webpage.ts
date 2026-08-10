@@ -26,17 +26,14 @@ export function webpageJsonLd({
     inLanguage: "en",
 
     isPartOf: {
-      "@type": "WebSite",
       "@id": `${company.url}#website`,
     },
 
     about: {
-      "@type": "Organization",
       "@id": `${company.url}#organization`,
     },
 
     publisher: {
-      "@type": "Organization",
       "@id": `${company.url}#organization`,
     },
   };

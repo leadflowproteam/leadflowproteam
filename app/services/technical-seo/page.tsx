@@ -29,21 +29,21 @@ export default function TechnicalSeoPage() {
     <main className="bg-white">
       <TechnicalSeoHero />
 
-<TechnicalSeoFeatures />
+      <TechnicalSeoBenefits />
 
-<TechnicalSeoBenefits />
+      <TechnicalSeoFeatures />
 
-<TechnicalSeoProcess />
+      <TechnicalSeoChecklist />
 
-<TechnicalSeoChecklist />
+      <TechnicalSeoProcess />
 
-<TechnicalSeoPortfolio />
+      <TechnicalSeoPortfolio />
 
-<TechnicalSeoTestimonials />
+      <TechnicalSeoTestimonials />
 
-<TechnicalSeoFaq />
+      <TechnicalSeoFaq />
 
-<CTA />
+      <CTA />
     </main>
   );
 }

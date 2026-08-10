@@ -13,12 +13,13 @@ import CTA from "@/components/sections/CTA";
 export const metadata: Metadata = generateSeo({
   title: "About LeadFlowProTeam",
   description:
-    "Learn about LeadFlowProTeam, our mission, values, and how we build AI-ready websites for service businesses.",
+    "Learn about LeadFlowProTeam, our mission, values, and how we build high-performance, AI-ready websites for service businesses.",
   path: "/about",
   keywords: [
     "About LeadFlowProTeam",
-    "Next.js Agency",
+    "Next.js Web Development Agency",
     "Technical SEO Agency",
+    "AI Search Optimization Agency",
   ],
 });
 
@@ -26,11 +27,17 @@ export default function AboutPage() {
   return (
     <main className="bg-white">
       <AboutHero />
+
       <AboutStory />
-      <Mission />
+
       <Journey />
+
+      <Mission />
+
       <WhyChooseUs />
+
       <CoreValues />
+
       <CTA />
     </main>
   );
