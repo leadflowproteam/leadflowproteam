@@ -7,7 +7,6 @@ import {
   Search,
   Smartphone,
   Target,
-  TimerReset,
   Zap,
 } from "lucide-react";
 
@@ -82,7 +81,7 @@ export default function LandingPageFeatures() {
 
       <div className="mx-auto mt-6 max-w-4xl text-center">
         <p className="text-lg leading-8 text-slate-600">
-          We don't simply design attractive landing pages—we build strategic
+          We don&apos;t simply design attractive landing pages—we build strategic
           conversion assets engineered to support marketing campaigns,
           strengthen search visibility, and maximize long-term business growth.
         </p>

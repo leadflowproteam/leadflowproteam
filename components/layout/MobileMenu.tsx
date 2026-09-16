@@ -88,14 +88,13 @@ export default function MobileMenu() {
           })}
 
           <div className="mt-4 border-t border-gray-200 pt-5">
-            <Button
-              fullWidth
-              className="group"
-            >
-              Get Free Website Audit
+            <Link href="/free-audit" onClick={() => setIsOpen(false)}>
+              <Button fullWidth className="group">
+                Get Your Free Audit
 
-              <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-            </Button>
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
+            </Link>
           </div>
         </nav>
       </div>

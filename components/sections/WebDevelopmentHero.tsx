@@ -240,8 +240,8 @@ export default function WebDevelopmentHero() {
                 {" "}
                 long-term scalability
               </span>
-              — ensuring your business is ready for both today's search engines
-              and tomorrow's AI-powered discovery platforms.
+              — ensuring your business is ready for both today&apos;s search engines
+              and tomorrow&apos;s AI-powered discovery platforms.
             </p>
           </div>
         </div>

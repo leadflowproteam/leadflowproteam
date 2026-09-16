@@ -35,7 +35,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${industry.title} | LeadFlowProTeam`,
+    title: industry.title,
     description: industry.description,
 
     alternates: {

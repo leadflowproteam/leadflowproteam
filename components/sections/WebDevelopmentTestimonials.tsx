@@ -7,7 +7,6 @@ import {
 
 import Card from "@/components/ui/Card";
 import Section from "@/components/ui/Section";
-import SectionHeading from "@/components/ui/SectionHeading";
 
 const testimonials = [
   {
@@ -64,7 +63,7 @@ export default function WebDevelopmentTestimonials() {
         </div>
 
         <p className="mt-8 grow text-lg italic leading-8 text-slate-600">
-          "{item.quote}"
+          &ldquo;{item.quote}&rdquo;
         </p>
 
         <div className="mt-10 border-t border-slate-200 pt-6">

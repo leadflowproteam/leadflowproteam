@@ -8,10 +8,10 @@ export const company = {
 
   legalName: "LeadFlowProTeam",
 
-  slogan: "Build Faster. Rank Smarter. Grow Better.",
+  slogan: "See How AI Sees Your Business. Fix the Gaps. Grow.",
 
   description:
-    "LeadFlowProTeam engineers AI-ready websites for service-based businesses with modern Next.js development, Technical SEO, AI Search Visibility, and performance optimization.",
+    "LeadFlowProTeam helps investment-ready commercial businesses improve how they are discovered, understood, and represented across search, local information sources, and AI answer systems through evidence-based AI Search Visibility audits, practical implementation, and ongoing optimization.",
 
   url: "https://leadflowproteam.com",
 
@@ -34,7 +34,9 @@ export const company = {
   // ---------------------------------------------------------------------------
   contact: {
     email: "info@leadflowproteam.com",
+
     supportEmail: "support@leadflowproteam.com",
+
     salesEmail: "sales@leadflowproteam.com",
 
     phone: "",
@@ -64,34 +66,62 @@ export const company = {
   // Target Clients
   // ---------------------------------------------------------------------------
   targetClients: [
-    "Service-Based Businesses",
-    "Local Businesses",
-    "Small Businesses",
-    "Growing Companies",
+    "Investment-Ready Commercial Businesses",
+    "Established Service Businesses",
+    "Growth-Oriented Local Businesses",
+    "Marketing-Investment-Ready Companies",
+    "Businesses With a Clear Customer Acquisition Objective",
   ],
+
+  // ---------------------------------------------------------------------------
+  // Initial Commercial Focus
+  // ---------------------------------------------------------------------------
+  initialFocus: {
+    market: "United States",
+    geography: "Texas",
+    niche: "Hotels & Hospitality",
+    buyerProfile:
+      "Commercial businesses that are prepared to invest in professional marketing, digital infrastructure, search visibility, AI Search Visibility, website improvement, conversion, and ongoing optimization.",
+  },
 
   // ---------------------------------------------------------------------------
   // Industries
   // ---------------------------------------------------------------------------
   industries: [
+    "Hotels & Hospitality",
+    "Home Services",
     "Plumbing",
     "HVAC",
     "Electrical",
     "Roofing",
     "Cleaning",
     "Landscaping",
+    "Professional Services",
   ],
 
   // ---------------------------------------------------------------------------
   // Core Services
   // ---------------------------------------------------------------------------
   services: [
-    "AI-Ready Website Development",
-    "Technical SEO",
     "AI Search Visibility",
+    "AI Search Visibility Audit",
+    "Technical SEO",
+    "Local SEO",
     "Website Audit",
+    "Website Development",
     "Landing Page Development",
-    "Website Performance Optimization",
+    "Ongoing Visibility Optimization",
+  ],
+
+  // ---------------------------------------------------------------------------
+  // Commercial Model
+  // ---------------------------------------------------------------------------
+  commercialModel: [
+    "Audit",
+    "Findings",
+    "Fixes & Implementation",
+    "Re-testing",
+    "Ongoing Monitoring & Optimization",
   ],
 
   // ---------------------------------------------------------------------------
@@ -102,24 +132,28 @@ export const company = {
     "React",
     "TypeScript",
     "Tailwind CSS",
+    "Structured Data",
+    "Schema.org",
     "Vercel",
   ],
 
   // ---------------------------------------------------------------------------
-  // SEO Keywords
+  // SEO / Search Topics
   // ---------------------------------------------------------------------------
   keywords: [
-    "AI Ready Website Development",
-    "Next.js Agency",
-    "Technical SEO",
     "AI Search Visibility",
+    "AI Search Visibility Audit",
+    "AI Visibility Audit",
+    "Search Visibility",
+    "Technical SEO",
+    "Local SEO",
     "Website Audit",
-    "Core Web Vitals",
-    "Schema Markup",
-    "Performance Optimization",
-    "Service Business Website",
-    "Local Business Website",
-    "Website Development",
+    "Structured Data",
+    "Entity SEO",
+    "AI Search Optimization",
+    "Next.js Website Development",
+    "Conversion Optimization",
+    "Website Performance",
   ],
 
   // ---------------------------------------------------------------------------

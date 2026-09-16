@@ -1,10 +1,10 @@
 import {
-  Brain,
-  Database,
+  ClipboardCheck,
   FileSearch,
   LineChart,
-  Network,
   SearchCheck,
+  ShieldCheck,
+  Wrench,
 } from "lucide-react";
 
 import Section from "@/components/ui/Section";
@@ -13,90 +13,90 @@ import SectionHeading from "@/components/ui/SectionHeading";
 const steps = [
   {
     icon: FileSearch,
-    title: "01. AI Search Audit",
+    title: "01. Discover",
     description:
-      "We perform a comprehensive audit of your website's AI readiness, Technical SEO, structured data, content architecture, entity signals, and discoverability across modern AI-powered search platforms.",
-  },
-  {
-    icon: Network,
-    title: "02. Entity Research & Semantic Mapping",
-    description:
-      "We identify your core business entities, topical relationships, semantic keywords, and knowledge graph opportunities to strengthen AI understanding and contextual relevance.",
-  },
-  {
-    icon: Database,
-    title: "03. Structured Data Implementation",
-    description:
-      "We implement Schema.org markup, Organization, LocalBusiness, Service, FAQ, Breadcrumb, Article, and other structured data that help AI systems accurately interpret your website.",
-  },
-  {
-    icon: Brain,
-    title: "04. AI Content Optimization",
-    description:
-      "Your content is restructured using semantic headings, entity-rich language, conversational formatting, internal linking, and topical authority principles to improve AI-generated recommendations.",
+      "Collect the business's verified information, website details, local presence, services, market context, and other public signals needed for a meaningful assessment.",
   },
   {
     icon: SearchCheck,
-    title: "05. GEO & AI Search Optimization",
+    title: "02. Test",
     description:
-      "We optimize your website for Generative Engine Optimization (GEO), Google AI Overviews, ChatGPT, Gemini, Claude, Perplexity, and emerging AI search technologies.",
+      "Run relevant search, AI, location, service, and customer-query checks and preserve the important observations and sources.",
+  },
+  {
+    icon: ClipboardCheck,
+    title: "03. Validate",
+    description:
+      "Compare observed results against verified business information and review important findings before they become client-facing conclusions.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "04. Prioritize",
+    description:
+      "Classify gaps by severity, business impact, competitive impact, fixability, priority, and recommended next action.",
+  },
+  {
+    icon: Wrench,
+    title: "05. Improve",
+    description:
+      "Where implementation is appropriate, apply practical improvements across website, technical SEO, structured data, local information, content, conversion, or visibility foundations.",
   },
   {
     icon: LineChart,
-    title: "06. Monitoring & Continuous Improvement",
+    title: "06. Re-Test & Monitor",
     description:
-      "After implementation, we monitor visibility, strengthen entity authority, refine structured data, and continuously improve your AI Search performance for long-term growth.",
+      "Review important changes, compare the new state against the original findings, and establish ongoing monitoring or periodic re-audit where it makes business sense.",
   },
 ];
 
 export default function AiSearchProcess() {
   return (
-    <Section className="bg-gradient-to-b from-slate-50 via-white to-white py-20 lg:py-28">
+    <Section className="bg-slate-50 py-20 sm:py-24 lg:py-28">
       <SectionHeading
-        badge="Our Process"
-        title="A Proven AI Search Visibility Workflow"
-        description="Our structured process combines Technical SEO, Entity SEO, structured data, semantic content, and AI optimization to help your business become more discoverable across the next generation of search."
+        badge="Our Commercial Process"
+        title="From Audit Findings to Practical Business Improvement"
+        description="The audit is the entry point. When genuine gaps are found, they can become clearly scoped implementation work and, where appropriate, an ongoing optimization relationship."
       />
 
-      <div className="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+      <div className="mt-14 grid gap-7 md:grid-cols-2 xl:grid-cols-3">
         {steps.map((step) => {
           const Icon = step.icon;
 
           return (
-            <div
+            <article
               key={step.title}
-              className="group rounded-3xl border border-gray-200 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-200 hover:shadow-2xl"
+              className="group rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl sm:p-8"
             >
-              <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white">
-                <Icon className="h-8 w-8" />
+              <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 text-slate-900 transition-colors duration-300 group-hover:bg-slate-950 group-hover:text-white">
+                <Icon className="h-7 w-7" aria-hidden="true" />
               </div>
 
-              <h3 className="text-2xl font-bold leading-tight text-gray-900">
+              <h3 className="text-xl font-bold leading-tight text-slate-950">
                 {step.title}
               </h3>
 
-              <p className="mt-5 leading-8 text-gray-600">
+              <p className="mt-4 leading-7 text-slate-600">
                 {step.description}
               </p>
-            </div>
+            </article>
           );
         })}
       </div>
 
-      {/* Bottom Summary */}
-
-      <div className="mt-24 rounded-[36px] border border-blue-100 bg-blue-50 p-10">
+      <div className="mt-14 rounded-3xl border border-slate-200 bg-white p-7 shadow-sm sm:p-9">
         <div className="mx-auto max-w-4xl text-center">
-          <h3 className="text-3xl font-bold text-gray-900">
-            Built for Today's Search. Prepared for Tomorrow's AI.
+          <p className="text-sm font-bold uppercase tracking-[0.15em] text-slate-500">
+            Commercial Journey
+          </p>
+
+          <h3 className="mt-3 text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+            Audit → Findings → Implementation → Re-Test → Monitoring
           </h3>
 
-          <p className="mt-6 text-lg leading-8 text-gray-600">
-            AI Search Visibility is more than adding structured data. It
-            requires a complete strategy that combines Technical SEO, Entity
-            SEO, semantic content architecture, Generative Engine Optimization
-            (GEO), and continuous monitoring to maximize visibility across both
-            traditional search engines and AI-powered assistants.
+          <p className="mt-5 leading-7 text-slate-600">
+            Every stage should have a clear purpose. An audit remains valuable
+            on its own, while genuine implementation and monitoring needs can
+            create higher-value follow-on services.
           </p>
         </div>
       </div>

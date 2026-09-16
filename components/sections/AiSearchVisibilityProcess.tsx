@@ -93,14 +93,14 @@ export default function AiSearchVisibilityProcess() {
       <div className="mt-20 rounded-[32px] border border-cyan-100 bg-gradient-to-br from-cyan-50 via-white to-blue-50 p-8 lg:p-12">
         <div className="mx-auto max-w-5xl text-center">
           <h3 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-           Built for Today's Search.
-           Prepared for Tomorrow's AI.
+           Built for Today&apos;s Search.
+           Prepared for Tomorrow&apos;s AI.
           </h3>
 
           <p className="mt-6 text-lg leading-8 text-slate-600">
             Most businesses still optimize only for traditional search engines.
-            Our methodology prepares your website for both today's search
-            algorithms and tomorrow's AI-powered discovery systems by combining
+            Our methodology prepares your website for both today&apos;s search
+            algorithms and tomorrow&apos;s AI-powered discovery systems by combining
             semantic optimization, entity authority, structured data, technical
             excellence, and machine-readable content.
           </p>

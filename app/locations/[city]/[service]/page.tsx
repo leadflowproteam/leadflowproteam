@@ -46,7 +46,7 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${serviceData.title} in ${cityData.name} | LeadFlowProTeam`;
+  const title = `${serviceData.title} in ${cityData.name}`;
 
   const description = `Professional ${serviceData.title} services in ${cityData.name}. Fast, SEO-friendly, AI-ready websites built by LeadFlowProTeam.`;
 

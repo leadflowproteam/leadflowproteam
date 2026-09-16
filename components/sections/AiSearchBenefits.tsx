@@ -1,10 +1,10 @@
 import {
-  BadgeCheck,
-  Bot,
-  Brain,
-  Globe,
-  SearchCheck,
-  TrendingUp,
+  AlertTriangle,
+  BarChart3,
+  CheckCircle2,
+  FileSearch,
+  Search,
+  Target,
 } from "lucide-react";
 
 import Section from "@/components/ui/Section";
@@ -12,92 +12,89 @@ import SectionHeading from "@/components/ui/SectionHeading";
 
 const benefits = [
   {
-    icon: Bot,
-    title: "Become Visible in AI Search",
+    icon: FileSearch,
+    title: "Know How Your Business Is Represented",
     description:
-      "Increase your chances of appearing in AI-generated answers across ChatGPT, Google AI Overviews, Gemini, Claude, Perplexity, and other AI-powered search experiences.",
+      "See what search and AI systems can currently discover about your business, services, locations, positioning, and important public information.",
   },
   {
-    icon: Brain,
-    title: "Help AI Understand Your Business",
+    icon: AlertTriangle,
+    title: "Find Information Gaps",
     description:
-      "Structured data, semantic content, and Entity SEO make it easier for AI systems to accurately understand your services, expertise, and brand.",
+      "Identify information that is missing, inconsistent, outdated, ambiguous, or difficult for customers and search systems to discover.",
   },
   {
-    icon: SearchCheck,
-    title: "Strengthen Traditional SEO",
+    icon: CheckCircle2,
+    title: "Separate Facts From Assumptions",
     description:
-      "AI Search Optimization enhances—not replaces—Technical SEO, creating a stronger foundation for Google Search and future search technologies.",
+      "Compare observed AI and search results against verified business information instead of treating every generated answer as automatically correct.",
   },
   {
-    icon: TrendingUp,
-    title: "Generate Higher Quality Leads",
+    icon: Search,
+    title: "Strengthen Search Foundations",
     description:
-      "Reach users who ask conversational questions and receive AI-generated recommendations, increasing qualified organic traffic and business inquiries.",
+      "Improve technical SEO, structured data, internal information architecture, local signals, and website content where the audit shows a meaningful need.",
   },
   {
-    icon: BadgeCheck,
-    title: "Build Long-Term Brand Authority",
+    icon: Target,
+    title: "Prioritize the Gaps That Matter",
     description:
-      "Entity optimization, consistent content structure, and authoritative signals help establish your business as a trusted source across the web.",
+      "Connect each important issue to business impact, competitive impact, fixability, priority, and the most appropriate next service or action.",
   },
   {
-    icon: Globe,
-    title: "Future-Proof Your Online Presence",
+    icon: BarChart3,
+    title: "Create a Basis for Re-Testing",
     description:
-      "Prepare your website for the continuing evolution of search, ensuring your business remains discoverable as AI becomes the primary way people find information.",
+      "Document the initial state so important information and visibility changes can be reviewed again after implementation.",
   },
 ];
 
 export default function AiSearchBenefits() {
   return (
-    <Section className="bg-white py-16 sm:py-20 lg:py-24">
+    <Section className="bg-white py-20 sm:py-24">
       <SectionHeading
-        badge="Business Benefits"
-        title="Why AI Search Visibility Is Becoming Essential"
-        description="AI-powered search is changing how customers discover businesses. Optimizing today helps your website remain competitive across both traditional search engines and the next generation of AI assistants."
+        badge="Why This Matters"
+        title="AI Visibility Starts With Knowing What the Market Can Actually Discover"
+        description="A business may have a good website and still have incomplete, inconsistent, or weakly connected information across the public web. Our work starts by measuring that reality."
       />
 
-      <div className="mt-12 grid gap-8 md:grid-cols-2 xl:grid-cols-3 lg:mt-16">
+      <div className="mt-14 grid gap-7 md:grid-cols-2 xl:grid-cols-3">
         {benefits.map((benefit) => {
           const Icon = benefit.icon;
 
           return (
-            <div
+            <article
               key={benefit.title}
-              className="group rounded-3xl border border-gray-200 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-200 hover:shadow-2xl"
+              className="group rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl sm:p-8"
             >
-              <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white">
-                <Icon className="h-8 w-8" />
+              <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 text-slate-900 transition-colors duration-300 group-hover:bg-slate-950 group-hover:text-white">
+                <Icon className="h-7 w-7" aria-hidden="true" />
               </div>
 
-              <h3 className="text-2xl font-bold leading-tight text-gray-900">
+              <h3 className="text-xl font-bold leading-tight text-slate-950">
                 {benefit.title}
               </h3>
 
-              <p className="mt-5 leading-8 text-gray-600">
+              <p className="mt-4 leading-7 text-slate-600">
                 {benefit.description}
               </p>
-            </div>
+            </article>
           );
         })}
       </div>
 
-      {/* Bottom Summary */}
-
-      <div className="mt-24 rounded-[36px] border border-blue-100 bg-blue-50 p-10">
-        <div className="mx-auto max-w-4xl text-center">
-          <h3 className="text-3xl font-bold text-gray-900">
-            AI Search Optimization Is the Next Evolution of SEO
+      <div className="mt-14 rounded-3xl border border-slate-200 bg-slate-50 p-7 sm:p-9">
+        <div className="mx-auto max-w-4xl">
+          <h3 className="text-2xl font-bold tracking-tight text-slate-950">
+            This Is Not a Guaranteed-Ranking Service
           </h3>
 
-          <p className="mt-6 text-lg leading-8 text-gray-600">
-            Traditional SEO helps people find your website through search
-            engines. AI Search Visibility helps intelligent assistants
-            understand, recommend, and reference your business within
-            AI-generated answers. Combining both strategies gives your business
-            a stronger competitive advantage today while preparing for the
-            future of search.
+          <p className="mt-4 leading-7 text-slate-600">
+            AI answers can change by query, source, location, context, and
+            time. We therefore focus on measurable information quality,
+            coverage, consistency, discoverability, evidence, and practical
+            improvements rather than promising a guaranteed AI ranking,
+            citation, or recommendation.
           </p>
         </div>
       </div>

@@ -58,7 +58,7 @@ export const site = {
 
   appleTouchIcon: "/apple-touch-icon.png",
 
-  manifest: "/site.webmanifest",
+  manifest: "/manifest.webmanifest",
 
   // ---------------------------------------------------------------------------
   // Theme

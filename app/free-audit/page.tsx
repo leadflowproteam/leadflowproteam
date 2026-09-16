@@ -2,24 +2,24 @@ import type { Metadata } from "next";
 
 import { generateSeo } from "@/lib/seo";
 
-import FreeAuditHero from "@/components/sections/FreeAuditHero";
+import CTA from "@/components/sections/CTA";
+import FAQ from "@/components/sections/FreeAuditFaq";
 import FreeAuditBenefits from "@/components/sections/FreeAuditBenefits";
 import FreeAuditForm from "@/components/sections/FreeAuditForm";
-import FreeAuditFaq from "@/components/sections/FreeAuditFaq";
-import CTA from "@/components/sections/CTA";
+import FreeAuditHero from "@/components/sections/FreeAuditHero";
 
 export const metadata: Metadata = generateSeo({
-  title: "Free Website Audit",
+  title: "AI Search Visibility Audit",
   description:
-    "Request a free website audit from LeadFlowProTeam and receive actionable recommendations for technical SEO, performance, user experience, and AI Search Visibility.",
+    "Request an AI Search Visibility Audit to understand how your business is represented across search, local information sources, and AI answer experiences. Identify gaps and practical opportunities for improvement.",
   path: "/free-audit",
   keywords: [
-    "Free Website Audit",
-    "Free SEO Audit",
-    "Technical SEO Audit",
-    "Website Performance Audit",
     "AI Search Visibility Audit",
-    "Free Website Review",
+    "AI Visibility Audit",
+    "AI Search Optimization Audit",
+    "Search Visibility Audit",
+    "Local Search Audit",
+    "Website Audit",
   ],
 });
 
@@ -27,13 +27,9 @@ export default function FreeAuditPage() {
   return (
     <main className="bg-white">
       <FreeAuditHero />
-
       <FreeAuditBenefits />
-
       <FreeAuditForm />
-
-      <FreeAuditFaq />
-
+      <FAQ />
       <CTA />
     </main>
   );

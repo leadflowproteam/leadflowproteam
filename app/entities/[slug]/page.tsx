@@ -58,7 +58,7 @@ export async function generateMetadata({
     `https://leadflowproteam.com/entities/${entity.slug}`;
 
   return {
-    title: `${entity.name} | LeadFlowProTeam`,
+    title: entity.name,
 
     description: entity.description,
 

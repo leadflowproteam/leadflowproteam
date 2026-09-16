@@ -1,5 +1,3 @@
-import EntityLink from "@/components/seo/EntityLink";
-
 type RichTextProps = {
   paragraphs: readonly string[];
 };

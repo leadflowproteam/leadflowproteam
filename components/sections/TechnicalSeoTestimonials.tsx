@@ -81,7 +81,7 @@ export default function TechnicalSeoTestimonials() {
             </div>
 
             <p className="mt-6 grow leading-8 text-gray-600">
-              "{item.quote}"
+              &ldquo;{item.quote}&rdquo;
             </p>
 
             <div className="mt-8 rounded-2xl border border-blue-100 bg-linear-to-r from-blue-50 to-slate-50 p-5">

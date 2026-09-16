@@ -3,44 +3,44 @@ import { CheckCircle2 } from "lucide-react";
 import Section from "@/components/ui/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
 
-const technicalChecklist = [
-  "Complete Technical SEO Audit",
-  "XML Sitemap Optimization",
-  "Robots.txt Configuration",
-  "Canonical URL Optimization",
-  "Indexability Improvements",
-  "Crawl Budget Optimization",
-  "Broken Link Detection & Repair",
-  "Redirect Chain Optimization",
-  "HTTPS & Security Validation",
-  "Duplicate Content Resolution",
-] as const;
+const foundations = [
+  "Crawlability review",
+  "Indexability review",
+  "Robots.txt review",
+  "XML sitemap review",
+  "Canonical URL review",
+  "Redirect review",
+  "404 and broken URL review",
+  "Duplicate-page risk review",
+  "Internal linking review",
+  "URL structure review",
+];
 
-const performanceChecklist = [
-  "Core Web Vitals Optimization",
+const performance = [
+  "Core Web Vitals assessment",
   "Largest Contentful Paint (LCP)",
   "Interaction to Next Paint (INP)",
   "Cumulative Layout Shift (CLS)",
-  "Advanced Page Speed Optimization",
-  "Image & Asset Optimization",
-  "Mobile-First Performance",
-  "Accessibility (WCAG) Review",
-  "HTTPS & Security Hardening",
-  "JavaScript & CSS Optimization",
-] as const;
+  "Image and asset optimization",
+  "Rendering and loading review",
+  "Mobile usability review",
+  "JavaScript and CSS review",
+  "Page-level performance checks",
+  "User experience considerations",
+];
 
-const aiChecklist = [
-  "Schema.org Structured Data",
-  "Entity SEO Optimization",
-  "Semantic HTML Architecture",
-  "Metadata Optimization",
-  "Internal Linking Strategy",
-  "AI Search Readiness",
-  "Google AI Overviews Optimization",
-  "ChatGPT & Gemini Visibility",
-  "Knowledge Graph Signals",
-  "Technical SEO Growth Roadmap",
-] as const;
+const structuredData = [
+  "Schema.org review",
+  "Organization data where appropriate",
+  "Service data where appropriate",
+  "Breadcrumb data where appropriate",
+  "WebPage relationships",
+  "Metadata alignment",
+  "Semantic HTML review",
+  "Entity relationship clarity",
+  "Internal linking relationships",
+  "Technical implementation validation",
+];
 
 function ChecklistCard({
   title,
@@ -50,28 +50,29 @@ function ChecklistCard({
   items: readonly string[];
 }) {
   return (
-    <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl">
-      <div className="mb-8 flex items-center justify-between">
-  <h3 className="text-2xl font-bold tracking-tight text-gray-900">
-    {title}
-  </h3>
+    <div className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm sm:p-8">
+      <div className="flex items-center justify-between gap-4">
+        <h3 className="text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
+          {title}
+        </h3>
 
-  <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700">
-    {items.length} Items
-  </span>
-</div>
+        <span className="shrink-0 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+          {items.length} areas
+        </span>
+      </div>
 
-      <ul className="mt-8 space-y-4">
+      <ul className="mt-7 space-y-3">
         {items.map((item) => (
-         <li
-          key={item}
-          className="group flex items-start gap-4 rounded-xl p-2 transition-colors duration-300 hover:bg-slate-50"
-        >
-            <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-blue-600 transition-transform duration-300 group-hover:scale-110" />
+          <li
+            key={item}
+            className="flex items-start gap-3 text-sm leading-6 text-slate-700"
+          >
+            <CheckCircle2
+              className="mt-1 h-4 w-4 shrink-0 text-slate-900"
+              aria-hidden="true"
+            />
 
-            <span className="leading-7 text-gray-700 transition-colors duration-300 group-hover:text-gray-900">
-            {item}
-          </span>
+            <span>{item}</span>
           </li>
         ))}
       </ul>
@@ -81,49 +82,40 @@ function ChecklistCard({
 
 export default function TechnicalSeoChecklist() {
   return (
-    <Section className="bg-white py-16 sm:py-20 lg:py-24">
+    <Section className="bg-slate-50">
       <SectionHeading
-        badge="Technical SEO Framework"
-        title="Everything Included in Our Technical SEO Service"
-        description="Our Technical SEO service goes far beyond fixing technical errors. We build a complete search-ready foundation that improves crawlability, indexability, Core Web Vitals, structured data, AI Search Visibility, user experience, and long-term organic growth."
+        badge="Technical SEO Checklist"
+        title="A Practical Technical Review"
+        description="We prioritize issues according to their relevance to the business rather than treating every technical recommendation as equally important."
       />
 
-      <div className="mt-16 grid gap-8 lg:grid-cols-3">
+      <div className="grid gap-7 lg:grid-cols-3">
         <ChecklistCard
           title="Technical Foundation"
-          items={technicalChecklist}
+          items={foundations}
         />
 
         <ChecklistCard
           title="Performance & UX"
-          items={performanceChecklist}
+          items={performance}
         />
 
         <ChecklistCard
-          title="Search Visibility & AI"
-          items={aiChecklist}
+          title="Structured Data & Semantics"
+          items={structuredData}
         />
       </div>
 
-      <div className="mt-20 overflow-hidden rounded-[36px] border border-blue-100 bg-linear-to-br from-blue-600 via-blue-700 to-indigo-700 p-10 text-white shadow-2xl lg:p-16">
-
-        <div className="mx-auto max-w-4xl text-center">
-  <span className="inline-flex rounded-full bg-white/15 px-5 py-2 text-sm font-semibold tracking-wide text-white backdrop-blur">
-    Technical SEO • AI Search Visibility • Long-Term Growth
-  </span>
-          <h3 className="mt-8 text-3xl font-extrabold leading-tight lg:text-5xl">
-          Technical SEO Is the Foundation
-          <br />
-          Behind Every High-Ranking Website
+      <div className="mx-auto mt-12 max-w-4xl rounded-3xl border border-slate-200 bg-white p-7 text-center shadow-sm sm:p-9">
+        <h3 className="text-2xl font-bold tracking-tight text-slate-950">
+          Not Every Technical Issue Deserves the Same Investment
         </h3>
 
-          <p className="mt-8 text-lg leading-8 text-blue-100">
-            Technical SEO isn't just about fixing errors. It creates the
-            infrastructure that allows Google and AI-powered search engines to
-            understand, crawl, index, and trust your website—while delivering a
-            faster, more reliable experience for your visitors.
-          </p>
-        </div>
+        <p className="mt-4 leading-7 text-slate-600">
+          We connect technical findings to actual business objectives,
+          visibility needs, implementation effort, and priority so the work can
+          be scoped around what matters.
+        </p>
       </div>
     </Section>
   );

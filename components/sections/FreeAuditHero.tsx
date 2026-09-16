@@ -3,20 +3,20 @@ import PageHero from "@/components/ui/PageHero";
 export default function FreeAuditHero() {
   return (
     <PageHero
-      badge="Free Website Audit"
-      title="Get Your Free Website Audit"
-      description="Discover hidden SEO issues, performance bottlenecks, AI Search opportunities, Core Web Vitals problems, and actionable recommendations to improve your website's rankings, speed, and lead generation."
-      primaryButtonText="Request Free Audit"
+      badge="AI Search Visibility Audit"
+      title="See How AI Sees Your Business."
+      description="Start with a focused visibility assessment of your business information, website, local presence, search visibility, and relevant AI answer experiences. Find the gaps, understand the opportunities, and know what to improve next."
+      primaryButtonText="Request Your Audit"
       primaryButtonHref="#audit-form"
-      secondaryButtonText="Contact Us"
-      secondaryButtonHref="/contact"
+      secondaryButtonText="Explore AI Search Visibility"
+      secondaryButtonHref="/services/ai-search-visibility"
       tags={[
-        "Technical SEO",
-        "Performance Audit",
-        "Core Web Vitals",
-        "AI Search Ready",
-        "Website Health",
-        "Action Plan",
+        "Business & Identity",
+        "Website & Technical",
+        "Local Search & Data",
+        "AI Visibility",
+        "Customer Queries",
+        "Competitive Insights",
       ]}
     />
   );

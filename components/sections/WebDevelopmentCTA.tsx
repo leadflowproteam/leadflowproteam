@@ -19,7 +19,7 @@ export default function WebDevelopmentCTA() {
           </span>
 
           <h2 className="mt-8 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
-            Let's Build a Website
+            Let&apos;s Build a Website
             <span className="mt-2 block text-cyan-400">
               That Actually Grows Your Business
             </span>

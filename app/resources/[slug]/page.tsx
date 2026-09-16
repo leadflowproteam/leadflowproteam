@@ -11,7 +11,6 @@ import { resources } from "@/data/resources";
 import { resourceContents } from "@/data/resource-content";
 import { resourceLinks } from "@/lib/resource-links";
 import { siteGraph } from "@/lib/jsonld/site-graph";
-import { getSemanticLinks } from "@/lib/seo/semantic-links";
 import InternalLinks from "@/lib/seo/InternalLinks";
 
 

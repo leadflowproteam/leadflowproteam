@@ -13,7 +13,7 @@ export default function StickyCTA() {
           href="/free-audit"
           className="group inline-flex items-center rounded-2xl bg-blue-600 px-6 py-4 text-sm font-semibold text-white shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:bg-blue-700"
         >
-          Get Free Website Audit
+          Get Your Free Audit
 
           <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
         </Link>
@@ -26,7 +26,7 @@ export default function StickyCTA() {
           href="/free-audit"
           className="flex items-center justify-center rounded-xl bg-blue-600 px-5 py-4 text-base font-semibold text-white"
         >
-          Get Free Website Audit
+          Get Your Free Audit
 
           <ArrowRight className="ml-2 h-5 w-5" />
         </Link>

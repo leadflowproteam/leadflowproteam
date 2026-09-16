@@ -49,7 +49,7 @@ export default function Header() {
           >
             <Sparkles className="mr-2 h-4 w-4" />
 
-            Modern Website Development • Technical SEO • AI Search Visibility
+            AI-Ready Websites • Technical SEO • AI Search Visibility
 
           </div>
 
@@ -195,7 +195,7 @@ export default function Header() {
                       shadow-blue-600/20
                     "
                   >
-                    Get Free Website Audit
+                    Get Your Free Audit
 
                     <ArrowRight
                       className="

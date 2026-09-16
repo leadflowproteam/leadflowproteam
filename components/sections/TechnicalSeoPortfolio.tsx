@@ -1,8 +1,7 @@
 import Link from "next/link";
 import {
   ArrowRight,
- BadgeCheck,
-  CheckCircle2,
+  BadgeCheck,
   Gauge,
   Search,
   ShieldCheck,

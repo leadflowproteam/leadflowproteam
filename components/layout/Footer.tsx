@@ -78,6 +78,14 @@ const serviceLinks = [
     href: "/services/ai-search-visibility",
   },
   {
+    label: "AI Search Visibility Audit",
+    href: "/services/ai-search-visibility-audit",
+  },
+  {
+    label: "Local SEO",
+    href: "/services/local-seo",
+  },
+  {
     label: "Website Audit",
     href: "/services/website-audit",
   },
@@ -146,9 +154,8 @@ export default function Footer() {
             </Link>
 
             <p className="mt-6 max-w-xs text-sm leading-7 text-slate-600">
-              LeadFlowProTeam engineers AI-ready websites for service-based
-              businesses with modern Next.js development, Technical SEO, AI
-              Search Visibility, and performance optimization.
+              We build and optimize websites so businesses can be discovered,
+              understood, and represented more clearly across search and AI.
             </p>
           </div>
 
@@ -248,7 +255,7 @@ export default function Footer() {
                 </p>
 
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Monday – Friday
+                  Monday - Friday
                   <br />
                   9:00 AM – 6:00 PM (EST)
                 </p>

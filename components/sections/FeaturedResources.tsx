@@ -3,10 +3,10 @@ import Image from "next/image";
 import {
   ArrowRight,
   BookOpen,
+  Bot,
   Clock3,
-  User2,
-  Sparkles,
-  ChevronRight,
+  FileSearch,
+  SearchCheck,
 } from "lucide-react";
 
 import Button from "@/components/ui/Button";
@@ -15,296 +15,156 @@ import SectionHeading from "@/components/ui/SectionHeading";
 
 import { resources } from "@/data/resources";
 
+const resourceIcons = [Bot, SearchCheck, FileSearch];
+
 export default function FeaturedResources() {
   const featuredResources = resources.slice(0, 3);
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white py-24 lg:py-32">
-
-      {/* Background */}
-
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-blue-100/40 blur-3xl" />
-
-        <div className="absolute right-0 bottom-0 h-72 w-72 rounded-full bg-indigo-100/40 blur-3xl" />
-      </div>
-
-      <Container className="relative z-10">
-
+    <section className="bg-gray-50 py-20 lg:py-28">
+      <Container>
         <SectionHeading
           badge="Knowledge Center"
-          title="Resources That Help Businesses Grow Smarter"
-          description="Practical insights covering Next.js, Technical SEO, AI Search Visibility, website optimization, and digital growth strategies designed for real businesses."
+          title="Learn How Visibility Works in the AI Search Era."
+          description="Practical guides to help business owners understand AI Search Visibility, technical foundations, modern websites, and the information systems behind digital discovery."
         />
 
-        {/* Featured Cards */}
+        <div className="grid gap-6 lg:grid-cols-3">
+          {featuredResources.map((resource, index) => {
+            const Icon = resourceIcons[index] ?? BookOpen;
 
-        <div className="mt-20 grid gap-8 xl:grid-cols-3">
-          {featuredResources.map((resource) => (
-            <article
-              key={resource.slug}
-              className="
-                group
-                flex
-                h-full
-                flex-col
-                overflow-hidden
-                rounded-[30px]
-                border
-                border-slate-200
-                bg-white
-                shadow-sm
-                transition-all
-                duration-500
-                hover:-translate-y-2
-                hover:border-blue-200
-                hover:shadow-2xl
-              "
-            >
+            return (
+              <article
+                key={resource.slug}
+                className="group flex h-full flex-col overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:border-blue-200 hover:shadow-md"
+              >
+                <div className="relative h-56 overflow-hidden">
+                  <Image
+                    src={
+                      resource.coverImage ??
+                      "/images/resources/resource-placeholder.webp"
+                    }
+                    alt={resource.title}
+                    fill
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                  />
 
-              {/* Thumbnail */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent" />
 
-              <div className="relative h-60 overflow-hidden">
-
-                <Image
-                  src={
-                    resource.coverImage ??
-                    "/images/resources/resource-placeholder.webp"
-                  }
-                  alt={resource.title}
-                  fill
-                  className="
-                    object-cover
-                    transition-transform
-                    duration-700
-                    group-hover:scale-105
-                  "
-                />
-
-                {/* Overlay */}
-
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/75 via-slate-900/20 to-transparent" />
-
-                {/* Category */}
-
-                <div className="absolute left-6 top-6 flex items-center gap-2">
-
-                  <span className="
-                    inline-flex
-                    items-center
-                    rounded-full
-                    bg-white/90
-                    px-3
-                    py-1
-                    text-xs
-                    font-semibold
-                    tracking-wide
-                    text-blue-700
-                    backdrop-blur
-                  ">
-                    <BookOpen className="mr-1 h-3.5 w-3.5" />
-
-                    {resource.category}
-                  </span>
-
-                  <span className="
-                    inline-flex
-                    items-center
-                    rounded-full
-                    bg-blue-600
-                    px-3
-                    py-1
-                    text-xs
-                    font-semibold
-                    text-white
-                  ">
-                    <Sparkles className="mr-1 h-3.5 w-3.5" />
-
-                    Featured
-                  </span>
-
+                  <div className="absolute left-5 top-5 flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-blue-700 backdrop-blur">
+                      <Icon className="h-3.5 w-3.5" />
+                      {resource.category}
+                    </span>
+                  </div>
                 </div>
 
-              </div>
+                <div className="flex flex-1 flex-col p-7">
+                  <h3 className="text-xl font-bold leading-tight text-gray-900 transition-colors group-hover:text-blue-600">
+                    {resource.title}
+                  </h3>
 
-              {/* Content */}
+                  <p className="mt-4 flex-1 text-sm leading-7 text-gray-600">
+                    {resource.description}
+                  </p>
 
-              <div className="flex flex-1 flex-col p-8">
+                  <div className="mt-6 flex flex-wrap items-center gap-4 border-t border-gray-100 pt-5 text-xs text-gray-500">
+                    <span className="inline-flex items-center gap-1.5">
+                      <Clock3 className="h-4 w-4" />
+                      {resource.readingTime}
+                    </span>
 
-                <h3 className="
-                  text-2xl
-                  font-bold
-                  leading-tight
-                  text-slate-900
-                  transition-colors
-                  duration-300
-                  group-hover:text-blue-600
-                ">
-                  {resource.title}
-                </h3>
-
-                <p className="
-                  mt-5
-                  grow
-                  leading-8
-                  text-slate-600
-                ">
-                  {resource.description}
-                </p>
-
-                {/* Meta */}
-
-                <div className="
-                  mt-8
-                  flex
-                  flex-wrap
-                  items-center
-                  gap-5
-                  border-t
-                  border-slate-100
-                  pt-6
-                  text-sm
-                  text-slate-500
-                ">
-
-                  <div className="flex items-center gap-2">
-                    <User2 className="h-4 w-4" />
-
-                    {resource.author}
+                    <span className="inline-flex items-center gap-1.5">
+                      <BookOpen className="h-4 w-4" />
+                      {resource.funnelStage}
+                    </span>
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    <Clock3 className="h-4 w-4" />
-
-                    {resource.readingTime}
-                  </div>
-
+                  <Link
+                    href={`/resources/${resource.slug}`}
+                    className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-blue-600 transition hover:text-blue-700"
+                  >
+                    Read the Guide
+                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                  </Link>
                 </div>
-
-
-
-                <Link
-                  href={`/resources/${resource.slug}`}
-                  className="
-                    mt-8
-                    inline-flex
-                    items-center
-                    font-semibold
-                    text-blue-600
-                    transition-colors
-                    duration-300
-                    hover:text-blue-700
-                  "
-                >
-                  Read Complete Guide
-
-                  <ChevronRight className="
-                    ml-2
-                    h-4
-                    w-4
-                    transition-transform
-                    duration-300
-                    group-hover:translate-x-1
-                  " />
-                </Link>
-
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
 
+        <div className="mt-14 overflow-hidden rounded-3xl bg-slate-950 p-7 text-white sm:p-10 lg:p-12">
+          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wide text-blue-300">
+                Build Your Understanding
+              </p>
 
-        {/* Bottom CTA */}
+              <h3 className="mt-4 text-2xl font-bold tracking-tight sm:text-3xl">
+                Start With the Fundamentals. Then Improve What Matters.
+              </h3>
 
-        <div className="
-          mt-24
-          overflow-hidden
-          rounded-[36px]
-          bg-linear-to-r
-          from-slate-900
-          via-blue-700
-          to-blue-600
-          px-10
-          py-16
-          text-center
-          shadow-2xl
-        ">
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
+                Our resources explain the concepts behind modern search and
+                AI visibility so you can make better decisions about your
+                website, business information, and digital presence.
+              </p>
 
-          <span className="
-            inline-flex
-            items-center
-            rounded-full
-            bg-white/10
-            px-4
-            py-2
-            text-sm
-            font-semibold
-            text-blue-100
-            backdrop-blur
-          ">
-            <Sparkles className="mr-2 h-4 w-4" />
-            Free Learning Resources
-          </span>
+              <div className="mt-7">
+                <Link href="/resources">
+                  <Button variant="white" size="lg">
+                    Browse All Resources
+                    <ArrowRight className="h-5 w-5" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
 
-          <h2 className="
-            mt-6
-            text-4xl
-            font-extrabold
-            text-white
-          ">
-            Keep Learning. Keep Growing.
-          </h2>
+            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+              <p className="text-sm font-semibold text-blue-300">
+                Explore Topics
+              </p>
 
-          <p className="
-            mx-auto
-            mt-6
-            max-w-3xl
-            text-lg
-            leading-8
-            text-blue-100
-          ">
-            Explore practical guides covering Technical SEO,
-            AI Search Visibility,
-            Entity SEO,
-            Next.js development,
-            website performance,
-            lead generation,
-            and long-term digital growth.
+              <div className="mt-5 space-y-3">
+                {[
+                  "AI Search Visibility",
+                  "Technical SEO",
+                  "Business Information",
+                  "Modern Website Engineering",
+                  "Website Performance",
+                ].map((topic) => (
+                  <div
+                    key={topic}
+                    className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3"
+                  >
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-600">
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </span>
+
+                    <span className="text-sm font-medium text-slate-200">
+                      {topic}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10 text-center">
+          <p className="text-sm text-gray-500">
+            Ready to move from learning to a real visibility assessment?
           </p>
 
-
-          <div className="mt-10 flex justify-center">
-
-            <Link href="/resources">
-
-              <Button
-                variant="secondary"
-                size="lg"
-                className="group"
-              >
-                Browse All Resources
-
-                <ArrowRight
-                  className="
-                    ml-2
-                    h-5
-                    w-5
-                    transition-transform
-                    duration-300
-                    group-hover:translate-x-1
-                  "
-                />
-
-              </Button>
-
-            </Link>
-
-          </div>
-
+          <Link
+            href="/free-audit"
+            className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-blue-600 transition hover:text-blue-700"
+          >
+            Start With an AI Visibility Audit
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
-
       </Container>
-
     </section>
   );
 }

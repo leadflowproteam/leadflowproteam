@@ -3,24 +3,22 @@ import PageHero from "@/components/ui/PageHero";
 export default function AiSearchHero() {
   return (
     <PageHero
-      badge="AI Search Visibility Services"
-      title="Help Your Business Get Found by AI Search — Not Just Google"
-      description="AI Search Visibility helps your business appear in AI-powered search experiences like ChatGPT, Google AI Overviews, Gemini, Claude, and future AI search platforms. We optimize your website with structured data, Entity SEO, semantic content architecture, and technical best practices so AI systems can better understand, trust, and recommend your business."
-      primaryButtonText="Get Free AI Search Audit"
+      badge="Primary Service • AI Search Visibility"
+      title="See How AI Sees Your Business. Find the Gaps. Improve What Matters."
+      description="We investigate how your business is represented across search, local information sources, and AI answer systems. We identify missing, inconsistent, outdated, weak, or misleading information and turn the findings into a practical improvement plan."
+      primaryButtonText="Request an AI Visibility Audit"
       primaryButtonHref="/free-audit"
-      secondaryButtonText="Book Discovery Call"
+      secondaryButtonText="Discuss Your Growth Goals"
       secondaryButtonHref="/contact"
       tags={[
         "AI Search Visibility",
-        "Entity SEO",
-        "AI Search Optimization",
+        "AI Visibility Audit",
+        "Business Information",
+        "Technical SEO",
+        "Local Search",
         "Structured Data",
-        "Schema Markup",
-        "Semantic SEO",
-        "Google AI Overviews",
-        "ChatGPT",
-        "Gemini",
-        "Claude",
+        "Entity Information",
+        "Customer Query Testing",
       ]}
     />
   );

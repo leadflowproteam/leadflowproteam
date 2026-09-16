@@ -1,50 +1,86 @@
 export const brandEntity = {
   brand: {
     name: "LeadFlowProTeam",
+
     legalName: "LeadFlowProTeam",
 
     url: "https://leadflowproteam.com",
 
-    email: "hello@leadflowproteam.com",
+    email: "info@leadflowproteam.com",
 
-    slogan: "Build Faster. Rank Smarter. Grow Better.",
+    slogan:
+      "See How AI Sees Your Business. Fix the Gaps. Grow.",
 
     shortDescription:
-      "LeadFlowProTeam builds high-performance websites engineered for Technical SEO, AI Search Visibility, and business growth.",
+      "LeadFlowProTeam helps commercial businesses understand and improve how they are represented across search, local information sources, and AI answer systems.",
 
     longDescription:
-      "LeadFlowProTeam is a modern digital agency specializing in high-performance website development, Technical SEO, AI Search Optimization, Landing Page Development, Website Audits, and Conversion-Focused Digital Experiences.",
+      "LeadFlowProTeam provides evidence-based AI Search Visibility audits and practical digital implementation for commercial businesses that are prepared to invest in growth. We investigate how a business is represented across search, local information sources, and AI answer systems, identify information and visibility gaps, prioritize opportunities, implement improvements, and support ongoing monitoring and optimization.",
 
     foundingYear: 2026,
 
-    businessType: "Digital Agency",
+    businessType: "Professional Service",
 
     language: "en",
 
-    audience: "Service Businesses",
+    audience:
+      "Investment-Ready Commercial Businesses",
   },
 
+  // ---------------------------------------------------------------------------
+  // Primary Services
+  // ---------------------------------------------------------------------------
   services: [
-    "Web Development",
+    "AI Search Visibility",
+    "AI Search Visibility Audit",
     "Technical SEO",
-    "AI Search Optimization",
-    "Landing Page Development",
+    "Local SEO",
     "Website Audit",
+    "Website Development",
+    "Landing Page Development",
+    "Conversion Optimization",
+    "Ongoing Visibility Optimization",
   ],
 
+  // ---------------------------------------------------------------------------
+  // Initial / Potential Industries
+  // ---------------------------------------------------------------------------
   industries: [
+    "Hotels & Hospitality",
     "Home Services",
+    "Professional Services",
     "Roofing",
     "Plumbing",
     "HVAC",
     "Electrical",
     "Landscaping",
-    "Construction",
+    "Cleaning Services",
     "Legal Services",
     "Healthcare",
-    "Cleaning Services",
   ],
 
+  // ---------------------------------------------------------------------------
+  // Markets
+  // ---------------------------------------------------------------------------
+  markets: [
+    "United States",
+    "Canada",
+    "United Kingdom",
+    "Australia",
+  ],
+
+  // ---------------------------------------------------------------------------
+  // Initial Pilot
+  // ---------------------------------------------------------------------------
+  pilotMarket: {
+    country: "United States",
+    geography: "Texas",
+    niche: "Hotels & Hospitality",
+  },
+
+  // ---------------------------------------------------------------------------
+  // Technologies & Implementation Capabilities
+  // ---------------------------------------------------------------------------
   technologies: [
     "Next.js",
     "React",
@@ -56,69 +92,93 @@ export const brandEntity = {
     "Vercel",
   ],
 
-  markets: [
-    "United States",
-    "Canada",
-    "United Kingdom",
-    "Australia",
-  ],
-
+  // ---------------------------------------------------------------------------
+  // Core Entities
+  // ---------------------------------------------------------------------------
   entities: [
-    "Technical SEO",
-    "Entity SEO",
-    "AI Search",
-    "Search Visibility",
-    "Website Performance",
-    "Core Web Vitals",
-    "Structured Data",
-    "Website Architecture",
-    "Conversion Optimization",
-    "Lead Generation",
-  ],
-
-  topics: [
-    "Technical SEO",
-    "AI Search",
-    "Entity SEO",
-    "Semantic SEO",
-    "Structured Data",
-    "Website Performance",
-    "Core Web Vitals",
-    "Next.js",
-    "Website Architecture",
-    "Conversion Optimization",
-  ],
-
-  keywords: [
-    "Web Design Agency",
-    "Next.js Agency",
-    "Technical SEO",
-    "AI Search Optimization",
-    "Entity SEO",
-    "Website Development",
-    "Landing Page Development",
-    "Website Audit",
-    "Core Web Vitals",
-    "Website Performance",
-    "Lead Generation",
-    "Search Visibility",
-  ],
-
-  strengths: [
-    "Fast Websites",
-    "Search-Friendly Development",
-    "Modern Architecture",
-    "AI Ready",
-    "Conversion Focused",
-    "Scalable Code",
-  ],
-
-  trustSignals: [
-    "Next.js Development",
-    "Technical SEO",
-    "Performance Optimization",
     "AI Search Visibility",
-    "Schema Implementation",
+    "AI Search",
+    "Search Visibility",
+    "Technical SEO",
+    "Local SEO",
+    "Entity SEO",
+    "Structured Data",
+    "Schema.org",
+    "Website Performance",
+    "Core Web Vitals",
+    "Website Architecture",
+    "Conversion Optimization",
+    "Business Information",
+    "Customer Query Testing",
+    "Competitive Intelligence",
+  ],
+
+  // ---------------------------------------------------------------------------
+  // Topics
+  // ---------------------------------------------------------------------------
+  topics: [
+    "AI Search Visibility",
+    "AI Search",
+    "Search Visibility",
+    "Technical SEO",
+    "Local Search",
+    "Entity SEO",
+    "Semantic Search",
+    "Structured Data",
+    "Website Performance",
+    "Core Web Vitals",
+    "Website Architecture",
+    "Conversion Optimization",
+    "Customer Query Testing",
+    "Competitive Intelligence",
+    "Business Information Consistency",
+  ],
+
+  // ---------------------------------------------------------------------------
+  // Search Terms
+  // ---------------------------------------------------------------------------
+  keywords: [
+    "AI Search Visibility",
+    "AI Search Visibility Audit",
+    "AI Visibility Audit",
+    "AI Search Optimization",
+    "Search Visibility",
+    "Technical SEO",
+    "Local SEO",
+    "Website Audit",
+    "Entity SEO",
+    "Structured Data",
+    "Next.js Website Development",
+    "Conversion Optimization",
+    "Website Performance",
+  ],
+
+  // ---------------------------------------------------------------------------
+  // Core Strengths
+  // ---------------------------------------------------------------------------
+  strengths: [
+    "Evidence-Based Auditing",
+    "AI Search Visibility",
+    "Technical SEO",
+    "Business Information Consistency",
+    "Search-Friendly Development",
+    "Structured Data Implementation",
+    "Performance-Focused Development",
+    "Conversion-Focused Architecture",
+    "Human-Validated Recommendations",
+  ],
+
+  // ---------------------------------------------------------------------------
+  // Trust / Capability Signals
+  // ---------------------------------------------------------------------------
+  trustSignals: [
+    "AI Search Visibility Audits",
+    "Evidence-First Reporting",
+    "Technical SEO",
+    "Structured Data",
+    "Next.js Development",
+    "Performance Optimization",
+    "Human QA",
   ],
 } as const;
 

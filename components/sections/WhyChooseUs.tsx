@@ -1,186 +1,186 @@
 import Link from "next/link";
 import {
-  Award,
-  Bot,
-  Clock3,
-  Gauge,
-  HeartHandshake,
-  SearchCheck,
   ArrowRight,
+  CheckCircle2,
+  FileCheck2,
+  GitCompare,
+  Lightbulb,
+  Search,
+  ShieldCheck,
+  Wrench,
 } from "lucide-react";
 
-import Button from "@/components/ui/Button";
-import Card from "@/components/ui/Card";
-import Section from "@/components/ui/Section";
+import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 
-const features = [
+const differentiators = [
   {
-    icon: Gauge,
-    title: "Lightning-Fast Performance",
+    icon: FileCheck2,
+    title: "Evidence First",
     description:
-      "Built with Next.js, optimized Core Web Vitals, and engineered for exceptional loading speed.",
-    href: "/services/web-development",
+      "We focus on observable information, source evidence, and documented findings instead of making unsupported visibility claims.",
   },
   {
-    icon: SearchCheck,
-    title: "Technical SEO Foundation",
+    icon: Search,
+    title: "Beyond Traditional SEO",
     description:
-      "Every website includes structured metadata, schema markup, clean architecture, and crawl optimization.",
-    href: "/services/technical-seo",
+      "We look beyond rankings to understand how your business information is discovered, interpreted, and represented.",
   },
   {
-    icon: Bot,
-    title: "AI Search Ready",
+    icon: GitCompare,
+    title: "Competitive Context",
     description:
-      "Prepared for Google AI Overviews, ChatGPT, Claude, Gemini, and future AI-powered search experiences.",
-    href: "/services/ai-search-visibility",
+      "Relevant competitors help provide context for gaps, strengths, and opportunities—not just an isolated business score.",
   },
   {
-    icon: Award,
-    title: "Modern Engineering",
+    icon: ShieldCheck,
+    title: "Human Validation",
     description:
-      "Reusable components, scalable architecture, TypeScript safety, and long-term maintainability.",
-    href: "/services/web-development",
+      "Automation can accelerate repetitive research, while important findings and recommendations receive human review.",
   },
   {
-    icon: HeartHandshake,
-    title: "Business Growth Focus",
+    icon: Lightbulb,
+    title: "Actionable Recommendations",
     description:
-      "Every decision is made to improve trust, conversions, qualified leads, and long-term growth.",
-    href: "/services/website-audit",
+      "The objective is to explain what matters, why it matters, and what should be prioritized next.",
   },
   {
-    icon: Clock3,
-    title: "Reliable Delivery",
+    icon: Wrench,
+    title: "Built to Implement",
     description:
-      "Clear communication, transparent milestones, realistic timelines, and dependable execution.",
-    href: "/contact",
+      "When improvements require technical, website, search, local, or information work, we have implementation capabilities to act on the findings.",
   },
+];
+
+const principles = [
+  "No guaranteed AI rankings or mentions",
+  "No one-size-fits-all recommendations",
+  "No confusing the audit with the implementation",
+  "No relying on a single visibility signal",
 ];
 
 export default function WhyChooseUs() {
   return (
-    <Section className="bg-white">
-      <SectionHeading
-        badge="Why Choose LeadFlowProTeam"
-        title="A Strategic Partner for Search Visibility, AI Readiness & Sustainable Business Growth"
-        description="We build more than visually impressive websites. Every project is strategically engineered using modern web technologies, Technical SEO, Entity SEO, AI Search Optimization, and conversion-focused architecture to help service businesses improve visibility, generate qualified leads, and achieve long-term digital growth."
-      />
+    <section className="bg-white py-20 lg:py-28">
+      <Container>
+        <SectionHeading
+          badge="Why LeadFlowProTeam"
+          title="A Visibility Approach Built Around Evidence and Action."
+          description="Our methodology combines AI visibility research, search foundations, website quality, local information, competitive context, and human judgment to create a clearer path from finding a problem to improving it."
+          align="center"
+        />
 
-      <div className="mx-auto mt-6 max-w-4xl text-center">
-        <p className="text-lg leading-8 text-slate-600">
-          Our approach combines technical excellence, search intelligence,
-          performance optimization, and business strategy into one unified
-          framework. Every website is designed to perform exceptionally across
-          Google Search, Google AI Overviews, ChatGPT, Gemini, Claude, Microsoft
-          Copilot, and future AI-powered search experiences.
-        </p>
-      </div>
+        <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {differentiators.map((item) => {
+            const Icon = item.icon;
 
-      <div className="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-        {features.map((feature) => {
-          const Icon = feature.icon;
-
-          return (
-            <Card
-              key={feature.title}
-              className="
-                group
-                relative
-                h-full
-                overflow-hidden
-                rounded-3xl
-                border
-                border-slate-200
-                bg-white
-                shadow-sm
-                transition-all
-                duration-300
-                hover:-translate-y-2
-                hover:border-cyan-300
-                hover:shadow-2xl
-              "
-            >
-              <Card.Body className="flex h-full flex-col p-8">
-                <div className="mb-8 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white">
-                  <Icon className="h-8 w-8" />
+            return (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-blue-200 hover:shadow-md"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50">
+                  <Icon className="h-6 w-6 text-blue-600" />
                 </div>
 
-                <Card.Title className="text-2xl leading-tight">
-                  {feature.title}
-                </Card.Title>
+                <h3 className="mt-5 text-lg font-bold text-gray-900">
+                  {item.title}
+                </h3>
 
-                <Card.Description className="mt-5 grow leading-8 text-slate-600">
-                  {feature.description}
-                </Card.Description>
+                <p className="mt-3 text-sm leading-6 text-gray-600">
+                  {item.description}
+                </p>
+              </div>
+            );
+          })}
+        </div>
 
-                <Link
-                  href={feature.href}
-                  className="mt-8 inline-flex items-center text-sm font-semibold text-cyan-700 transition-colors duration-300 hover:text-cyan-800"
-                >
-                  Learn More
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </Link>
-              </Card.Body>
-            </Card>
-          );
-        })}
-      </div>
+        <div className="mt-16 overflow-hidden rounded-3xl bg-slate-950 text-white">
+          <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
+            <div className="p-7 sm:p-10 lg:p-12">
+              <p className="text-sm font-semibold uppercase tracking-wide text-blue-300">
+                Our Principles
+              </p>
 
-      {/* CTA */}
-      <div className="mt-24 overflow-hidden rounded-[36px] border border-cyan-200 bg-linear-to-r from-cyan-600 via-blue-700 to-slate-900 shadow-2xl">
-        <div className="grid items-center gap-12 px-6 py-12 sm:px-10 sm:py-16 lg:grid-cols-2 lg:px-16">
-          <div>
-            <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-cyan-100 backdrop-blur-sm">
-              Build Faster &bull; Rank Smarter &bull; Grow Better
-            </span>
+              <h3 className="mt-4 text-2xl font-bold tracking-tight sm:text-3xl">
+                What We Will Not Promise.
+              </h3>
 
-            <h2 className="mt-6 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
-              Ready to Build a Website That
-              <span className="block text-cyan-200">
-                Ranks, Converts &amp; Grows?
-              </span>
-            </h2>
+              <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300 sm:text-base">
+                AI and search systems change. Visibility depends on many
+                factors outside any agency&apos;s direct control. Our approach is
+                to document what can be observed, explain what it means, and
+                focus on improvements we can actually influence.
+              </p>
 
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-blue-100">
-              Whether you&apos;re launching a new business, redesigning an
-              existing website, or improving your visibility through Technical
-              SEO and AI Search Optimization, our team builds modern digital
-              experiences engineered for sustainable business growth.
-            </p>
-          </div>
+              <div className="mt-7 space-y-4">
+                {principles.map((principle) => (
+                  <div key={principle} className="flex items-start gap-3">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-blue-300" />
 
-          <div className="flex w-full flex-col items-stretch gap-5 sm:items-center lg:items-end">
-            <Link href="/free-audit" className="w-full sm:w-auto">
-              <Button
-                variant="white"
-                size="lg"
-                className="w-full min-w-0 justify-center sm:min-w-62.5"
+                    <p className="text-sm leading-6 text-slate-200">
+                      {principle}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t border-white/10 bg-white/[0.04] p-7 sm:p-10 lg:border-l lg:border-t-0 lg:p-12">
+              <p className="text-sm font-semibold uppercase tracking-wide text-blue-300">
+                The Goal
+              </p>
+
+              <h3 className="mt-4 text-2xl font-bold tracking-tight">
+                Better Information. Better Understanding. Better Decisions.
+              </h3>
+
+              <div className="mt-7 space-y-5">
+                {[
+                  {
+                    label: "Understand",
+                    text: "See how your business is currently represented.",
+                  },
+                  {
+                    label: "Prioritize",
+                    text: "Identify the gaps and opportunities that matter most.",
+                  },
+                  {
+                    label: "Improve",
+                    text: "Implement practical changes based on the evidence.",
+                  },
+                  {
+                    label: "Monitor",
+                    text: "Continue checking visibility as information and systems change.",
+                  },
+                ].map((item, index) => (
+                  <div key={item.label} className="flex gap-4">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">
+                      {index + 1}
+                    </span>
+
+                    <div>
+                      <p className="font-bold text-white">{item.label}</p>
+
+                      <p className="mt-1 text-sm leading-6 text-slate-400">
+                        {item.text}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <Link
+                href="/free-audit"
+                className="mt-8 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
               >
-                Get Free Website Audit
-              </Button>
-            </Link>
-
-            <Link href="/contact" className="w-full sm:w-auto">
-              <Button
-                variant="outline"
-                size="lg"
-                className="w-full min-w-0 justify-center border-white text-white hover:bg-white hover:text-blue-700 sm:min-w-62.5"
-              >
-                Schedule Free Consultation
-              </Button>
-            </Link>
-
-            <p className="max-w-xs text-center text-sm leading-7 text-blue-100 lg:text-right">
-              <span className="block">✓ No obligation consultation</span>
-              <span className="block">✓ Custom growth strategy</span>
-              <span className="block">✓ Transparent pricing</span>
-              <span className="block">✓ Long-term partnership</span>
-            </p>
+                See Your Visibility
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
-    </Section>
+      </Container>
+    </section>
   );
 }

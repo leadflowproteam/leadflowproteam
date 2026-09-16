@@ -35,7 +35,7 @@ export const programmaticServices: readonly ProgrammaticService[] = [
 
   {
     slug: "ai-search-visibility",
-    name: "AI Search Optimization",
+    name: "AI Search Visibility",
     shortDescription:
       "Prepare websites for ChatGPT, Gemini, Claude, Google AI Overviews, and AI-powered search.",
   },

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import NotFoundHero from "@/components/sections/NotFoundHero";
 
 export const metadata: Metadata = {
-  title: "404 - Page Not Found | LeadFlowProTeam",
+  title: "404 - Page Not Found",
   description:
     "The page you're looking for could not be found. Explore our services or return to the homepage.",
   robots: {

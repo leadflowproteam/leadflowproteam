@@ -3,31 +3,25 @@ import PageHero from "@/components/ui/PageHero";
 export default function TechnicalSeoHero() {
   return (
     <PageHero
-      badge="Technical SEO Services"
-
-      title="Technical SEO Services That Build a Faster, Smarter & AI-Ready Website"
-
-      description="Our Technical SEO services strengthen your website's foundation by improving crawlability, indexing, Core Web Vitals, structured data, site architecture, semantic signals, and overall search performance. We optimize your website for Google Search, Google AI Overviews, ChatGPT, Gemini, Claude, Microsoft Copilot, Perplexity, and the next generation of AI-powered search experiences."
-
-      primaryButtonText="Get Your Free Technical SEO Audit"
-      primaryButtonHref="/free-audit"
-
-      secondaryButtonText="Book a Technical SEO Strategy Call"
-      secondaryButtonHref="/contact"
-
+      badge="Supporting Implementation Service • Technical SEO"
+      title="Strengthen the Technical Foundation Behind Your Search Visibility"
+      description="We fix technical issues that can make a website harder to crawl, index, understand, maintain, or use. Our work supports stronger search foundations and complements AI Search Visibility initiatives."
+      primaryButtonText="Discuss a Technical SEO Project"
+      primaryButtonHref="/contact"
+      secondaryButtonText="Start With an Audit"
+      secondaryButtonHref="/free-audit"
       tags={[
         "Technical SEO",
-        "Core Web Vitals",
-        "Website Performance",
         "Crawlability",
-        "Indexing",
+        "Indexability",
+        "Core Web Vitals",
         "Structured Data",
         "Schema Markup",
-        "Site Architecture",
-        "Semantic SEO",
-        "Entity SEO",
-        "AI Search Visibility",
-        "Google Search Console",
+        "Internal Linking",
+        "XML Sitemap",
+        "Canonical URLs",
+        "Redirects",
+        "Website Architecture",
       ]}
     />
   );

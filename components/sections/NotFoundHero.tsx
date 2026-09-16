@@ -23,8 +23,8 @@ export default function NotFoundHero() {
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600">
-            Sorry, the page you are looking for doesn't exist, has been moved,
-            or the URL may be incorrect. Let's help you get back on track.
+            Sorry, the page you are looking for doesn&apos;t exist, has been moved,
+            or the URL may be incorrect. Let&apos;s help you get back on track.
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">

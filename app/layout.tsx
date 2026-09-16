@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { Viewport } from "next";
+import { Inter, Outfit } from "next/font/google";
 
 import "./globals.css";
 
@@ -12,6 +13,18 @@ import { siteGraph } from "@/lib/jsonld/site-graph";
 
 import { metadata } from "@/lib/metadata";
 import { site } from "@/config/site";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-outfit",
+});
 
 export { metadata };
 
@@ -30,14 +43,14 @@ export default function RootLayout({
   children,
 }: Readonly<RootLayoutProps>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
       <body>
         {/* Global Structured Data */}
         <JsonLd data={siteGraph()} />
 
         <Header />
 
-        <main>{children}</main>
+        <div>{children}</div>
 
         <StickyCTA />
 

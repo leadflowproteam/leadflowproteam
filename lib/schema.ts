@@ -12,6 +12,8 @@ export function organizationSchema() {
     "@context": "https://schema.org",
     "@type": "Organization",
 
+    "@id": `${company.url}#organization`,
+
     name: company.name,
     url: company.url,
     logo: `${company.url}${company.logo}`,
@@ -40,6 +42,8 @@ export function professionalServiceSchema() {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
 
+    "@id": `${company.url}#professional-service`,
+
     name: company.name,
 
     url: company.url,
@@ -62,6 +66,8 @@ export function websiteSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
+
+    "@id": `${SITE_URL}#website`,
 
     name: company.name,
 

@@ -66,7 +66,7 @@ export default function FeaturedTechnologies() {
             </h3>
 
             <p className="mt-6 text-lg leading-8 text-slate-600">
-              We don't simply build beautiful websites—we engineer high-performance
+              We don&apos;t simply build beautiful websites—we engineer high-performance
               digital platforms using modern web technologies, Technical SEO,
               structured data, semantic architecture, and AI Search Optimization.
               Every project is designed to remain fast, scalable, secure, and

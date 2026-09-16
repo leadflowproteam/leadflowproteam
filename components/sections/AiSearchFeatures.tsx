@@ -1,10 +1,10 @@
 import {
-  Brain,
+  Bot,
+  Building2,
   Database,
-  FileText,
-  Globe,
+  FileSearch,
+  MapPin,
   Network,
-  Sparkles,
 } from "lucide-react";
 
 import Card from "@/components/ui/Card";
@@ -13,69 +13,64 @@ import SectionHeading from "@/components/ui/SectionHeading";
 
 const features = [
   {
-    icon: Brain,
-    title: "AI Search Optimization",
+    icon: Building2,
+    title: "Business & Identity",
     description:
-      "Optimize your website for AI-powered search engines like ChatGPT, Gemini, Claude, and Perplexity.",
+      "Review business name, category, location or service area, services, contact information, hours, positioning, and other core facts that should remain consistent.",
   },
   {
-    icon: Database,
-    title: "Structured Data",
+    icon: FileSearch,
+    title: "Website & Technical Foundation",
     description:
-      "Implement Schema.org markup so AI systems can better understand your business and services.",
+      "Assess crawlability, metadata, headings, internal linking, information architecture, structured data, performance, conversion paths, and content completeness.",
+  },
+  {
+    icon: MapPin,
+    title: "Local Search & Data Consistency",
+    description:
+      "Compare important public business information across the website, local search sources, and relevant listings to identify meaningful inconsistencies.",
+  },
+  {
+    icon: Bot,
+    title: "AI Search Visibility",
+    description:
+      "Test relevant business, service, and location queries and document whether the business is mentioned, omitted, misunderstood, or represented with important factual differences.",
   },
   {
     icon: Network,
-    title: "Entity SEO",
+    title: "Customer Query Testing",
     description:
-      "Strengthen your brand entities and relationships to improve AI understanding and knowledge graph visibility.",
+      "Use a repeatable question set covering service, location, pricing guidance, comparisons, booking, availability, and other high-intent customer questions.",
   },
   {
-    icon: FileText,
-    title: "AI-Friendly Content",
+    icon: Database,
+    title: "Evidence & Opportunity Mapping",
     description:
-      "Create well-structured content that is easy for both users and AI models to interpret.",
-  },
-  {
-    icon: Globe,
-    title: "Generative Engine Optimization",
-    description:
-      "Prepare your website for the future of AI-generated search experiences and answer engines.",
-  },
-  {
-    icon: Sparkles,
-    title: "Future-Proof Strategy",
-    description:
-      "Build a long-term SEO strategy designed for both traditional search engines and modern AI platforms.",
+      "Connect findings to sources, evidence, severity, business impact, competitive impact, fixability, priority, and recommended next action.",
   },
 ];
 
 export default function AiSearchFeatures() {
   return (
-    <Section className="bg-slate-50">
+    <Section className="bg-slate-50 py-20 sm:py-24">
       <SectionHeading
-        badge="AI Search Features"
-        title="Prepare Your Website for the Future of Search"
-        description="We combine technical excellence, structured data, and AI-focused optimization to help your business become more visible across the next generation of search platforms."
+        badge="What We Investigate"
+        title="A Layered View of Business Visibility"
+        description="Our methodology looks at the business as an information system rather than treating AI visibility as a single technical setting."
       />
 
-      <div className="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+      <div className="mt-14 grid gap-7 md:grid-cols-2 xl:grid-cols-3">
         {features.map((feature) => {
           const Icon = feature.icon;
 
           return (
-            <Card
-              key={feature.title}
-              className="group h-full"
-            >
+            <Card key={feature.title} className="group h-full">
               <Card.Body className="flex h-full flex-col">
-                <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white">
-                  <Icon className="h-8 w-8" />
+                <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 text-slate-900 transition-colors duration-300 group-hover:bg-slate-950 group-hover:text-white">
+                  <Icon className="h-7 w-7" aria-hidden="true" />
                 </div>
 
-                <Card.Title>
-                  {feature.title}
-                </Card.Title>
+                <Card.Title>{feature.title}</Card.Title>
 
                 <Card.Description className="grow">
                   {feature.description}

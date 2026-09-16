@@ -3,15 +3,12 @@ import Link from "next/link";
 import {
   ArrowRight,
   Bot,
-  BrainCircuit,
-  Globe2,
-  SearchCheck,
   Sparkles,
-  Zap,
 } from "lucide-react";
 
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
+
 const trustBadges = [
   "Entity SEO",
   "Answer Engine Optimization",
@@ -26,52 +23,6 @@ const platforms = [
   "Claude",
   "Perplexity",
   "Copilot",
-];
-
-const highlights = [
-  {
-    icon: BrainCircuit,
-    title: "Entity SEO",
-    description:
-      "Strengthen entity recognition so AI systems clearly understand your business.",
-  },
-  {
-    icon: SearchCheck,
-    title: "Answer Engine Optimization",
-    description:
-      "Optimize content to appear inside AI-generated answers instead of only traditional search results.",
-  },
-  {
-    icon: Zap,
-    title: "Technical AI Readiness",
-    description:
-      "Improve structured data, semantic architecture, and crawl efficiency for modern AI search.",
-  },
-  {
-    icon: Globe2,
-    title: "Future Search Visibility",
-    description:
-      "Build a website prepared for both search engines and Large Language Models.",
-  },
-];
-
-const metrics = [
-  {
-    value: "100%",
-    label: "AI Search Ready Architecture",
-  },
-  {
-    value: "EEAT",
-    label: "Content Framework",
-  },
-  {
-    value: "Schema",
-    label: "Structured Data",
-  },
-  {
-    value: "Next.js",
-    label: "Performance Optimized",
-  },
 ];
 export default function AiSearchVisibilityHero() {
   return (

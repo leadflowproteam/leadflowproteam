@@ -4,49 +4,53 @@ export default function AiSearchFAQ() {
   return (
     <FAQ
       badge="AI Search Visibility FAQ"
-      title="Frequently Asked Questions"
-      description="Answers to common questions about AI Search Visibility, AI Search Optimization, Entity SEO, and Generative Engine Optimization."
-
+      title="Questions Commercial Businesses Should Ask Before Investing"
+      description="Clear answers about AI Search Visibility, audits, implementation, evidence, and what businesses can realistically expect from the work."
       items={[
         {
           question: "What is AI Search Visibility?",
           answer:
-            "AI Search Visibility is the process of helping AI-powered search platforms such as Google AI Overviews, ChatGPT, Gemini, Claude, and Perplexity better understand your website so they can confidently reference and recommend your business.",
+            "AI Search Visibility is the ability of a business to be discovered, represented, and understood across AI answer systems and related search experiences. Our work measures the current state, identifies information and visibility gaps, and recommends practical improvements.",
         },
         {
-          question: "Is AI Search replacing traditional SEO?",
+          question: "Is this a replacement for traditional SEO?",
           answer:
-            "No. AI Search builds on top of traditional SEO rather than replacing it. A strong Technical SEO foundation, structured data, semantic content, and entity optimization remain essential for both Google Search and AI-powered search experiences.",
+            "No. Technical SEO, crawlability, indexation, structured data, information architecture, and strong website foundations remain important. AI Search Visibility extends the assessment into how business information is discovered and represented across newer answer-driven search experiences.",
         },
         {
-          question: "What is Entity SEO?",
+          question: "What does the audit actually check?",
           answer:
-            "Entity SEO helps search engines and AI systems understand your business, services, locations, and expertise through structured relationships rather than relying only on keywords. It strengthens topical authority and improves AI understanding.",
+            "Depending on scope, the audit can cover business identity, website and technical foundations, local search and information consistency, AI visibility, customer-query testing, reputation and trust signals, competitor comparison, and commercial opportunity prioritization.",
         },
         {
-          question: "Do you implement Schema Markup?",
+          question: "Will you guarantee that AI systems recommend my business?",
           answer:
-            "Yes. We implement structured data including Organization, Service, FAQ, Breadcrumb, Local Business, and other relevant Schema.org markup that improves machine understanding and AI Search Visibility.",
+            "No. AI answers vary by query, context, source, location, and time. We do not promise guaranteed rankings, citations, mentions, or recommendations. We focus on evidence, information quality, consistency, coverage, discoverability, and practical improvements.",
         },
         {
-          question: "Will this improve visibility in Google AI Overviews?",
+          question: "Can an existing website be improved?",
           answer:
-            "Our strategy follows Google's best practices for structured data, semantic content, entity optimization, and Technical SEO, which helps improve eligibility for AI-powered search experiences including Google AI Overviews.",
+            "Yes. An existing website can be assessed for technical, content, structured-data, information-architecture, local, and conversion issues. Where genuine gaps are found, implementation can be scoped around those findings.",
         },
         {
-          question: "Can existing websites be optimized for AI Search?",
+          question: "What happens after the audit?",
           answer:
-            "Absolutely. We can audit your current website, identify technical issues, improve structured data, strengthen content architecture, optimize entities, and prepare the site for modern AI search systems.",
+            "You can use the audit as a standalone decision document, implement the recommendations internally, or engage us for selected improvements. Where appropriate, important changes can then be re-tested and monitored.",
         },
         {
-          question: "How is AI Search Optimization different from Technical SEO?",
+          question: "Do you provide implementation as well as audits?",
           answer:
-            "Technical SEO focuses on crawlability, indexing, website performance, and search engine accessibility, while AI Search Optimization extends those foundations by improving semantic understanding, structured content, entity relationships, and AI-friendly information architecture.",
+            "Yes. Implementation may include website improvements, technical SEO, structured data, business-information updates, local search work, content architecture, conversion improvements, and related visibility work, depending on the findings and agreed scope.",
         },
         {
-          question: "Why should businesses prepare for AI-powered search now?",
+          question: "Who is the best fit for this service?",
           answer:
-            "Search behavior is rapidly evolving. Businesses that prepare early with strong Technical SEO, structured data, semantic content, and entity optimization are more likely to remain visible as AI-powered search becomes increasingly important.",
+            "Our primary commercial focus is businesses with a genuine growth objective that are prepared to invest in professional digital work. The strongest fit is an organization that sees visibility, website quality, information accuracy, and customer acquisition as business priorities.",
+        },
+        {
+          question: "How do you handle evidence and confidential information?",
+          answer:
+            "Important findings should be supported by source information or preserved evidence where practical. Verified facts, observed results, and recommendations are kept distinct, and private client information is not published as public proof without appropriate approval.",
         },
       ]}
     />

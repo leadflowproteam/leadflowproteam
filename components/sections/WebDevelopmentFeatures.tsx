@@ -94,7 +94,7 @@ export default function WebDevelopmentFeatures() {
 
           <p className="mt-6 text-lg leading-8 text-slate-600">
             Every project is developed with a long-term growth strategy in mind.
-            We don't simply build visually appealing websites—we create digital
+            We don&apos;t simply build visually appealing websites—we create digital
             platforms that combine performance, Technical SEO, AI Search
             Readiness, scalability, security, and conversion-focused design to
             help your business attract more qualified visitors and generate

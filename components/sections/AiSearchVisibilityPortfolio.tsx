@@ -1,7 +1,6 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  Bot,
   BrainCircuit,
   Globe,
   SearchCheck,
@@ -175,8 +174,8 @@ export default function AiSearchVisibilityPortfolio() {
               </h4>
 
               <p className="mt-3 text-sm leading-7 text-slate-600">
-                Our implementation aligns with both today's search engines and
-                tomorrow's AI-powered discovery platforms.
+                Our implementation aligns with both today&apos;s search engines and
+                tomorrow&apos;s AI-powered discovery platforms.
               </p>
             </div>
           </div>

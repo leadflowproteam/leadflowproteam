@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "LeadFlowProTeam",
     short_name: "LeadFlowProTeam",
     description:
-      "Modern Web Development, Technical SEO, AI Search Optimization, and Website Performance Solutions.",
+      "AI-ready websites, Technical SEO, and AI Search Visibility for businesses.",
 
     start_url: "/",
     display: "standalone",
