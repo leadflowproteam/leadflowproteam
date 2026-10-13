@@ -7,6 +7,7 @@ import TechnicalSeoBenefits from "@/components/sections/TechnicalSeoBenefits";
 import TechnicalSeoFeatures from "@/components/sections/TechnicalSeoFeatures";
 import TechnicalSeoChecklist from "@/components/sections/TechnicalSeoChecklist";
 import TechnicalSeoProcess from "@/components/sections/TechnicalSeoProcess";
+import ServicePageSchema from "@/components/seo/ServicePageSchema";
 
 import { generateSeo } from "@/lib/seo";
 
@@ -66,6 +67,8 @@ const faqs = [
 export default function TechnicalSeoPage() {
   return (
     <main className="bg-white">
+      <ServicePageSchema slug="technical-seo" />
+
       <TechnicalSeoHero />
 
       <TechnicalSeoBenefits />
