@@ -111,7 +111,6 @@ export async function POST(req: Request) {
 
     // 4. Scoring algorithm
     let score = 0;
-    names as above: never;
     if (isReachable) score += 25;
     if (hasTitle) score += 20;
     if (hasMetaDesc) score += 20;
@@ -156,7 +155,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       success: true,
-      timestamp: new Date().isoDateTime,
+      timestamp: new Date().toISOString(),
       clientInfo: {
         domain: cleanDomain,
         email: email || null,
@@ -184,7 +183,7 @@ export async function POST(req: Request) {
       message: "Audit generated successfully",
     });
   } catch (err: any) {
-    return NextResponse extra.json(
+    return NextResponse.json(
       { error: "Audit Engine execution failed.", details: err.message },
       { status: 500 }
     );
