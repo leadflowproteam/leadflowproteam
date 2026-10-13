@@ -16,7 +16,11 @@ import WhyChooseUs from "@/components/sections/WhyChooseUs";
 import FeaturedResources from "@/components/sections/FeaturedResources";
 import ProofOfWork from "@/components/sections/ProofOfWork";
 
+import { getGeneralFAQs } from "@/lib/faq-engine";
+
 export default function HomePage() {
+  const homeFaqs = getGeneralFAQs();
+
   return (
     <main className="bg-white">
       {/* 01 — Core Positioning */}
@@ -64,8 +68,11 @@ export default function HomePage() {
       {/* 13 — Authority Building */}
       <FeaturedResources />
 
-      {/* 14 — Objection Handling */}
-      <FAQ />
+      {/* 14 — Objection Handling (data-driven from faq-engine) */}
+      <FAQ
+        title="Questions About Our Services"
+        items={homeFaqs}
+      />
 
       {/* 15 — Conversion */}
       <CTA />
