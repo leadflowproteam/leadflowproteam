@@ -5,6 +5,7 @@ import { ChevronDown, HelpCircle } from "lucide-react";
 
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
+import FAQSchema from "@/components/seo/FAQSchema";
 
 type FAQItem = {
   question: string;
@@ -85,6 +86,9 @@ export default function FAQ({
 
   return (
     <section className="bg-white py-20 lg:py-28">
+      {/* FAQPage structured data for AI answer engines */}
+      <FAQSchema items={faqItems} />
+
       <Container>
         <SectionHeading
           badge={sectionEyebrow}
