@@ -176,7 +176,7 @@ export default async function EntityPage({ params }: PageProps) {
 
               <ul className="mt-6 list-disc space-y-3 pl-6 text-gray-600">
                 {content.useCases.map((item) => (
-                  <li key={item}>{li-item-placeholder}
+                  <li key={item}>{item}</li>
                 ))}
               </ul>
             </section>
