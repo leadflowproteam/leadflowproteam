@@ -1,6 +1,7 @@
 import CTA from "@/components/sections/CTA";
 import FAQ from "@/components/sections/FAQ";
 import Hero from "@/components/sections/Hero";
+import HeroFactBlock from "@/components/sections/HeroFactBlock";
 import HowAISeesYourBusiness from "@/components/sections/HowAISeesYourBusiness";
 import AeoGeoAioExplainer from "@/components/sections/AeoGeoAioExplainer";
 import AIVisibilityAudit from "@/components/sections/AIVisibilityAudit";
@@ -20,6 +21,9 @@ export default function HomePage() {
     <main className="bg-white">
       {/* 01 — Core Positioning */}
       <Hero />
+
+      {/* 01.5 — Extractable company facts for AI answer engines */}
+      <HeroFactBlock />
 
       {/* 02 — Explain the Problem */}
       <HowAISeesYourBusiness />
