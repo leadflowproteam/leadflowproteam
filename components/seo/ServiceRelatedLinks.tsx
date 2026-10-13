@@ -26,7 +26,7 @@ export default function ServiceRelatedLinks({ slug }: Props) {
 
   const relatedEntityLinks = (entity?.relatedEntities ?? [])
     .map((entitySlug) => entities.find((item) => item.slug === entitySlug))
-    .filter((item) => Boolean(item))
+    .filter((item): item is (typeof entities)[number] => Boolean(item))
     .filter((item) => item.slug !== slug)
     .slice(0, 6);
 
