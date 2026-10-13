@@ -11,6 +11,7 @@ import RelatedPortfolio from "@/components/sections/RelatedPortfolio";
 
 import RelatedEntities from "@/components/seo/RelatedEntities";
 import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
+import EntityKnowledgeLinks from "@/components/seo/EntityKnowledgeLinks";
 import JsonLd from "@/components/seo/JsonLd";
 
 import KnowledgeGraph from "@/components/knowledge/KnowledgeGraph";
@@ -32,14 +33,10 @@ type PageProps = {
 };
 
 export async function generateStaticParams() {
-  return entities.map((entity) => ({
-    slug: entity.slug,
-  }));
+  return entities.map((entity) => ({ slug: entity.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
 
   const entity = getEntity(slug);
@@ -54,18 +51,14 @@ export async function generateMetadata({
     };
   }
 
-  const entityUrl =
-    `https://leadflowproteam.com/entities/${entity.slug}`;
+  const entityUrl = `https://leadflowproteam.com/entities/${entity.slug}`;
 
   return {
     title: entity.name,
-
     description: entity.description,
-
     alternates: {
       canonical: entityUrl,
     },
-
     openGraph: {
       title: `${entity.name} | LeadFlowProTeam`,
       description: entity.description,
@@ -75,43 +68,27 @@ export async function generateMetadata({
   };
 }
 
-export default async function EntityPage({
-  params,
-}: PageProps) {
+export default async function EntityPage({ params }: PageProps) {
   const { slug } = await params;
 
-  const entity = entities.find(
-    (item) => item.slug === slug,
-  );
+  const entity = entities.find((item) => item.slug === slug);
 
   if (!entity) {
     notFound();
   }
 
-  const content =
-    entityContent[
-      entity.slug as keyof typeof entityContent
-    ];
+  const content = entityContent[entity.slug as keyof typeof entityContent];
 
   const relatedEntitiesData = entity.relatedEntities
-    .map((slug) =>
-      entities.find(
-        (relatedEntity) =>
-          relatedEntity.slug === slug,
-      ),
-    )
+    .map((slug) => entities.find((relatedEntity) => relatedEntity.slug === slug))
     .filter(
-      (
-        relatedEntity,
-      ): relatedEntity is (typeof entities)[number] =>
+      (relatedEntity): relatedEntity is (typeof entities)[number] =>
         relatedEntity !== undefined,
     );
 
   const topicClusterItems = entity.relatedEntities
     .map((slug) => {
-      const related = entities.find(
-        (item) => item.slug === slug,
-      );
+      const related = entities.find((item) => item.slug === slug);
 
       if (!related) {
         return null;
@@ -123,23 +100,16 @@ export default async function EntityPage({
       };
     })
     .filter(
-      (
-        item,
-      ): item is {
-        title: string;
-        href: string;
-      } => item !== null,
+      (item): item is { title: string; href: string } => item !== null,
     );
 
-  const entityUrl =
-    `https://leadflowproteam.com/entities/${entity.slug}`;
+  const entityUrl = `https://leadflowproteam.com/entities/${entity.slug}`;
 
   return (
     <>
       <JsonLd
         data={siteGraph(
           entitySchema(entity),
-
           webpageJsonLd({
             title: `${entity.name} | LeadFlowProTeam`,
             description: entity.description,
@@ -150,18 +120,9 @@ export default async function EntityPage({
 
       <BreadcrumbSchema
         items={[
-          {
-            name: "Home",
-            url: "https://leadflowproteam.com",
-          },
-          {
-            name: "Entities",
-            url: "https://leadflowproteam.com/entities",
-          },
-          {
-            name: entity.name,
-            url: entityUrl,
-          },
+          { name: "Home", url: "https://leadflowproteam.com" },
+          { name: "Entities", url: "https://leadflowproteam.com/entities" },
+          { name: entity.name, url: entityUrl },
         ]}
       />
 
@@ -183,13 +144,9 @@ export default async function EntityPage({
         {content && (
           <>
             <section className="mt-16">
-              <h2 className="text-3xl font-bold text-gray-900">
-                Overview
-              </h2>
+              <h2 className="text-3xl font-bold text-gray-900">Overview</h2>
 
-              <p className="mt-6 leading-8 text-gray-600">
-                {content.summary}
-              </p>
+              <p className="mt-6 leading-8 text-gray-600">{content.summary}</p>
             </section>
 
             <section className="mt-16">
@@ -203,9 +160,7 @@ export default async function EntityPage({
             </section>
 
             <section className="mt-16">
-              <h2 className="text-3xl font-bold text-gray-900">
-                Benefits
-              </h2>
+              <h2 className="text-3xl font-bold text-gray-900">Benefits</h2>
 
               <ul className="mt-6 list-disc space-y-3 pl-6 text-gray-600">
                 {content.benefits.map((item) => (
@@ -221,7 +176,7 @@ export default async function EntityPage({
 
               <ul className="mt-6 list-disc space-y-3 pl-6 text-gray-600">
                 {content.useCases.map((item) => (
-                  <li key={item}>{item}</li>
+                  <li key={item}>{li-item-placeholder}
                 ))}
               </ul>
             </section>
@@ -255,9 +210,9 @@ export default async function EntityPage({
           </h2>
 
           <p className="mt-5 max-w-2xl leading-8 text-gray-600">
-            Our team helps businesses implement modern web
-            development, Technical SEO, AI Search Visibility,
-            and structured website architecture.
+            Our team helps businesses implement modern web development,
+            Technical SEO, AI Search Visibility, and structured website
+            architecture.
           </p>
 
           <a
@@ -269,25 +224,17 @@ export default async function EntityPage({
         </section>
       </main>
 
-      <RelatedEntities
-        entitySlugs={entity.relatedEntities}
-      />
+      <EntityKnowledgeLinks slug={entity.slug} />
 
-      <RelatedServices
-        currentSlug={entity.slug}
-      />
+      <RelatedEntities entitySlugs={entity.relatedEntities} />
 
-      <RelatedResources
-        currentSlug={entity.slug}
-      />
+      <RelatedServices currentSlug={entity.slug} />
 
-      <RelatedPortfolio
-        currentSlug={entity.slug}
-      />
+      <RelatedResources currentSlug={entity.slug} />
 
-      <RelatedTopics
-        currentSlug={entity.slug}
-      />
+      <RelatedPortfolio currentSlug={entity.slug} />
+
+      <RelatedTopics currentSlug={entity.slug} />
     </>
   );
 }
