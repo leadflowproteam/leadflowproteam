@@ -8,6 +8,7 @@ import LandingPageProcess from "@/components/sections/LandingPageProcess";
 import LandingPageTestimonials from "@/components/sections/LandingPageTestimonials";
 import LandingPageChecklist from "@/components/sections/LandingPageChecklist";
 import LandingPagePortfolio from "@/components/sections/LandingPagePortfolio";
+import ServicePageSchema from "@/components/seo/ServicePageSchema";
 
 import { generateSeo } from "@/lib/seo";
 
@@ -26,6 +27,8 @@ export const metadata: Metadata = generateSeo({
 export default function LandingPageDevelopmentPage() {
   return (
     <main className="bg-white">
+      <ServicePageSchema slug="landing-page-development" />
+
       <LandingPageHero />
 
       <LandingPageFeatures />
