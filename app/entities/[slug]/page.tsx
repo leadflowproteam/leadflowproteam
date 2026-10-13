@@ -8,6 +8,7 @@ import RelatedTopics from "@/components/sections/RelatedTopics";
 import RelatedServices from "@/components/sections/RelatedServices";
 import RelatedResources from "@/components/sections/RelatedResources";
 import RelatedPortfolio from "@/components/sections/RelatedPortfolio";
+import RelatedGlossary from "@/components/sections/RelatedGlossary";
 
 import RelatedEntities from "@/components/seo/RelatedEntities";
 import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
@@ -195,6 +196,10 @@ export default async function EntityPage({ params }: PageProps) {
             title="Explore Related Topics"
             items={topicClusterItems}
           />
+        </section>
+
+        <section className="mt-16">
+          <RelatedGlossary relatedEntities={[entity.slug]} />
         </section>
 
         <section className="mt-16">
