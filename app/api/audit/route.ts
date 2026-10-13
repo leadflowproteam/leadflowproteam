@@ -1,12 +1,36 @@
-// app/api/audit/route.ts — Bulletproof In-House Engine
+// app/api/audit/route.ts — In-House Audit Engine with Lead Capture
 import { NextResponse } from "next/server";
+
+// Domain validation: only public, well-formed hostnames are allowed.
+// Blocks SSRF attempts like "localhost", "127.0.0.1", "169.254.x.x", "10.x.x.x",
+// "192.168.x.x", "[::1]", and internal/cloud metadata hosts.
+const PRIVATE_HOST_PATTERNS = [
+  /^localhost$/i,
+  /^127\./,
+  /^0\./,
+  /^10\./,
+  /^192\.168\./,
+  /^169\.254\./,
+  /^172\.(1[6-9]|2\d|3[01])\./,
+  /^\[?::1\]?$/,
+  /^metadata\./i,
+  /^\[?fc00:/i,
+  /^\[?fe80:/i,
+];
+
+function isPublicDomain(domain: string): boolean {
+  // Must look like a normal hostname: letters, digits, hyphens, dots
+  if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(domain)) return false;
+  if (PRIVATE_HOST_PATTERNS.some((p) => p.test(domain))) return false;
+  return true;
+}
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     let { domain, email, name } = body;
 
-    // ১. স্যানিটাইজেশন
+    // 1. Sanitize the domain
     if (!domain || typeof domain !== "string") {
       return NextResponse.json(
         { error: "Please enter a valid website domain." },
@@ -16,9 +40,9 @@ export async function POST(req: Request) {
 
     let cleanDomain = domain.trim().toLowerCase();
     cleanDomain = cleanDomain.replace(/^(https?:\/\/)?(www\.)?/, "");
-    cleanDomain = cleanDomain.replace(/\/.*$/, ""); // রুট পাথ বাদ দেওয়া
+    cleanDomain = cleanDomain.replace(/\/.*$/, "");
 
-    if (!cleanDomain) {
+    if (!cleanDomain || !isPublicDomain(cleanDomain)) {
       return NextResponse.json(
         { error: "Invalid domain format provided." },
         { status: 400 }
@@ -27,13 +51,13 @@ export async function POST(req: Request) {
 
     const targetUrl = `https://${cleanDomain}`;
 
-    // ২. ফলব্যাক সহ সেফ ফেচ
+    // 2. Safe fetch with timeout; never crashes the backend
     let html = "";
     let isReachable = false;
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 6000); // ৬ সেকেন্ড টাইমআউট
+      const timeoutId = setTimeout(() => controller.abort(), 6000);
 
       const res = await fetch(targetUrl, {
         headers: {
@@ -51,19 +75,18 @@ export async function POST(req: Request) {
         html = await res.text();
         isReachable = true;
       }
-    } catch (fetchErr) {
-      // যদি সাইট টাইমআউট বা ব্লক করে, তাহলেও ব্যাকএন্ড ক্র্যাশ করবে না
+    } catch {
       isReachable = false;
     }
 
-    // ৩. টেকনিক্যাল সিগন্যাল ডায়াগনস্টিকস
+    // 3. Technical signal diagnostics
     const hasTitle = /<title[^>]*>(.*?)<\/title>/i.test(html);
     const hasMetaDesc = /<meta[^>]*name=["']description["'][^>]*>/i.test(html);
     const hasCanonical = /<link[^>]*rel=["']canonical["'][^>]*>/i.test(html);
     const hasSchema = /application\/ld\+json/i.test(html);
     const hasH1 = /<h1[^>]*>(.*?)<\/h1>/i.test(html);
 
-    // ৪. স্কোরিং অ্যালগরিদম
+    // 4. Scoring algorithm
     let score = 0;
     if (isReachable) score += 25;
     if (hasTitle) score += 20;
@@ -71,6 +94,40 @@ export async function POST(req: Request) {
     if (hasCanonical) score += 15;
     if (hasH1) score += 10;
     if (hasSchema) score += 10;
+
+    // 5. Lead capture: persist the visitor even if scoring is done.
+    //    Runs best-effort — a lead is never lost because of the save step.
+    let leadSaved = false;
+    if (email && typeof email === "string" && email.includes("@")) {
+      const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
+      if (scriptUrl) {
+        try {
+          const leadResponse = await fetch(scriptUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              domain: cleanDomain,
+              email: email.trim(),
+              name: typeof name === "string" ? name.trim() : "",
+              overallScore: score,
+              status:
+                score >= 70
+                  ? "Healthy"
+                  : score >= 40
+                  ? "Needs Improvement"
+                  : "Critical Risk",
+              timestamp: new Date().toISOString(),
+              source: "instant-audit-engine",
+            }),
+            cache: "no-store",
+          });
+          if (leadResponse.ok) leadSaved = true;
+        } catch {
+          // Lead save failed; do not fail the whole audit response.
+          leadSaved = false;
+        }
+      }
+    }
 
     return NextResponse.json({
       success: true,
@@ -97,6 +154,7 @@ export async function POST(req: Request) {
           schemaMarkup: hasSchema,
         },
       },
+      leadSaved,
       message: "Audit generated successfully",
     });
   } catch (err: any) {
