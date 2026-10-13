@@ -20,6 +20,103 @@ export function organizationSchema() {
 
     email: company.contact.email,
 
+    foundingDate: "2026",
+
+    slogan:
+      "AI-ready websites and evidence-based AI search visibility for commercial businesses.",
+
+    // Remote-first agency: no published street address; country-level address only
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "BD",
+    },
+
+    areaServed: company.markets.primary.map((market) => ({
+      "@type": "Country",
+      name: market,
+    })),
+
+    knowsAbout: [
+      "Answer Engine Optimization (AEO)",
+      "Generative Engine Optimization (GEO)",
+      "AI Optimization (AIO)",
+      "AI Search Visibility",
+      "Technical SEO",
+      "Local SEO",
+      "Entity SEO",
+      "Structured Data",
+      "Schema.org JSON-LD",
+      "Next.js Website Development",
+      "Website Performance Optimization",
+    ],
+
+    makesOffer: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "AI Search Visibility Audit",
+          url: `${company.url}/services/ai-search-visibility-audit`,
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "AI Search Visibility",
+          url: `${company.url}/services/ai-search-visibility`,
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "AI Visibility Framework",
+          url: `${company.url}/services/ai-visibility-framework`,
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Technical SEO",
+          url: `${company.url}/services/technical-seo`,
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Website Audit",
+          url: `${company.url}/services/website-audit`,
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Local SEO",
+          url: `${company.url}/services/local-seo`,
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Web Development",
+          url: `${company.url}/services/web-development`,
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Landing Page Development",
+          url: `${company.url}/services/landing-page-development`,
+        },
+      },
+    ],
+
     sameAs: Object.values(company.social),
 
     contactPoint: [
@@ -239,7 +336,8 @@ export function articleSchema({
     },
 
     mainEntityOfPage: url,
-        ...(entitySlugs && {
+
+    ...(entitySlugs && {
       about: entitySlugs.map((slug) => ({
         "@id": `${company.url}/entities/${slug}#entity`,
       })),
@@ -252,6 +350,7 @@ export function articleSchema({
     }),
   };
 }
+
 /* -------------------------------------------------------------------------- */
 /*                              Creative Work                                 */
 /* -------------------------------------------------------------------------- */
@@ -292,9 +391,7 @@ export function creativeWorkSchema({
       "@id": `${company.url}#organization`,
     },
 
-    image:
-      image ??
-      `${company.url}${company.logo}`,
+    image: image ?? `${company.url}${company.logo}`,
 
     isPartOf: {
       "@id": `${company.url}#website`,
