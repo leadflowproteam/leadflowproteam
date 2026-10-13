@@ -9,6 +9,7 @@ import AiSearchChecklist from "@/components/sections/AiSearchChecklist";
 import AiSearchPortfolio from "@/components/sections/AiSearchPortfolio";
 import AiSearchTestimonials from "@/components/sections/AiSearchTestimonials";
 import AiSearchFAQ from "@/components/sections/AiSearchFAQ";
+import ServicePageSchema from "@/components/seo/ServicePageSchema";
 
 import { generateSeo } from "@/lib/seo";
 
@@ -31,6 +32,8 @@ export const metadata: Metadata = generateSeo({
 export default function AiSearchVisibilityPage() {
   return (
     <main className="bg-white">
+      <ServicePageSchema slug="ai-search-visibility" />
+
       <AiSearchHero />
 
       <AiSearchBenefits />
