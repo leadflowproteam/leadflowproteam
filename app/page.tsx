@@ -2,6 +2,7 @@ import CTA from "@/components/sections/CTA";
 import FAQ from "@/components/sections/FAQ";
 import Hero from "@/components/sections/Hero";
 import HowAISeesYourBusiness from "@/components/sections/HowAISeesYourBusiness";
+import AeoGeoAioExplainer from "@/components/sections/AeoGeoAioExplainer";
 import AIVisibilityAudit from "@/components/sections/AIVisibilityAudit";
 import HowItWorks from "@/components/sections/HowItWorks";
 import TrustBar from "@/components/sections/TrustBar";
@@ -22,6 +23,9 @@ export default function HomePage() {
 
       {/* 02 — Explain the Problem */}
       <HowAISeesYourBusiness />
+
+      {/* 02.5 — Explain AEO, GEO, AIO */}
+      <AeoGeoAioExplainer />
 
       {/* 03 — Core Commercial Offer */}
       <AIVisibilityAudit />

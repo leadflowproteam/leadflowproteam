@@ -9,13 +9,17 @@ import FreeAuditForm from "@/components/sections/FreeAuditForm";
 import FreeAuditHero from "@/components/sections/FreeAuditHero";
 
 export const metadata: Metadata = generateSeo({
-  title: "AI Search Visibility Audit",
+  title: "Free AI Search Visibility Audit - AEO, GEO & AIO Assessment",
   description:
-    "Request an AI Search Visibility Audit to understand how your business is represented across search, local information sources, and AI answer experiences. Identify gaps and practical opportunities for improvement.",
+    "Request a free AI Search Visibility Audit to understand how your business is represented across search, local information sources, and AI answer experiences. Includes Answer Engine Optimization (AEO), Generative Engine Optimization (GEO), and AI optimization assessment.",
   path: "/free-audit",
   keywords: [
-    "AI Search Visibility Audit",
-    "AI Visibility Audit",
+    "Free AI Search Visibility Audit",
+    "AEO Audit",
+    "Answer Engine Optimization Audit",
+    "GEO Audit",
+    "Generative Engine Optimization Audit",
+    "AIO Assessment",
     "AI Search Optimization Audit",
     "Search Visibility Audit",
     "Local Search Audit",

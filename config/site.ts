@@ -12,7 +12,7 @@ export const site = {
   titleTemplate: "%s | LeadFlowProTeam",
 
   description:
-    "LeadFlowProTeam engineers AI-ready websites for service-based businesses with modern Next.js development, Technical SEO, AI Search Visibility, and performance optimization.",
+    "LeadFlowProTeam engineers AI-ready websites for service-based businesses with Answer Engine Optimization (AEO), Generative Engine Optimization (GEO), Technical SEO, AI Search Visibility, and performance optimization.",
 
   url: company.url,
 

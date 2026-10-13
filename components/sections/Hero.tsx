@@ -47,7 +47,7 @@ export default function Hero() {
             {/* Badge */}
             <span className="badge">
               <Sparkles className="h-3.5 w-3.5" />
-              AI Search Visibility
+              AI Search Visibility & Answer Engine Optimization
             </span>
 
             {/* Headline */}
@@ -60,7 +60,7 @@ export default function Hero() {
 
             {/* Sub-headline */}
             <p className="mt-6 max-w-lg text-lg leading-8 text-gray-600">
-              We audit how your business is represented across modern search, local data sources, and AI answer engines like ChatGPT, Gemini, and Perplexity. Find what&apos;s missing, inconsistent, or limiting your visibility — and get a practical roadmap to fix it.
+              We audit how your business is represented across modern search, local data sources, and AI answer engines like ChatGPT, Gemini, and Perplexity. Find what&apos;s missing, inconsistent, or limiting your visibility — and get a practical roadmap to fix it. Includes Answer Engine Optimization (AEO), Generative Engine Optimization (GEO), and AI optimization (AIO) assessment.
             </p>
 
             {/* CTAs */}

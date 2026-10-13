@@ -50,7 +50,7 @@ export const services: readonly Service[] = [
       "Understand and improve how your business is represented across search, local sources, and AI answer systems.",
 
     description:
-      "Our primary service helps commercial businesses understand how search and AI systems currently represent them, identify missing, inconsistent, outdated, or weak information, and improve the digital foundations that influence discovery, trust, and customer action.",
+      "Our primary service helps commercial businesses understand how search and AI systems currently represent them through Answer Engine Optimization (AEO), Generative Engine Optimization (GEO), and AI Search Visibility strategies. We identify missing, inconsistent, outdated, or weak information, and improve the digital foundations that influence discovery, trust, and customer action.",
 
     keywords: [
       "AI Search Visibility",
@@ -59,6 +59,12 @@ export const services: readonly Service[] = [
       "AI Visibility Audit",
       "Search Visibility",
       "AI Search",
+      "AEO",
+      "Answer Engine Optimization",
+      "GEO",
+      "Generative Engine Optimization",
+      "AIO",
+      "AI Answer Optimization",
     ],
 
     industries: [
@@ -105,7 +111,7 @@ export const services: readonly Service[] = [
       "A structured audit showing how AI and search systems currently see your business and where important gaps exist.",
 
     description:
-      "We investigate business identity, website foundations, local information, AI visibility, customer queries, reputation signals, competitors, and commercial opportunities to produce an evidence-based visibility assessment and prioritized action plan.",
+      "We investigate business identity, website foundations, local information, AI visibility, customer queries, reputation signals, competitors, and commercial opportunities to produce an evidence-based visibility assessment covering Answer Engine Optimization (AEO), Generative Engine Optimization (GEO), and AI optimization strategies.",
 
     keywords: [
       "AI Search Visibility Audit",
@@ -113,6 +119,11 @@ export const services: readonly Service[] = [
       "AI Search Audit",
       "AI SEO Audit",
       "Business Visibility Audit",
+      "AEO Audit",
+      "Answer Engine Audit",
+      "GEO Audit",
+      "Generative Search Audit",
+      "AI Answer Audit",
     ],
 
     industries: [
@@ -159,7 +170,7 @@ export const services: readonly Service[] = [
       "A structured framework for improving business information, discoverability, trust, and AI visibility.",
 
     description:
-      "Our framework connects business identity, website and technical foundations, local search information, AI visibility testing, customer queries, reputation, competitive intelligence, and opportunity prioritization into one repeatable process.",
+      "Our framework connects business identity, website and technical foundations, local search information, AI visibility testing, customer queries, reputation, competitive intelligence, and opportunity prioritization into one repeatable process for Answer Engine Optimization (AEO), Generative Engine Optimization (GEO), and AI Search Visibility improvement.",
 
     keywords: [
       "AI Visibility Framework",
@@ -167,6 +178,10 @@ export const services: readonly Service[] = [
       "AI Visibility Strategy",
       "AI Search Strategy",
       "AI Search Optimization Framework",
+      "AEO Framework",
+      "Answer Engine Optimization Framework",
+      "GEO Methodology",
+      "Generative Engine Optimization",
     ],
 
     industries: [

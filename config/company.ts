@@ -141,16 +141,33 @@ export const company = {
   // SEO / Search Topics
   // ---------------------------------------------------------------------------
   keywords: [
+    // Answer Engine & AI Optimization
+    "AEO",
+    "Answer Engine Optimization",
+    "Answer Engine Marketing",
+    "GEO",
+    "Generative Engine Optimization",
+    "Generative Search Optimization",
+    "AIO",
+    "AI Optimization",
+    "AI Overviews Optimization",
+    "AI Answer Optimization",
+    // AI Visibility Core
     "AI Search Visibility",
     "AI Search Visibility Audit",
     "AI Visibility Audit",
+    "ChatGPT Visibility",
+    "Gemini Optimization",
+    "Perplexity Ranking",
+    "AI Search Optimization",
+    // Traditional SEO
     "Search Visibility",
     "Technical SEO",
     "Local SEO",
+    "Entity SEO",
+    // Implementation Services
     "Website Audit",
     "Structured Data",
-    "Entity SEO",
-    "AI Search Optimization",
     "Next.js Website Development",
     "Conversion Optimization",
     "Website Performance",
