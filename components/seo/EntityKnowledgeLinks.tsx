@@ -144,7 +144,7 @@ export default function EntityKnowledgeLinks({ slug }: Props) {
                     href={`/industries/${item.slug}`}
                     className="rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-medium text-slate-800 transition hover:border-blue-600 hover:text-blue-600"
                   >
-                    {item.name}
+                    {item.shortTitle}
                   </Link>
                 ))}
               </div>
