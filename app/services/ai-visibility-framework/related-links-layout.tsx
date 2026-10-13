@@ -1,17 +1,2 @@
-import type { ReactNode } from "react";
-
-import ServiceRelatedLinks from "@/components/seo/ServiceRelatedLinks";
-
-export default function AiVisibilityFrameworkRelatedLinksLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
-  return (
-    <>
-      {children}
-
-      <ServiceRelatedLinks slug="ai-visibility-framework" />
-    </>
-  );
-}
+// This file is intentionally left empty.
+// Related links for this route are rendered by app/services/ai-visibility-framework/layout.tsx
