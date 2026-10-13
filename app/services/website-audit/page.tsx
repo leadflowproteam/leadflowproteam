@@ -6,6 +6,7 @@ import WebsiteAuditFeatures from "@/components/sections/WebsiteAuditFeatures";
 import WebsiteAuditChecklist from "@/components/sections/WebsiteAuditChecklist";
 import WebsiteAuditProcess from "@/components/sections/WebsiteAuditProcess";
 import WebsiteAuditFaq from "@/components/sections/WebsiteAuditFaq";
+import ServicePageSchema from "@/components/seo/ServicePageSchema";
 
 import { generateSeo } from "@/lib/seo";
 
@@ -24,6 +25,8 @@ export const metadata: Metadata = generateSeo({
 export default function WebsiteAuditPage() {
   return (
     <main className="bg-white">
+      <ServicePageSchema slug="website-audit" />
+
       <WebsiteAuditHero />
 
       <WebsiteAuditFeatures />

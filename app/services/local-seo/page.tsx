@@ -7,6 +7,7 @@ import LocalSeoChecklist from "@/components/sections/LocalSeoChecklist";
 import LocalSeoFeatures from "@/components/sections/LocalSeoFeatures";
 import LocalSeoHero from "@/components/sections/LocalSeoHero";
 import LocalSeoProcess from "@/components/sections/LocalSeoProcess";
+import ServicePageSchema from "@/components/seo/ServicePageSchema";
 
 import { generateSeo } from "@/lib/seo";
 
@@ -68,6 +69,8 @@ const faqs = [
 export default function LocalSeoPage() {
   return (
     <main className="bg-white">
+      <ServicePageSchema slug="local-seo" />
+
       <LocalSeoHero />
 
       <LocalSeoBenefits />
