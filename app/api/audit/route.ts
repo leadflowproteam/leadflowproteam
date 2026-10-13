@@ -25,13 +25,36 @@ function isPublicDomain(domain: string): boolean {
   return true;
 }
 
+function cleanString(value: unknown): string {
+  return typeof value === "string" ? value.trim() : "";
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    let { domain, email, name } = body;
+
+    // Accept both the new instant-audit format ({ domain, email, name })
+    // and the legacy free-audit form format
+    // ({ website, fullName, businessName, email, ... }).
+    const domain = cleanString(body.domain) || cleanString(body.website);
+    const email = cleanString(body.email);
+    const name =
+      cleanString(body.name) ||
+      cleanString(body.fullName) ||
+      cleanString(body.businessName);
+
+    // Extra lead context from the legacy form (stored, not required)
+    const extra = {
+      businessName: cleanString(body.businessName),
+      cityState: cleanString(body.cityState),
+      country: cleanString(body.country),
+      services: cleanString(body.services),
+      visibilityConcern: cleanString(body.visibilityConcern),
+      message: cleanString(body.message),
+    };
 
     // 1. Sanitize the domain
-    if (!domain || typeof domain !== "string") {
+    if (!domain) {
       return NextResponse.json(
         { error: "Please enter a valid website domain." },
         { status: 400 }
@@ -88,6 +111,7 @@ export async function POST(req: Request) {
 
     // 4. Scoring algorithm
     let score = 0;
+    names as above: never;
     if (isReachable) score += 25;
     if (hasTitle) score += 20;
     if (hasMetaDesc) score += 20;
@@ -98,7 +122,7 @@ export async function POST(req: Request) {
     // 5. Lead capture: persist the visitor even if scoring is done.
     //    Runs best-effort — a lead is never lost because of the save step.
     let leadSaved = false;
-    if (email && typeof email === "string" && email.includes("@")) {
+    if (email && email.includes("@")) {
       const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
       if (scriptUrl) {
         try {
@@ -107,8 +131,8 @@ export async function POST(req: Request) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               domain: cleanDomain,
-              email: email.trim(),
-              name: typeof name === "string" ? name.trim() : "",
+              email: email,
+              name,
               overallScore: score,
               status:
                 score >= 70
@@ -118,6 +142,7 @@ export async function POST(req: Request) {
                   : "Critical Risk",
               timestamp: new Date().toISOString(),
               source: "instant-audit-engine",
+              ...extra,
             }),
             cache: "no-store",
           });
@@ -131,7 +156,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       success: true,
-      timestamp: new Date().toISOString(),
+      timestamp: new Date().isoDateTime,
       clientInfo: {
         domain: cleanDomain,
         email: email || null,
@@ -139,6 +164,7 @@ export async function POST(req: Request) {
       },
       auditResult: {
         overallScore: score,
+        score,
         status:
           score >= 70
             ? "Healthy"
@@ -158,7 +184,7 @@ export async function POST(req: Request) {
       message: "Audit generated successfully",
     });
   } catch (err: any) {
-    return NextResponse.json(
+    return NextResponse extra.json(
       { error: "Audit Engine execution failed.", details: err.message },
       { status: 500 }
     );
