@@ -104,6 +104,11 @@ export default async function EntityPage({ params }: PageProps) {
       (item): item is { title: string; href: string } => item !== null,
     );
 
+  const glossaryEntitySlugs = [
+    entity.slug,
+    ...entity.relatedEntities,
+  ];
+
   const entityUrl = `https://leadflowproteam.com/entities/${entity.slug}`;
 
   return (
@@ -199,7 +204,7 @@ export default async function EntityPage({ params }: PageProps) {
         </section>
 
         <section className="mt-16">
-          <RelatedGlossary relatedEntities={[entity.slug]} />
+          <RelatedGlossary relatedEntities={glossaryEntitySlugs} />
         </section>
 
         <section className="mt-16">
