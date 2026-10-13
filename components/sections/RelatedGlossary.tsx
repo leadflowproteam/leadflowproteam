@@ -27,19 +27,30 @@ export default function RelatedGlossary({
 
       <div className="mt-8 grid gap-6 md:grid-cols-2">
         {items.map((item) => (
-          <Link
+          <div
             key={item.slug}
-            href={`/glossary/${item.slug}`}
-            className="rounded-xl border p-6 transition hover:border-blue-500"
+            className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition hover:border-blue-300"
           >
-            <h3 className="font-semibold">
+            <h3 className="text-lg font-bold text-gray-900">
               {item.term}
             </h3>
 
-            <p className="mt-3 text-sm text-gray-600">
+            <p className="mt-3 text-sm leading-6 text-gray-600">
               {item.definition}
             </p>
-          </Link>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {item.relatedEntities.map((entitySlug) => (
+                <Link
+                  key={entitySlug}
+                  href={`/entities/${entitySlug}`}
+                  className="rounded-full border border-slate-300 bg-white px-3 py-1 text-xs font-medium text-slate-700 transition hover:border-blue-600 hover:text-blue-600"
+                >
+                  {entitySlug.replace(/-/g, " ")}
+                </Link>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
     </section>
