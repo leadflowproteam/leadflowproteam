@@ -45,7 +45,8 @@ export async function POST(req: Request) {
       cleanString(body.company);
 
     // Extra lead context from the free-audit and contact forms
-    // (stored, not required)
+    // (stored, not required). `source` is kept out of this object so it
+    // can be set explicitly in the lead payload below.
     const extra = {
       businessName: cleanString(body.businessName) || cleanString(body.company),
       cityState: cleanString(body.cityState),
@@ -54,9 +55,9 @@ export async function POST(req: Request) {
       visibilityConcern: cleanString(body.visibilityConcern),
       budget: cleanString(body.budget),
       message: cleanString(body.message),
-      // Contact form may arrive without a website — keep the lead anyway.
-      source: cleanString(body.source) || "contact-form",
     };
+
+    const formSource = cleanString(body.source);
 
     // 1. Email is the minimum requirement for a lead.
     //    Even without a domain (contact form), the lead must be saved.
@@ -146,6 +147,11 @@ export async function POST(req: Request) {
     if (scriptUrl) {
       leadSaveStatus = "attempted";
 
+      const leadSource =
+        formSource === "contact-form" && hasDomain
+          ? "contact-form-with-website"
+          : formSource;
+
       try {
         const leadController = new AbortController();
         const leadTimeoutId = setTimeout(() => leadController.abort(), 8000);
@@ -165,9 +171,7 @@ export async function POST(req: Request) {
                 ? "Needs Improvement"
                 : "Critical Risk",
             timestamp: new Date().toISOString(),
-            source: extra.source === "contact-form" && hasDomain
-              ? "contact-form-with-website"
-              : extra.source,
+            source: leadSource,
             ...extra,
           }),
           signal: leadController.signal,
