@@ -54,8 +54,10 @@ function getSheetsConfig(): SheetsConfig | null {
   return { privateKey: normalizedKey, clientEmail, spreadsheetId, sheetName };
 }
 
-function base64url(input: string): string {
-  return Buffer.from(input)
+// Accepts both strings and Buffer/Uint8Array (e.g. signer.sign() output).
+function base64url(input: string | Uint8Array | ArrayBuffer): string {
+  const buf = Buffer.from(input);
+  return buf
     .toString("base64")
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
