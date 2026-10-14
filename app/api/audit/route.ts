@@ -29,8 +29,34 @@ function cleanString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
+// CORS hardening: the browser enforces CORS for reads, but a malicious
+// site can still fire cross-origin POSTs (CSRF-style). This API is only
+// meant to serve THIS site's own forms, so we verify the Origin header.
+// - Requests with no Origin (curl, Postman, PowerShell tests, server-side
+//   calls) stay allowed — they cannot be initiated by a browser page.
+// - Browsers always send Origin on cross-origin fetch/POST, so only
+//   this site (and local dev) can submit leads from a page.
+const ALLOWED_ORIGINS = new Set<string>([
+  "https://leadflowproteam.com",
+  "https://www.leadflowproteam.com",
+  // Local development servers
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+]);
+
 export async function POST(req: Request) {
   try {
+    // Anti-spam / CSRF protection: reject browser requests from
+    // origins other than this site. Non-browser clients (no Origin
+    // header) pass through; they are server-to-server or CLI tools.
+    const origin = req.headers.get("origin");
+    if (origin && !ALLOWED_ORIGINS.has(origin)) {
+      return NextResponse.json(
+        { error: "Cross-origin requests are not permitted for this API." },
+        { status: 403 }
+      );
+    }
+
     const body = await req.json();
 
     // Accept the instant-audit format ({ domain, email, name }),
