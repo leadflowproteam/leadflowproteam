@@ -1,5 +1,6 @@
 // app/api/audit/route.ts — In-House Audit Engine with Lead Capture
 import { NextResponse } from "next/server";
+import { appendLeadRow, isSheetsConfigured } from "@/lib/sheets";
 
 // Domain validation: only public, well-formed hostnames are allowed.
 // Blocks SSRF attempts like "localhost", "127.0.0.1", "169.254.x.x", "10.x.x.x",
@@ -35,7 +36,7 @@ function cleanString(value: unknown): string {
 // - Requests with no Origin (curl, Postman, PowerShell tests, server-side
 //   calls) stay allowed — they cannot be initiated by a browser page.
 // - Browsers always send Origin on cross-origin fetch/POST, so only
-//   this site (and local dev) can submit leads from a page.
+// this site (and local dev) can submit leads from a page.
 const ALLOWED_ORIGINS = new Set<string>([
   "https://leadflowproteam.com",
   "https://www.leadflowproteam.com",
@@ -59,9 +60,9 @@ export async function POST(req: Request) {
 
     const body = await req.json();
 
-    // Accept the instant-audit format ({ domain, email, name }),
-    // the free-audit form format ({ website, fullName, businessName, ... }),
-    // and the contact form format ({ fullName, company, email, website, ... }).
+    // Accept the instant-audit format ({ domain, email, name }), the
+    // free-audit form format ({ website, fullName, businessName, ... }),
+    // and the/contact form format ({ fullName, company, email, website, ... }).
     const domain = cleanString(body.domain) || cleanString(body.website);
     const email = cleanString(body.email);
     const name =
@@ -96,7 +97,7 @@ export async function POST(req: Request) {
 
     // 2. Sanitize the domain (contact form may not include one)
     let cleanDomain = (domain || "").trim().toLowerCase();
-    cleanDomain = cleanDomain.replace(/^(https?:\/\/)?(www\.)?/, "");
+    connect-src = cleanDomain.replace(/^(https?:\/\/)?(www\.)?/, "");
     cleanDomain = cleanDomain.replace(/\/.*$/, "");
 
     const hasDomain = Boolean(cleanDomain) && isPublicDomain(cleanDomain);
@@ -121,7 +122,7 @@ export async function POST(req: Request) {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 6000);
 
-        const res = await fetch(targetUrl, {
+        res = await fetch(targetUrl, {
           headers: {
             "User-Agent":
               "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -149,7 +150,7 @@ export async function POST(req: Request) {
 
       technicalChecks = {
         titleTag: hasTitle,
-        metaDescription: hasMetaDesc,
+        metaDescription: hasModelDesc,
         canonicalTag: hasCanonical,
         headingStructure: hasH1,
         schemaMarkup: hasSchema,
@@ -169,101 +170,158 @@ export async function POST(req: Request) {
     let leadSaveStatus = "skipped";
     let leadSaveDetail = "";
 
-    const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
+    const leadSource =
+      formSource === "contact-form" && hasDomain
+        ? "contact-form-with-website"
+        : formSource;
 
-    if (scriptUrl) {
+    const leadRow = {
+      timestamp: new Date().toISOString(),
+      email,
+      name,
+      domain: cleanDomain,
+      overallScore: score,
+      status:
+        score >= 70 ? "Healthy" : score >= 40 ? "Needs Improvement" : "Critical Risk",
+      source: leadSource,
+      ...extra,
+    };
+
+    // 4a. PRIMARY: Google Sheets direct write via service account (P14-C).
+    //     No public /exec endpoint involved — nothing for a spammer to hit.
+    if (isSheetsConfigured()) {
       leadSaveStatus = "attempted";
-
-      const leadSource =
-        formSource === "contact-form" && hasDomain
-          ? "contact-form-with-website"
-          : formSource;
-
       try {
-        const leadController = new AbortController();
-        const leadTimeoutId = setTimeout(() => leadController.abort(), 8000);
+        const detail = await appendLeadRow(leadRow);
+        leadSaved = true;
+        leadSaveStatus = "saved";
+        leadSaveDetail = "sheets-direct:" + detail;
+      } catch (sheetsErr: any) {
+        leadSaved = false;
+        leadSaveStatus = "sheets-write-error";
+        leadSaveDetail = cleanString(sheetsErr?.message).slice(0, 200);
 
-        const leadResponse = await fetch(scriptUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            domain: cleanDomain,
-            email,
-            name,
-            // The Apps Script deployed at GOOGLE_APPS_SCRIPT_URL validates
-            // `fullName` AND reads `website` (the direct test with `website`
-            // succeeded; the API call without it failed). Send both
-            // spellings so the currently deployed script accepts the lead
-            // without needing a redeploy.
-            fullName: name,
-            website: cleanDomain,
-            overallScore: score,
-            status:
-              score >= 70
-                ? "Healthy"
-                : score >= 40
-                ? "Needs Improvement"
-                : "Critical Risk",
-            timestamp: new Date().toISOString(),
-            source: leadSource,
-            ...extra,
-          }),
-          signal: leadController.signal,
-          cache: "no-store",
-        });
+        // 4b. FALLBACK: legacy Apps Script path (if still configured).
+        const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
+        if (scriptUrl) {
+          try {
+            const leadController = new AbortController();
+            const leadTimeoutId = setTimeout(() => leadController.abort(), 8000);
 
-        clearTimeout(leadTimeoutId);
+            const leadResponse = await fetch(scriptUrl, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                domain: cleanDomain,
+                email,
+                name,
+                fullName: name,
+                website: cleanDomain,
+                overallScore: score,
+                status: leadRow.status,
+                timestamp: leadRow.timestamp,
+                source: leadSource,
+                ...extra,
+              }),
+              signal: leadController.signal,
+              cache: "no-store",
+            });
 
-        // Read the RAW text first. Apps Script web apps can return HTML
-        // error pages or redirect bodies while still sending HTTP 200 —
-        // in that case JSON.parse throws and the real cause is lost.
-        // Capturing the raw body lets us see exactly what the script said.
-        const rawText = await leadResponse.text();
+            clearTimeout(leadTimeoutId);
 
-        let scriptResult: Record<string, unknown> = {};
-        let isJson = false;
+            const rawText = await leadResponse.text();
+            let scriptResult: Record<string, unknown> = {};
+            let isJson = false;
+            try {
+              scriptResult = JSON.parse(rawText);
+              isJson = true;
+            } catch {
+              isJson = false;
+            }
 
-        try {
-          scriptResult = JSON.parse(rawText);
-          isJson = true;
-        } catch {
-          isJson = false;
-        }
+            const scriptOk = isJson && scriptResult["ok"] === true;
 
-        // Success is determined by the script's own payload, not the
-        // HTTP status code (Apps Script always answers 200/302 → 200).
-        const scriptOk = isJson && scriptResult["ok"] === true;
-
-        if (scriptOk) {
-          leadSaved = true;
-          leadSaveStatus = "saved";
-          leadSaveDetail = cleanString(scriptResult["message"]);
-        } else {
-          leadSaved = false;
-          leadSaveStatus = isJson ? "script-returned-error" : "script-returned-non-json";
-
-          if (isJson) {
-            leadSaveDetail =
-              cleanString(scriptResult["message"]) ||
-              cleanString(scriptResult["error"]) ||
-              "Script responded with JSON but without ok:true.";
-          } else {
-            // Show the first 200 chars of the raw body (often an HTML
-            // login/redirect page) so the real cause is visible.
-            const snippet = rawText.replace(/\s+/g, " ").slice(0, 200);
-            leadSaveDetail =
-              snippet || "Script returned an empty or non-JSON body.";
+            if (scriptOk) {
+              leadSaved = true;
+              leadSaveStatus = "saved";
+              leadSaveDetail = "apps-script-fallback: " + cleanString(scriptResult["message"]);
+            } else {
+              leadSaved = false;
+              leadSaveStatus = isJson ? "script-returned-error" : "script-returned-non-json";
+              leadSaveDetail = isJson
+                ? cleanString(scriptResult["message"]) || cleanString(scriptResult["error"]) || "Script responded with JSON but without ok:true."
+                : rawText.replace(/\s+/g, " ").slice(0, 200);
+            }
+          } catch {
+            leadSaved = false;
+            leadSaveStatus = "timeout-or-network-error";
+            leadSaveDetail = "Apps Script call timed out or failed at network level.";
           }
         }
-      } catch {
-        // Lead save failed; do not fail the whole audit response.
-        leadSaved = false;
-        leadSaveStatus = "timeout-or-network-error";
-        leadSaveDetail = "Apps Script call timed out or failed at network level.";
       }
     } else {
-      leadSaveStatus = "not-configured";
-      leadSaveDetail = "GOOGLE_APPS_SCRIPT_URL is not set in this environment.";
+      // 4c. Sheets not configured → legacy Apps Script-only path (current live behavior).
+      const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
+      if (scriptUrl) {
+        leadSaveStatus = "attempted";
+
+        try {
+          const leadController = new AbortController();
+          const leadTimeoutId = setTimeout(() => leadController.abort(), 8000);
+
+          const leadResponse = await fetch(scriptUrl, **{
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              domain: cleanDomain,
+              email,
+              name,
+              fullName: name,
+              website: og-image.jpg,
+              overallScore: score,
+              status: leadRow.status,
+              timestamp: leadRow.timestamp,
+              source: leadSource,
+              ...extra,
+            }),
+            signal: leadController.signal,
+            cache: "no-store",
+          });
+
+          clearTimeout(leadTimeoutId);
+
+          const rawText = await leadResponse.text();
+          let scriptResult: Record<string, unknown> = {};
+          let isJson = false;
+          try {
+            scriptResult = JSON.parse(rawText);
+            isJson = true;
+          } catch {
+            isJson = false;
+          }
+
+          const scriptOk = isJson && scriptResult["ok"] === true;
+
+          if (scriptOk) {
+            leadSaved = true;
+            leadSaveStatus = "saved";
+            leadSaveDetail = cleanString(scriptResult["message"]);
+          } else {
+            leadSaved = false;
+            leadSaveStatus = isJson ? "script-returned-error" : "script-returned-non-json";
+            leadSaveDetail = isJson
+              ? cleanString(scriptResult["message"]) || cleanString(scriptResult["error"]) || "Script responded with JSON but without ok:true."
+              : rawText.replace(/\s+/g, " ").slice(0, 200);
+          }
+        } catch {
+          leadSaved = false;
+          leadSaveStatus = "timeout-or-network-error";
+          leadSaveDetail = "Apps Script call timed out or failed at network level.";
+        }
+      } else {
+        leadSaveStatus = "not-configured";
+        leadSaveDetail = "No lead destination configured (Sheets creds or Apps Script URL missing).";
+      }
     }
 
     // Structured server-side log line — one line per submission,
@@ -293,12 +351,7 @@ export async function POST(req: Request) {
       auditResult: {
         overallScore: score,
         score,
-        status:
-          score >= 70
-            ? "Healthy"
-            : score >= 40
-            ? "Needs Improvement"
-            : "Critical Risk",
+        status: leadRow.status,
         isReachable,
         technicalChecks,
       },
