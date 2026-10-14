@@ -29,6 +29,8 @@ const initialFormData: FormData = {
 export default function ContactForm() {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   function handleChange(
     e: React.ChangeEvent<
@@ -41,14 +43,59 @@ export default function ContactForm() {
       ...current,
       [name]: value,
     }));
+
+    if (error) {
+      setError("");
+    }
+
+    if (submitted) {
+      setSubmitted(false);
+    }
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    // Temporary client-side submission state.
-    // API / CRM integration will be added later.
-    setSubmitted(true);
+    if (submitting) {
+      return;
+    }
+
+    setSubmitting(true);
+    setSubmitted(false);
+    setError("");
+
+    try {
+      const response = await fetch("/api/audit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          source: "contact-form",
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || result?.error) {
+        throw new Error(
+          result?.error ??
+            "Unable to send your message. Please try again.",
+        );
+      }
+
+      setSubmitted(true);
+      setFormData(initialFormData);
+    } catch (submitError) {
+      setError(
+        submitError instanceof Error
+          ? submitError.message
+          : "Unable to send your message. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -160,15 +207,29 @@ export default function ContactForm() {
               className="rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-700"
             >
               Thank you for contacting LeadFlowProTeam. Your message has been
-              received.
+              received. We&apos;ll respond within one business day.
+            </div>
+          )}
+
+          {error && (
+            <div
+              role="alert"
+              className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700"
+            >
+              {error}
             </div>
           )}
 
           <Button
             type="submit"
             size="lg"
+            disabled={submitting}
           >
-            {submitted ? "Message Received" : "Send Message"}
+            {submitting
+              ? "Sending..."
+              : submitted
+                ? "Message Received"
+                : "Send Message"}
           </Button>
         </form>
       </Container>
