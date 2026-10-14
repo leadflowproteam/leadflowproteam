@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import JsonLd from "@/components/seo/JsonLd";
 import EntityList from "@/components/seo/EntityList";
+import AuthorByline from "@/components/seo/AuthorByline";
 
 import RelatedResources from "@/components/sections/RelatedResources";
 import RelatedServices from "@/components/sections/RelatedServices";
@@ -12,7 +13,6 @@ import { resourceContents } from "@/data/resource-content";
 import { resourceLinks } from "@/lib/resource-links";
 import { siteGraph } from "@/lib/jsonld/site-graph";
 import InternalLinks from "@/lib/seo/InternalLinks";
-
 
 import {
   articleSchema,
@@ -35,7 +35,6 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-
   const article = resources.find(
     (item) => item.slug === slug,
   );
@@ -65,7 +64,6 @@ export default async function ResourceArticlePage({
   params,
 }: PageProps) {
   const { slug } = await params;
-
   const article = resources.find(
     (item) => item.slug === slug,
   );
@@ -74,41 +72,43 @@ export default async function ResourceArticlePage({
     notFound();
   }
 
-  const content = 
-  resourceContents.find(
+  const content = resourceContents.find(
     (item) => item.slug === slug,
   );
   const links = resourceLinks[article.slug];
 
+  const authorSlug = "leadflowproteam";
+
   return (
     <>
       <JsonLd
-  data={siteGraph(
-    articleSchema({
-      title: article.title,
-      description: article.description,
-      url: article.canonicalUrl,
-      published: article.publishedAt,
-      entitySlugs: links?.entities,
-      serviceSlugs: links?.services,
-    }),
+        data={siteGraph(
+          articleSchema({
+            title: article.title,
+            description: article.description,
+            url: article.canonicalUrl,
+            published: article.publishedAt,
+            entitySlugs: links?.entities,
+            serviceSlugs: links?.services,
+            authorSlug,
+          }),
 
-    breadcrumbSchema([
-      {
-        name: "Home",
-        url: "https://leadflowproteam.com",
-      },
-      {
-        name: "Resources",
-        url: "https://leadflowproteam.com/resources",
-      },
-      {
-        name: article.title,
-        url: article.canonicalUrl,
-      },
-    ])
-  )}
-/>
+          breadcrumbSchema([
+            {
+              name: "Home",
+              url: "https://leadflowproteam.com",
+            },
+            {
+              name: "Resources",
+              url: "https://leadflowproteam.com/resources",
+            },
+            {
+              name: article.title,
+              url: article.canonicalUrl,
+            },
+          ])
+        )}
+      />
 
       <main className="mx-auto max-w-4xl px-6 py-20">
         <div className="mb-6">
@@ -133,13 +133,10 @@ export default async function ResourceArticlePage({
           {article.description}
         </p>
 
-        <EntityList
-          entities={article.entityKeywords}
-        />
+        <EntityList entities={article.entityKeywords} />
 
         {content ? (
           <article className="prose prose-lg mt-12 max-w-none">
-
             <p>{content.introduction}</p>
 
             {content.sections.map((section) => (
@@ -160,9 +157,7 @@ export default async function ResourceArticlePage({
             </section>
 
             <section className="mt-12">
-              <h2>
-                Frequently Asked Questions
-              </h2>
+              <h2>Frequently Asked Questions</h2>
 
               {content.faqs.map((faq) => (
                 <div
@@ -175,7 +170,6 @@ export default async function ResourceArticlePage({
                 </div>
               ))}
             </section>
-
           </article>
         ) : (
           <div className="mt-12 rounded-2xl border border-dashed border-gray-300 bg-slate-50 p-8">
@@ -190,6 +184,8 @@ export default async function ResourceArticlePage({
             </p>
           </div>
         )}
+
+        <AuthorByline authorSlug={authorSlug} />
       </main>
 
       <InternalLinks
@@ -217,9 +213,7 @@ export default async function ResourceArticlePage({
         currentSlug={article.relatedServices[0]}
       />
 
-      <RelatedResources
-        currentSlug={article.slug}
-      />
+      <RelatedResources currentSlug={article.slug} />
     </>
   );
 }
