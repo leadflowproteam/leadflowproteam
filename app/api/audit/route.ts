@@ -165,9 +165,12 @@ export async function POST(req: Request) {
             email,
             name,
             // The Apps Script deployed at GOOGLE_APPS_SCRIPT_URL validates
-            // a `fullName` field. Send BOTH spellings so the existing
-            // deployment accepts the lead without needing a redeploy.
+            // `fullName` AND reads `website` (the direct test with `website`
+            // succeeded; the API call without it failed). Send both
+            // spellings so the currently deployed script accepts the lead
+            // without needing a redeploy.
             fullName: name,
+            website: cleanDomain,
             overallScore: score,
             status:
               score >= 70
@@ -185,33 +188,46 @@ export async function POST(req: Request) {
 
         clearTimeout(leadTimeoutId);
 
-        // Read the script's response body. Apps Script web apps return
-        // HTTP 200 even for logical failures ({ ok: false, message }),
-        // so the status code alone can't tell us whether the row was
-        // actually written. Inspect the JSON payload instead.
+        // Read the RAW text first. Apps Script web apps can return HTML
+        // error pages or redirect bodies while still sending HTTP 200 —
+        // in that case JSON.parse throws and the real cause is lost.
+        // Capturing the raw body lets us see exactly what the script said.
+        const rawText = await leadResponse.text();
+
         let scriptResult: Record<string, unknown> = {};
+        let isJson = false;
 
         try {
-          scriptResult = await leadResponse.json();
+          scriptResult = JSON.parse(rawText);
+          isJson = true;
         } catch {
-          scriptResult = {};
+          isJson = false;
         }
 
-        const scriptOk = scriptResult["ok"] === true;
+        // Success is determined by the script's own payload, not the
+        // HTTP status code (Apps Script always answers 200/302 → 200).
+        const scriptOk = isJson && scriptResult["ok"] === true;
 
-        if (leadResponse.ok && scriptOk) {
+        if (scriptOk) {
           leadSaved = true;
           leadSaveStatus = "saved";
+          leadSaveDetail = cleanString(scriptResult["message"]);
         } else {
           leadSaved = false;
-          leadSaveStatus = scriptOk
-            ? `script-returned-${leadResponse.status}`
-            : "script-returned-error";
+          leadSaveStatus = isJson ? "script-returned-error" : "script-returned-non-json";
 
-          leadSaveDetail =
-            cleanString(scriptResult["message"]) ||
-            cleanString(scriptResult["error"]) ||
-            "Script responded without a valid success payload.";
+          if (isJson) {
+            leadSaveDetail =
+              cleanString(scriptResult["message"]) ||
+              cleanString(scriptResult["error"]) ||
+              "Script responded with JSON but without ok:true.";
+          } else {
+            // Show the first 200 chars of the raw body (often an HTML
+            // login/redirect page) so the real cause is visible.
+            const snippet = rawText.replace(/\s+/g, " ").slice(0, 200);
+            leadSaveDetail =
+              snippet || "Script returned an empty or non-JSON body.";
+          }
         }
       } catch {
         // Lead save failed; do not fail the whole audit response.
