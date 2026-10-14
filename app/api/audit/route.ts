@@ -33,7 +33,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    // Accept both the new instant-audit format ({ domain, email, name })
+    // Accept both the instant-audit format ({ domain, email, name })
     // and the legacy free-audit form format
     // ({ website, fullName, businessName, email, ... }).
     const domain = cleanString(body.domain) || cleanString(body.website);
@@ -121,10 +121,21 @@ export async function POST(req: Request) {
     // 5. Lead capture: persist the visitor even if scoring is done.
     //    Runs best-effort — a lead is never lost because of the save step.
     let leadSaved = false;
+    let leadSaveStatus = "skipped";
+
     if (email && email.includes("@")) {
       const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
+
       if (scriptUrl) {
+        leadSaveStatus = "attempted";
+
         try {
+          const leadController = new AbortController();
+          const leadTimeoutId = setTimeout(
+            () => leadController.abort(),
+            8000,
+          );
+
           const leadResponse = await fetch(scriptUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -143,15 +154,41 @@ export async function POST(req: Request) {
               source: "instant-audit-engine",
               ...extra,
             }),
+            signal: leadController.signal,
             cache: "no-store",
           });
-          if (leadResponse.ok) leadSaved = true;
+
+          clearTimeout(leadTimeoutId);
+
+          if (leadResponse.ok) {
+            leadSaved = true;
+            leadSaveStatus = "saved";
+          } else {
+            leadSaveStatus = `script-returned-${leadResponse.status}`;
+          }
         } catch {
           // Lead save failed; do not fail the whole audit response.
           leadSaved = false;
+          leadSaveStatus = "timeout-or-network-error";
         }
+      } else {
+        leadSaveStatus = "not-configured";
       }
     }
+
+    // Structured server-side log line — one line per submission,
+    // greppable in Vercel logs for lead-capture debugging.
+    console.log(
+      JSON.stringify({
+        event: "audit_submission",
+        domain: cleanDomain,
+        hasEmail: Boolean(email),
+        score,
+        leadSaved,
+        leadSaveStatus,
+        timestamp: new Date().toISOString(),
+      }),
+    );
 
     return NextResponse.json({
       success: true,
@@ -180,6 +217,7 @@ export async function POST(req: Request) {
         },
       },
       leadSaved,
+      leadSaveStatus,
       message: "Audit generated successfully",
     });
   } catch (err: any) {
