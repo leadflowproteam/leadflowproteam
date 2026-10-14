@@ -38,6 +38,26 @@ const securityHeaders = [
     key: "X-Frame-Options",
     value: "SAMEORIGIN",
   },
+  // Cross-Origin isolation headers:
+  // - COOP same-origin: pages cannot be interacted with cross-origin
+  //   windows (blocks some XS-Leaks / tab-nabbing attacks).
+  // - COEP require-corp: the document refuses cross-origin subresources
+  //   lacking CORP headers. Safe because this repo loads no cross-origin
+  //   subresources (verified: no third-party scripts/images/iframes).
+  // - CORP same-origin: our own resources are protected from being
+  //   embedded by other origins (complements CSP frame-ancestors).
+  {
+    key: "Cross-Origin-Opener-Policy",
+    value: "same-origin",
+  },
+  {
+    key: "Cross-Origin-Embedder-Policy",
+    value: "require-corp",
+  },
+  {
+    key: "Cross-Origin-Resource-Policy",
+    value: "same-origin",
+  },
   {
     key: "Referrer-Policy",
     value: "strict-origin-when-cross-origin",
@@ -53,10 +73,6 @@ const securityHeaders = [
   {
     key: "Strict-Transport-Security",
     value: "max-age=63072000; includeSubDomains; preload",
-  },
-  {
-    key: "X-XSS-Protection",
-    value: "1; mode=block",
   },
 ];
 
