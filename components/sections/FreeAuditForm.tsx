@@ -78,15 +78,21 @@ export default function FreeAuditForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          source: "free-audit-form",
+        }),
       });
 
       const result = await response.json();
 
-      if (!response.ok || !result.ok) {
+      // The API returns { success: true } — response.ok reflects the
+      // HTTP status. Accept either so a saved lead is never shown
+      // as an error to the visitor.
+      if (!response.ok || result?.error) {
         throw new Error(
-          result.message ??
-            "Unable to submit your audit request.",
+          result?.error ??
+            "Unable to submit your audit request. Please try again.",
         );
       }
 
