@@ -10,6 +10,13 @@ const siteTitle =
 const siteDescription =
   "LeadFlowProTeam helps businesses understand and improve how they are represented across search, local information sources, and AI answer systems through evidence-based AI Search Visibility audits, practical implementation, and ongoing optimization.";
 
+// P16-C: dynamic OG images rendered on the fly by /api/og (next/og).
+// Same-origin endpoint — fully compatible with the strict CSP (img-src 'self').
+// Pages can pass their own title via the `title` query param.
+const ogImageUrl = `/api/og?title=${encodeURIComponent(
+  "See How AI Sees Your Business",
+)}&subtitle=${encodeURIComponent("AI Search Visibility Audit")}`;
+
 const metadata: Metadata = {
   metadataBase: new URL(brand.url),
 
@@ -79,7 +86,7 @@ const metadata: Metadata = {
 
     images: [
       {
-        url: "/images/og-image.jpg",
+        url: ogImageUrl,
         width: 1200,
         height: 630,
         alt: "LeadFlowProTeam — AI Search Visibility",
@@ -91,7 +98,7 @@ const metadata: Metadata = {
     card: "summary_large_image",
     title: siteTitle,
     description: siteDescription,
-    images: ["/images/og-image.jpg"],
+    images: [ogImageUrl],
   },
 
   icons: {
