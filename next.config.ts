@@ -1,35 +1,16 @@
 import type { NextConfig } from "next";
 
-// Content-Security-Policy:
-// - default-src 'self' — everything must come from this origin by default.
-// - script-src/style-src 'unsafe-inline' — Next.js injects inline bootstrap
-//   and hydration scripts/styles (self.__next_f.push, RSC payload). Removing
-//   'unsafe-inline' breaks hydration; nonce-based CSP requires middleware
-//   and is a follow-up hardening step if desired.
-// - font-src 'self' — next/font/google self-hosts fonts at build time, so
-//   no fonts.gstatic.com is needed.
+// Content-Security-Policy is now emitted per-request by middleware.ts
+// (P15) with a unique nonce on script-src. Do NOT add a static CSP here —
+// sending two CSP headers would let the weaker (unsafe-inline) policy
+// weaken the nonce-based one in some browsers.
+// - style-src keeps 'unsafe-inline' (handled in middleware) because
+//   Next.js inlines critical styles; scripts are nonce-gated.
+// - font-src 'self' — next/font/google self-hosts fonts at build time.
 // - img-src data:/blob: — Next.js image optimizer and inline placeholders.
 // - frame-ancestors 'self' — complements X-Frame-Options (Clickjacking).
-// - form-action/base-uri 'self', object-src 'none' — no form hijacking,
-//   no <object>/<embed>, no base tag hijacking.
-const CSP = [
-  "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
-  "font-src 'self' data:",
-  "connect-src 'self'",
-  "frame-ancestors 'self'",
-  "form-action 'self'",
-  "base-uri 'self'",
-  "object-src 'none'",
-].join("; ");
 
 const securityHeaders = [
-  {
-    key: "Content-Security-Policy",
-    value: CSP,
-  },
   {
     key: "X-Content-Type-Options",
     value: "nosniff",
