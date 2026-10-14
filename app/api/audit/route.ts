@@ -1,5 +1,25 @@
 // app/api/audit/route.ts — In-House Audit Engine with Lead Capture
 import { NextResponse } from "next/server";
+import { appendLeadRow, isSheetsConfigured } from "@/lib/sheets";
+
+// P11 self-heal: the production env was verified (Select-String on
+// .env.vercel-prod) to still contain the KNOWN-DEAD deployment URL.
+// Instead of requiring a manual Vercel dashboard edit + redeploy, the
+// code detects the dead URL and automatically uses the live one.
+// Once GOOGLE_APPS_SCRIPT_URL is updated in Vercel, or the P14-C
+// service-account path is configured, this guard becomes a no-op.
+const DEAD_APPS_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbweMe9RIQutTQCxiYmVaPkn8fUSXARZCpX-MHaRp7waPIW8BK18V01rv1PnpGawvB0W/exec";
+
+const LIVE_APPS_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwrOvUUTTPA7dVzin0cHy_2rIAeyzj5o1Ov1oOgH0vYDVfkMEc3hVr2lRwrCnzKjmHW/exec";
+
+function resolveAppsScriptUrl(): string {
+  const fromEnv = process.env.GOOGLE_APPS_SCRIPT_URL?.trim();
+  if (!fromEnv) return LIVE_APPS_SCRIPT_URL;
+  if (fromEnv === DEAD_APPS_SCRIPT_URL) return LIVE_APPS_SCRIPT_URL;
+  return fromEnv;
+}
 
 // Domain validation: only public, well-formed hostnames are allowed.
 // Blocks SSRF attempts like "localhost", "127.0.0.1", "169.254.x.x", "10.x.x.x",
@@ -35,7 +55,7 @@ function cleanString(value: unknown): string {
 // - Requests with no Origin (curl, Postman, PowerShell tests, server-side
 //   calls) stay allowed — they cannot be initiated by a browser page.
 // - Browsers always send Origin on cross-origin fetch/POST, so only
-//   this site (and local dev) can submit leads from a page.
+// this site (and local dev) can submit leads from a page.
 const ALLOWED_ORIGINS = new Set<string>([
   "https://leadflowproteam.com",
   "https://www.leadflowproteam.com",
@@ -59,8 +79,8 @@ export async function POST(req: Request) {
 
     const body = await req.json();
 
-    // Accept the instant-audit format ({ domain, email, name }),
-    // the free-audit form format ({ website, fullName, businessName, ... }),
+    // Accept the instant-audit format ({ domain, email, name }), the
+    // free-audit form format ({ website, fullName, businessName, ... }),
     // and the contact form format ({ fullName, company, email, website, ... }).
     const domain = cleanString(body.domain) || cleanString(body.website);
     const email = cleanString(body.email);
@@ -169,15 +189,38 @@ export async function POST(req: Request) {
     let leadSaveStatus = "skipped";
     let leadSaveDetail = "";
 
-    const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
+    const leadSource =
+      formSource === "contact-form" && hasDomain
+        ? "contact-form-with-website"
+        : formSource;
 
-    if (scriptUrl) {
-      leadSaveStatus = "attempted";
+    const leadRow = {
+      timestamp: new Date().toISOString(),
+      email,
+      name,
+      domain: cleanDomain,
+      overallScore: score,
+      status:
+        score >= 70 ? "Healthy" : score >= 40 ? "Needs Improvement" : "Critical Risk",
+      source: leadSource,
+      ...extra,
+    };
 
-      const leadSource =
-        formSource === "contact-form" && hasDomain
-          ? "contact-form-with-website"
-          : formSource;
+    // Shared legacy path: POST the lead to the Apps Script web app.
+    // Returns via out-params style object; caller maps to response fields.
+    async function saveViaAppsScript(): Promise<{
+      saved: boolean;
+      status: string;
+      detail: string;
+    }> {
+      const scriptUrl = resolveAppsScriptUrl();
+      if (!scriptUrl) {
+        return {
+          saved: false,
+          status: "not-configured",
+          detail: "GOOGLE_APPS_SCRIPT_URL is not set in this environment.",
+        };
+      }
 
       try {
         const leadController = new AbortController();
@@ -198,13 +241,8 @@ export async function POST(req: Request) {
             fullName: name,
             website: cleanDomain,
             overallScore: score,
-            status:
-              score >= 70
-                ? "Healthy"
-                : score >= 40
-                ? "Needs Improvement"
-                : "Critical Risk",
-            timestamp: new Date().toISOString(),
+            status: leadRow.status,
+            timestamp: leadRow.timestamp,
             source: leadSource,
             ...extra,
           }),
@@ -217,7 +255,6 @@ export async function POST(req: Request) {
         // Read the RAW text first. Apps Script web apps can return HTML
         // error pages or redirect bodies while still sending HTTP 200 —
         // in that case JSON.parse throws and the real cause is lost.
-        // Capturing the raw body lets us see exactly what the script said.
         const rawText = await leadResponse.text();
 
         let scriptResult: Record<string, unknown> = {};
@@ -235,35 +272,68 @@ export async function POST(req: Request) {
         const scriptOk = isJson && scriptResult["ok"] === true;
 
         if (scriptOk) {
-          leadSaved = true;
-          leadSaveStatus = "saved";
-          leadSaveDetail = cleanString(scriptResult["message"]);
-        } else {
-          leadSaved = false;
-          leadSaveStatus = isJson ? "script-returned-error" : "script-returned-non-json";
+          return {
+            saved: true,
+            status: "saved",
+            detail: cleanString(scriptResult["message"]),
+          };
+        }
 
-          if (isJson) {
-            leadSaveDetail =
+        if (isJson) {
+          return {
+            saved: false,
+            status: "script-returned-error",
+            detail:
               cleanString(scriptResult["message"]) ||
               cleanString(scriptResult["error"]) ||
-              "Script responded with JSON but without ok:true.";
-          } else {
-            // Show the first 200 chars of the raw body (often an HTML
-            // login/redirect page) so the real cause is visible.
-            const snippet = rawText.replace(/\s+/g, " ").slice(0, 200);
-            leadSaveDetail =
-              snippet || "Script returned an empty or non-JSON body.";
-          }
+              "Script responded with JSON but without ok:true.",
+          };
         }
+
+        // Show the first 200 chars of the raw body (often an HTML
+        // login/redirect page) so the real cause is visible.
+        const snippet = rawText.replace(/\s+/g, " ").slice(0, 200);
+        return {
+          saved: false,
+          status: "script-returned-non-json",
+          detail: snippet || "Script returned an empty or non-JSON body.",
+        };
       } catch {
-        // Lead save failed; do not fail the whole audit response.
+        return {
+          saved: false,
+          status: "timeout-or-network-error",
+          detail: "Apps Script call timed out or failed at network level.",
+        };
+      }
+    }
+
+    // 4a. PRIMARY: Google Sheets direct write via service account (P14-C).
+    //     No public /exec endpoint involved — nothing for a spammer to hit.
+    if (isSheetsConfigured()) {
+      leadSaveStatus = "attempted";
+      try {
+        const detail = await appendLeadRow(leadRow);
+        leadSaved = true;
+        leadSaveStatus = "saved";
+        leadSaveDetail = "sheets-direct: " + detail;
+      } catch (sheetsErr: any) {
         leadSaved = false;
-        leadSaveStatus = "timeout-or-network-error";
-        leadSaveDetail = "Apps Script call timed out or failed at network level.";
+        leadSaveStatus = "sheets-write-error";
+        leadSaveDetail = cleanString(sheetsErr?.message).slice(0, 200);
+
+        // 4b. FALLBACK: legacy Apps Script path (if still configured).
+        const fallback = await saveViaAppsScript();
+        leadSaved = fallback.saved;
+        leadSaveStatus = fallback.status;
+        leadSaveDetail = "apps-script-fallback: " + fallback.detail;
       }
     } else {
-      leadSaveStatus = "not-configured";
-      leadSaveDetail = "GOOGLE_APPS_SCRIPT_URL is not set in this environment.";
+      // 4c. Sheets not configured → legacy Apps Script-only path
+      //     (preserves current live behavior when creds are absent).
+      const result = await saveViaAppsScript();
+      leadSaved = result.saved;
+      leadSaveStatus = result.status;
+      leadSaveDetail = result.detail;
     }
 
     // Structured server-side log line — one line per submission,
@@ -293,12 +363,7 @@ export async function POST(req: Request) {
       auditResult: {
         overallScore: score,
         score,
-        status:
-          score >= 70
-            ? "Healthy"
-            : score >= 40
-            ? "Needs Improvement"
-            : "Critical Risk",
+        status: leadRow.status,
         isReachable,
         technicalChecks,
       },
