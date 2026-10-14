@@ -141,6 +141,7 @@ export async function POST(req: Request) {
     //    Runs best-effort — a lead is never lost because of the save step.
     let leadSaved = false;
     let leadSaveStatus = "skipped";
+    let leadSaveDetail = "";
 
     const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
 
@@ -163,6 +164,10 @@ export async function POST(req: Request) {
             domain: cleanDomain,
             email,
             name,
+            // The Apps Script deployed at GOOGLE_APPS_SCRIPT_URL validates
+            // a `fullName` field. Send BOTH spellings so the existing
+            // deployment accepts the lead without needing a redeploy.
+            fullName: name,
             overallScore: score,
             status:
               score >= 70
@@ -180,19 +185,43 @@ export async function POST(req: Request) {
 
         clearTimeout(leadTimeoutId);
 
-        if (leadResponse.ok) {
+        // Read the script's response body. Apps Script web apps return
+        // HTTP 200 even for logical failures ({ ok: false, message }),
+        // so the status code alone can't tell us whether the row was
+        // actually written. Inspect the JSON payload instead.
+        let scriptResult: Record<string, unknown> = {};
+
+        try {
+          scriptResult = await leadResponse.json();
+        } catch {
+          scriptResult = {};
+        }
+
+        const scriptOk = scriptResult["ok"] === true;
+
+        if (leadResponse.ok && scriptOk) {
           leadSaved = true;
           leadSaveStatus = "saved";
         } else {
-          leadSaveStatus = `script-returned-${leadResponse.status}`;
+          leadSaved = false;
+          leadSaveStatus = scriptOk
+            ? `script-returned-${leadResponse.status}`
+            : "script-returned-error";
+
+          leadSaveDetail =
+            cleanString(scriptResult["message"]) ||
+            cleanString(scriptResult["error"]) ||
+            "Script responded without a valid success payload.";
         }
       } catch {
         // Lead save failed; do not fail the whole audit response.
         leadSaved = false;
         leadSaveStatus = "timeout-or-network-error";
+        leadSaveDetail = "Apps Script call timed out or failed at network level.";
       }
     } else {
       leadSaveStatus = "not-configured";
+      leadSaveDetail = "GOOGLE_APPS_SCRIPT_URL is not set in this environment.";
     }
 
     // Structured server-side log line — one line per submission,
@@ -206,6 +235,7 @@ export async function POST(req: Request) {
         score,
         leadSaved,
         leadSaveStatus,
+        leadSaveDetail,
         timestamp: new Date().toISOString(),
       }),
     );
@@ -232,6 +262,7 @@ export async function POST(req: Request) {
       },
       leadSaved,
       leadSaveStatus,
+      leadSaveDetail,
       message: "Audit generated successfully",
     });
   } catch (err: any) {
