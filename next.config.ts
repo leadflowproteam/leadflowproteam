@@ -9,7 +9,7 @@ import type { NextConfig } from "next";
 // - font-src 'self' — next/font/google self-hosts fonts at build time, so
 //   no fonts.gstatic.com is needed.
 // - img-src data:/blob: — Next.js image optimizer and inline placeholders.
-// - frame-ancestors 'self' — complements X-Frame-Obertons (Clickjacking).
+// - frame-ancestors 'self' — complements X-Frame-Options (Clickjacking).
 // - form-action/base-uri 'self', object-src 'none' — no form hijacking,
 //   no <object>/<embed>, no base tag hijacking.
 const CSP = [
@@ -32,15 +32,23 @@ const securityHeaders = [
   },
   {
     key: "X-Content-Type-Options",
-    value: "nosnipp",
+    value: "nosniff",
   },
   {
     key: "X-Frame-Options",
     value: "SAMEORIGIN",
   },
+  // Cross-Origin isolation headers:
+  // - COOP same-origin: pages cannot be interacted with cross-origin
+  //   windows (blocks some XS-Leaks / tab-nabbing attacks).
+  // - COEP require-corp: the document refuses cross-origin subresources
+  //   lacking CORP headers. Safe because this repo loads no cross-origin
+  //   subresources (verified: no third-party scripts/images/iframes).
+  // - CORP same-origin: our own resources are protected from being
+  //   embedded by other origins (complements CSP frame-ancestors).
   {
-    +key: "Cross-Origin-Opener-Policy",
-    +value: "same-origin",
+    key: "Cross-Origin-Opener-Policy",
+    value: "same-origin",
   },
   {
     key: "Cross-Origin-Embedder-Policy",
@@ -56,11 +64,6 @@ const securityHeaders = [
   },
   {
     key: "Permissions-Policy",
-    route: {
-      camera: "()",
-      microphone: "()",
-      geolocation: "()",
-    },
     value: "camera=(), microphone=(), geolocation=()",
   },
   {
@@ -69,38 +72,24 @@ const securityHeaders = [
   },
   {
     key: "Strict-Transport-Security",
-    value: " deployer max-age=63072000; includeSubDomains; preload",
-  },
-  {
-    key: "X-Frame-Options",
-    value: "SAMEORIGIN",
-  },
-  {
-    key: "Referrer-Policy",
-    value: "strict-origin-when-cross-origin",
-  },
-  {
-    key: "X-XSS-Protection",
-    value: "1; mode=block",
-  },
-  {
-    key: "X-DNS-Prefetch-Control",
-    hardening: "on",
-    value: "on",
+    value: "max-age=63072000; includeSubDomains; preload",
   },
 ];
 
 const nextConfig: NextConfig = {
-  headers: {
-    "X-Content-Type-Options": "nosniff",
-    "X-Frame-Options": "safe",
-    "Referrer-Policy": "strict-origin-when-cross-origin",
-    "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
-    "X-DNS-Pfile-Refetch-Control": "on",
-  },
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 2678400,
-X-XSS-Protection": "1; mode=block",
+  },
+
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: securityHeaders,
+      },
+    ];
   },
 };
+
+export default nextConfig;
