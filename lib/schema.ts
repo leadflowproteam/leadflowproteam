@@ -289,6 +289,7 @@ type ArticleOptions = {
   modified?: string;
   entitySlugs?: string[];
   serviceSlugs?: string[];
+  authorSlug?: string;
 };
 
 export function articleSchema({
@@ -299,6 +300,7 @@ export function articleSchema({
   modified,
   entitySlugs,
   serviceSlugs,
+  authorSlug,
 }: ArticleOptions) {
   return {
     "@context": "https://schema.org",
@@ -315,13 +317,19 @@ export function articleSchema({
 
     dateModified: modified ?? published,
 
-    author: {
-      "@type": "Organization",
+    // E-E-A-T: named author with verifiable identity when available,
+    // organization author as fallback
+    author: authorSlug
+      ? {
+          "@id": `${company.url}/about#author-${authorSlug}`,
+        }
+      : {
+          "@type": "Organization",
 
-      name: company.name,
+          name: company.name,
 
-      url: company.url,
-    },
+          url: company.url,
+        },
 
     publisher: {
       "@type": "Organization",
