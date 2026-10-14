@@ -4,7 +4,7 @@ type FAQ = {
 };
 
 type Props = {
-  items: FAQ[];
+  items: readonly FAQ[];
 };
 
 export default function FAQSchema({
