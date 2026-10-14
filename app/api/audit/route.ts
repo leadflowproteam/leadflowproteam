@@ -2,6 +2,25 @@
 import { NextResponse } from "next/server";
 import { appendLeadRow, isSheetsConfigured } from "@/lib/sheets";
 
+// P11 self-heal: the production env was verified (Select-String on
+// .env.vercel-prod) to still contain the KNOWN-DEAD deployment URL.
+// Instead of requiring a manual Vercel dashboard edit + redeploy, the
+// code detects the dead URL and automatically uses the live one.
+// Once GOOGLE_APPS_SCRIPT_URL is updated in Vercel, or the P14-C
+// service-account path is configured, this guard becomes a no-op.
+const DEAD_APPS_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbweMe9RIQutTQCxiYmVaPkn8fUSXARZCpX-MHaRp7waPIW8BK18V01rv1PnpGawvB0W/exec";
+
+const LIVE_APPS_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwrOvUUTTPA7dVzin0cHy_2rIAeyzj5o1Ov1oOgH0vYDVfkMEc3hVr2lRwrCnzKjmHW/exec";
+
+function resolveAppsScriptUrl(): string {
+  const fromEnv = process.env.GOOGLE_APPS_SCRIPT_URL?.trim();
+  if (!fromEnv) return LIVE_APPS_SCRIPT_URL;
+  if (fromEnv === DEAD_APPS_SCRIPT_URL) return LIVE_APPS_SCRIPT_URL;
+  return fromEnv;
+}
+
 // Domain validation: only public, well-formed hostnames are allowed.
 // Blocks SSRF attempts like "localhost", "127.0.0.1", "169.254.x.x", "10.x.x.x",
 // "192.168.x.x", "[::1]", and internal/cloud metadata hosts.
@@ -194,7 +213,7 @@ export async function POST(req: Request) {
       status: string;
       detail: string;
     }> {
-      const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
+      const scriptUrl = resolveAppsScriptUrl();
       if (!scriptUrl) {
         return {
           saved: false,
