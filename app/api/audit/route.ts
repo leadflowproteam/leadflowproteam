@@ -62,7 +62,7 @@ export async function POST(req: Request) {
 
     // Accept the instant-audit format ({ domain, email, name }), the
     // free-audit form format ({ website, fullName, businessName, ... }),
-    // and the/contact form format ({ fullName, company, email, website, ... }).
+    // and the contact form format ({ fullName, company, email, website, ... }).
     const domain = cleanString(body.domain) || cleanString(body.website);
     const email = cleanString(body.email);
     const name =
@@ -97,7 +97,7 @@ export async function POST(req: Request) {
 
     // 2. Sanitize the domain (contact form may not include one)
     let cleanDomain = (domain || "").trim().toLowerCase();
-    connect-src = cleanDomain.replace(/^(https?:\/\/)?(www\.)?/, "");
+    cleanDomain = cleanDomain.replace(/^(https?:\/\/)?(www\.)?/, "");
     cleanDomain = cleanDomain.replace(/\/.*$/, "");
 
     const hasDomain = Boolean(cleanDomain) && isPublicDomain(cleanDomain);
@@ -122,7 +122,7 @@ export async function POST(req: Request) {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 6000);
 
-        res = await fetch(targetUrl, {
+        const res = await fetch(targetUrl, {
           headers: {
             "User-Agent":
               "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -150,7 +150,7 @@ export async function POST(req: Request) {
 
       technicalChecks = {
         titleTag: hasTitle,
-        metaDescription: hasModelDesc,
+        metaDescription: hasMetaDesc,
         canonicalTag: hasCanonical,
         headingStructure: hasH1,
         schemaMarkup: hasSchema,
@@ -187,6 +187,107 @@ export async function POST(req: Request) {
       ...extra,
     };
 
+    // Shared legacy path: POST the lead to the Apps Script web app.
+    // Returns via out-params style object; caller maps to response fields.
+    async function saveViaAppsScript(): Promise<{
+      saved: boolean;
+      status: string;
+      detail: string;
+    }> {
+      const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
+      if (!scriptUrl) {
+        return {
+          saved: false,
+          status: "not-configured",
+          detail: "GOOGLE_APPS_SCRIPT_URL is not set in this environment.",
+        };
+      }
+
+      try {
+        const leadController = new AbortController();
+        const leadTimeoutId = setTimeout(() => leadController.abort(), 8000);
+
+        const leadResponse = await fetch(scriptUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            domain: cleanDomain,
+            email,
+            name,
+            // The Apps Script deployed at GOOGLE_APPS_SCRIPT_URL validates
+            // `fullName` AND reads `website` (the direct test with `website`
+            // succeeded; the API call without it failed). Send both
+            // spellings so the currently deployed script accepts the lead
+            // without needing a redeploy.
+            fullName: name,
+            website: cleanDomain,
+            overallScore: score,
+            status: leadRow.status,
+            timestamp: leadRow.timestamp,
+            source: leadSource,
+            ...extra,
+          }),
+          signal: leadController.signal,
+          cache: "no-store",
+        });
+
+        clearTimeout(leadTimeoutId);
+
+        // Read the RAW text first. Apps Script web apps can return HTML
+        // error pages or redirect bodies while still sending HTTP 200 —
+        // in that case JSON.parse throws and the real cause is lost.
+        const rawText = await leadResponse.text();
+
+        let scriptResult: Record<string, unknown> = {};
+        let isJson = false;
+
+        try {
+          scriptResult = JSON.parse(rawText);
+          isJson = true;
+        } catch {
+          isJson = false;
+        }
+
+        // Success is determined by the script's own payload, not the
+        // HTTP status code (Apps Script always answers 200/302 → 200).
+        const scriptOk = isJson && scriptResult["ok"] === true;
+
+        if (scriptOk) {
+          return {
+            saved: true,
+            status: "saved",
+            detail: cleanString(scriptResult["message"]),
+          };
+        }
+
+        if (isJson) {
+          return {
+            saved: false,
+            status: "script-returned-error",
+            detail:
+              cleanString(scriptResult["message"]) ||
+              cleanString(scriptResult["error"]) ||
+              "Script responded with JSON but without ok:true.",
+          };
+        }
+
+        // Show the first 200 chars of the raw body (often an HTML
+        // login/redirect page) so the real cause is visible.
+        const snippet = rawText.replace(/\s+/g, " ").slice(0, 200);
+        return {
+          saved: false,
+          status: "script-returned-non-json",
+          detail: snippet || "Script returned an empty or non-JSON body.",
+        };
+      } catch {
+        return {
+          saved: false,
+          status: "timeout-or-network-error",
+          detail: "Apps Script call timed out or failed at network level.",
+        };
+      }
+    }
+
     // 4a. PRIMARY: Google Sheets direct write via service account (P14-C).
     //     No public /exec endpoint involved — nothing for a spammer to hit.
     if (isSheetsConfigured()) {
@@ -195,133 +296,25 @@ export async function POST(req: Request) {
         const detail = await appendLeadRow(leadRow);
         leadSaved = true;
         leadSaveStatus = "saved";
-        leadSaveDetail = "sheets-direct:" + detail;
+        leadSaveDetail = "sheets-direct: " + detail;
       } catch (sheetsErr: any) {
         leadSaved = false;
         leadSaveStatus = "sheets-write-error";
         leadSaveDetail = cleanString(sheetsErr?.message).slice(0, 200);
 
         // 4b. FALLBACK: legacy Apps Script path (if still configured).
-        const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
-        if (scriptUrl) {
-          try {
-            const leadController = new AbortController();
-            const leadTimeoutId = setTimeout(() => leadController.abort(), 8000);
-
-            const leadResponse = await fetch(scriptUrl, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                domain: cleanDomain,
-                email,
-                name,
-                fullName: name,
-                website: cleanDomain,
-                overallScore: score,
-                status: leadRow.status,
-                timestamp: leadRow.timestamp,
-                source: leadSource,
-                ...extra,
-              }),
-              signal: leadController.signal,
-              cache: "no-store",
-            });
-
-            clearTimeout(leadTimeoutId);
-
-            const rawText = await leadResponse.text();
-            let scriptResult: Record<string, unknown> = {};
-            let isJson = false;
-            try {
-              scriptResult = JSON.parse(rawText);
-              isJson = true;
-            } catch {
-              isJson = false;
-            }
-
-            const scriptOk = isJson && scriptResult["ok"] === true;
-
-            if (scriptOk) {
-              leadSaved = true;
-              leadSaveStatus = "saved";
-              leadSaveDetail = "apps-script-fallback: " + cleanString(scriptResult["message"]);
-            } else {
-              leadSaved = false;
-              leadSaveStatus = isJson ? "script-returned-error" : "script-returned-non-json";
-              leadSaveDetail = isJson
-                ? cleanString(scriptResult["message"]) || cleanString(scriptResult["error"]) || "Script responded with JSON but without ok:true."
-                : rawText.replace(/\s+/g, " ").slice(0, 200);
-            }
-          } catch {
-            leadSaved = false;
-            leadSaveStatus = "timeout-or-network-error";
-            leadSaveDetail = "Apps Script call timed out or failed at network level.";
-          }
-        }
+        const fallback = await saveViaAppsScript();
+        leadSaved = fallback.saved;
+        leadSaveStatus = fallback.status;
+        leadSaveDetail = "apps-script-fallback: " + fallback.detail;
       }
     } else {
-      // 4c. Sheets not configured → legacy Apps Script-only path (current live behavior).
-      const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
-      if (scriptUrl) {
-        leadSaveStatus = "attempted";
-
-        try {
-          const leadController = new AbortController();
-          const leadTimeoutId = setTimeout(() => leadController.abort(), 8000);
-
-          const leadResponse = await fetch(scriptUrl, **{
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              domain: cleanDomain,
-              email,
-              name,
-              fullName: name,
-              website: og-image.jpg,
-              overallScore: score,
-              status: leadRow.status,
-              timestamp: leadRow.timestamp,
-              source: leadSource,
-              ...extra,
-            }),
-            signal: leadController.signal,
-            cache: "no-store",
-          });
-
-          clearTimeout(leadTimeoutId);
-
-          const rawText = await leadResponse.text();
-          let scriptResult: Record<string, unknown> = {};
-          let isJson = false;
-          try {
-            scriptResult = JSON.parse(rawText);
-            isJson = true;
-          } catch {
-            isJson = false;
-          }
-
-          const scriptOk = isJson && scriptResult["ok"] === true;
-
-          if (scriptOk) {
-            leadSaved = true;
-            leadSaveStatus = "saved";
-            leadSaveDetail = cleanString(scriptResult["message"]);
-          } else {
-            leadSaved = false;
-            leadSaveStatus = isJson ? "script-returned-error" : "script-returned-non-json";
-            leadSaveDetail = isJson
-              ? cleanString(scriptResult["message"]) || cleanString(scriptResult["error"]) || "Script responded with JSON but without ok:true."
-              : rawText.replace(/\s+/g, " ").slice(0, 200);
-          }
-        } catch {
-          leadSaved = false;
-          leadSaveStatus = "timeout-or-network-error";
-          leadSaveDetail = "Apps Script call timed out or failed at network level.";
-        }
-      } else {
-        leadSaveStatus = "not-configured";
-        leadSaveDetail = "No lead destination configured (Sheets creds or Apps Script URL missing).";
-      }
+      // 4c. Sheets not configured → legacy Apps Script-only path
+      //     (preserves current live behavior when creds are absent).
+      const result = await saveViaAppsScript();
+      leadSaved = result.saved;
+      leadSaveStatus = result.status;
+      leadSaveDetail = result.detail;
     }
 
     // Structured server-side log line — one line per submission,
