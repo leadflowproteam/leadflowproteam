@@ -17,7 +17,7 @@ type FAQProps = {
   eyebrow?: string;
   title?: string;
   description?: string;
-  items: FAQItem[];
+  items?: readonly FAQItem[];
 };
 
 export default function FAQ({
