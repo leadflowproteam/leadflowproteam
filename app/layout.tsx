@@ -39,6 +39,11 @@ type RootLayoutProps = {
   children: ReactNode;
 };
 
+// P15c: nonce-based CSP requires per-request (dynamic) rendering.
+// Static prerendering cannot inject per-request nonces into scripts.
+export const dynamic = "force-dynamic";
+
+
 export default function RootLayout({
   children,
 }: Readonly<RootLayoutProps>) {
